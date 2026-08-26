@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Архитектура LLM Gateway &amp; Rate-Limiter на Go | Кейс под NDA | Иван Шахотько</title>
+  <meta name="description" content="Разбор архитектуры прокси-шлюза для vLLM кластера: распределенный Token Bucket в Redis Lua, потоковый SSE, контроль TTFT задержек и защита GPU от перегрузок памяти.">
+  <meta name="keywords" content="LLM Gateway, Go, Golang, vLLM, Redis Token Bucket, Rate Limiting, Server-Sent Events, Prometheus, TTFT, High Load Backend">
+  <link rel="canonical" href="https://shahotko.tech/cases/llm-gateway-rate-limiter.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              950: '#09090b',
+              900: '#141417',
+              850: '#1c1c21',
+              800: '#27272a',
+              700: '#3f3f46',
+              600: '#52525b',
+              500: '#71717a',
+              400: '#a1a1aa',
+              300: '#d4d4d8',
+              200: '#e4e4e7',
+              100: '#f4f4f5',
+              50: '#fafafa',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      background-color: #09090b;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+  </style>
+</head>
+<body class="text-zinc-100 font-sans antialiased selection:bg-zinc-800 selection:text-zinc-100 min-h-screen flex flex-col">
+  
+  <header class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="font-mono text-sm tracking-tight font-semibold text-zinc-100 hover:text-white flex items-center gap-2.5 transition-colors group">
+        <span class="px-2 py-0.5 rounded bg-zinc-900 text-zinc-200 border border-zinc-800 group-hover:border-zinc-700 text-xs font-mono transition-colors">IS</span>
+        <span class="text-zinc-300 group-hover:text-white transition-colors">shahotko.tech</span>
+      </a>
+
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="/" class="text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span>Все кейсы и стек</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12">
+    
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-500">
+        <a href="/" class="hover:text-zinc-300 transition-colors">Главная</a>
+        <span>/</span>
+        <span class="text-zinc-400">Архитектурный кейс #01 (NDA)</span>
+        <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 ml-auto">Production Verified</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
+        High-Performance LLM Gateway &amp; Rate-Limiter на Go
+      </h1>
+
+      <p class="text-base sm:text-lg text-zinc-400 leading-relaxed font-normal">
+        Инженерный разбор отказоустойчивого прокси-шлюза для пула vLLM GPU-воркеров: учет токенов в реальном времени, потоковый SSE, минимизация TTFT и защита от VRAM OOM.
+      </p>
+
+      <div class="flex flex-wrap gap-2 pt-2 font-mono text-xs">
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Go 1.23</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Redis 7 (Lua Engine)</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">vLLM Inference</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Prometheus &amp; Grafana</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Docker Swarm / K8s</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/80 font-mono text-xs">
+      <div>
+        <div class="text-zinc-500 text-[11px]">LATENCY (TTFT)</div>
+        <div class="text-emerald-400 font-bold text-base mt-0.5">&lt; 140ms P95</div>
+      </div>
+      <div>
+        <div class="text-zinc-500 text-[11px]">GATEWAY OVERHEAD</div>
+        <div class="text-zinc-200 font-bold text-base mt-0.5">&lt; 1.8ms</div>
+      </div>
+      <div>
+        <div class="text-zinc-500 text-[11px]">MAX CONCURRENCY</div>
+        <div class="text-zinc-200 font-bold text-base mt-0.5">8,500 conn/node</div>
+      </div>
+      <div>
+        <div class="text-zinc-500 text-[11px]">GPU OOM INCIDENTS</div>
+        <div class="text-emerald-400 font-bold text-base mt-0.5">0 incidents</div>
+      </div>
+    </div>
+
+    <article class="space-y-10 text-zinc-300 leading-relaxed text-sm sm:text-base border-t border-zinc-800/80 pt-8">
+      
+      <section class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-5 h-5 text-zinc-400"></i>
+          1. Исходная проблема и вызовы инфраструктуры
+        </h2>
+        <p>
+          В высоконагруженных B2B-системах подключение клиентов напрямую к инференс-серверам (vLLM / TGI) приводит к фатальным отказам. В отличие от стандартных веб-сервисов, инференс больших языковых моделей обладает критическими свойствами:
+        </p>
+        <ul class="list-disc list-inside space-y-2 text-zinc-400 pl-2">
+          <li><strong class="text-zinc-200">Ограниченность контекстной памяти (KV Cache):</strong> неконтролируемый наплыв параллельных длинных промптов мгновенно приводит к исчерпанию VRAM (CUDA Out Of Memory).</li>
+          <li><strong class="text-zinc-200">Неприменимость классического Rate Limiting (RPS):</strong> один запрос на 4,000 токенов нагружает GPU сильнее, чем 100 запросов по 20 токенов. Ограничивать необходимо именно <em>Tokens Per Minute (TPM)</em> и активный KV-cache volume.</li>
+          <li><strong class="text-zinc-200">Потоковая деградация (Streaming SSE):</strong> клиенты держат постоянное HTTP-соединение, что при блокирующей архитектуре исчерпывает файловые дескрипторы и пулы потоков.</li>
+        </ul>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-zinc-400"></i>
+          2. Архитектура решения (Architecture Blueprint)
+        </h2>
+        
+        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs text-zinc-300 overflow-x-auto space-y-2">
+          <div class="text-zinc-500 text-[11px] pb-2 border-b border-zinc-900 flex items-center justify-between">
+            <span>DISTRIBUTED LLM PROXY FLOW</span>
+            <span>ZERO-COPY SSE PIPELINE</span>
+          </div>
+          <pre class="leading-5 text-zinc-300">
+┌─────────────────┐       ┌────────────────────────────────────────────────────────┐
+│  Client Apps    │ ────&gt; │                Go LLM Gateway Service                  │
+│  (SDK / WebUI)  │       │                                                        │
+└─────────────────┘       │  1. Fast Tokenizer Pre-calc (Estimation)               │
+                          │  2. Token Bucket Reservation (Atomic Redis Lua)        │
+                          │  3. Least-Loaded GPU Worker Routing                    │
+                          │  4. Zero-Allocation Reverse Streaming (SSE Pipe)       │
+                          │  5. Post-inference Exact Token Correction              │
+                          └──────────────────────────┬─────────────────────────────┘
+                                                     │
+                                                     ▼
+                          ┌────────────────────────────────────────────────────────┐
+                          │         vLLM GPU Cluster (NVIDIA A100 / H100)          │
+                          │   Node 01 [8x vLLM]  │  Node 02 [8x vLLM] (PagedAttn)  │
+                          └────────────────────────────────────────────────────────┘</pre>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="code" class="w-5 h-5 text-zinc-400"></i>
+          3. Алгоритм Token Bucket в Redis на базе атомарного Lua
+        </h2>
+        <p>
+          Для предотвращения Race Condition при миллионах запросов резервирование квот по пользователю и организации выполняется за один атомарный round-trip в Redis.
+        </p>
+
+        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs overflow-x-auto">
+          <div class="text-zinc-500 pb-2 border-b border-zinc-900 flex items-center justify-between">
+            <span>token_bucket_limiter.lua</span>
+            <span class="text-emerald-400">Atomic Execution</span>
+          </div>
+          <pre class="pt-3 text-zinc-300 leading-relaxed">
+local key = KEYS[1]
+local requested_tokens = tonumber(ARGV[1])
+local capacity = tonumber(ARGV[2])
+local fill_rate = tonumber(ARGV[3])
+local now = tonumber(ARGV[4])
+
+local data = redis.call("HMGET", key, "tokens", "last_update")
+local current_tokens = tonumber(data[1])
+local last_update = tonumber(data[2])
+
+if not current_tokens then
+  current_tokens = capacity
+  last_update = now
+else
+  local elapsed = math.max(0, now - last_update)
+  current_tokens = math.min(capacity, current_tokens + (elapsed * fill_rate))
+end
+
+if current_tokens >= requested_tokens then
+  current_tokens = current_tokens - requested_tokens
+  redis.call("HMSET", key, "tokens", current_tokens, "last_update", now)
+  redis.call("EXPIRE", key, math.ceil(capacity / fill_rate) * 2)
+  return {1, math.floor(current_tokens)}
+else
+  return {0, math.floor(current_tokens)}
+end</pre>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="gauge" class="w-5 h-5 text-zinc-400"></i>
+          4. Оптимизация задержек: стриминг без аллокаций
+        </h2>
+        <p>
+          Для минимизации Time To First Token (TTFT) проксирование SSE (Server-Sent Events) реализовано через кастомный `io.Reader` пайплайн с пулом буферов `sync.Pool`. Пакеты токенов сбрасываются клиенту сразу через `http.Flusher` без промежуточного декодирования JSON.
+        </p>
+        <p class="text-zinc-400 text-xs sm:text-sm">
+          Результат: дополнительная задержка прокси-слоя составила менее <strong>1.8 миллисекунд</strong> при нагрузке 8,500 одновременных активных стримов на ноду.
+        </p>
+      </section>
+
+      <section class="space-y-4 border-t border-zinc-800/80 pt-8">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+          5. Бизнес-результаты и надежность
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
+          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-400 font-semibold mb-1">Защита серверов</div>
+            <div class="text-zinc-300">Полная ликвидация падений GPU из-за OOM при пиковых всплесках трафика.</div>
+          </div>
+          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-400 font-semibold mb-1">Точный биллинг</div>
+            <div class="text-zinc-300">Учет токенов с точностью до 1 токена по каждому клиенту и API-ключу.</div>
+          </div>
+          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-400 font-semibold mb-1">Метрики реального времени</div>
+            <div class="text-zinc-300">Дашборды Prometheus/Grafana: TTFT, Token Throughput, VRAM Usage.</div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+
+    <section class="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-6">
+      <div class="space-y-2">
+        <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Project Inquiry</div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">Нужна разработка надежного бэкенда или AI-шлюза?</h3>
+        <p class="text-zinc-400 text-sm">
+          Готов спроектировать и реализовать архитектуру под ваши объемы и SLA. Напишите напрямую или оставьте заявку.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Написать в Telegram (@shtoo_on_tvorit)</span>
+        </a>
+        <a href="/#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 transition-all">
+          <i data-lucide="file-text" class="w-4 h-4"></i>
+          <span>Заполнить форму обратной связи</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-zinc-900 bg-zinc-950/80 py-8 text-xs text-zinc-500">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="font-mono">
+        &copy; 2026 Ivan Shakhotko · Systems Automation &amp; Backend Engineer
+      </div>
+      <div class="flex items-center gap-4 font-mono">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" class="hover:text-zinc-300">Telegram</a>
+        <span>·</span>
+        <a href="mailto:ivan@shahotko.tech" class="hover:text-zinc-300">ivan@shahotko.tech</a>
+        <span>·</span>
+        <a href="/" class="hover:text-zinc-300">Главная</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Приватный RAG-пайплайн и локальные LLM для B2B | Кейс под NDA | Иван Шахотько</title>
+  <meta name="description" content="Кейс автоматизации технической поддержки L1 для корпоративного сектора: гибридный RAG-поиск по pgvector, строгие Guardrails, self-hosted LLM и 0% утечки данных.">
+  <meta name="keywords" content="RAG, Local LLM, Private AI, Ollama, vLLM, pgvector, PostgreSQL, FastAPI, Support Automation, Zero Data Leakage">
+  <link rel="canonical" href="https://shahotko.tech/cases/enterprise-rag-automation.html">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              950: '#09090b',
+              900: '#141417',
+              850: '#1c1c21',
+              800: '#27272a',
+              700: '#3f3f46',
+              600: '#52525b',
+              500: '#71717a',
+              400: '#a1a1aa',
+              300: '#d4d4d8',
+              200: '#e4e4e7',
+              100: '#f4f4f5',
+              50: '#fafafa',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      background-color: #09090b;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+  </style>
+</head>
+<body class="text-zinc-100 font-sans antialiased selection:bg-zinc-800 selection:text-zinc-100 min-h-screen flex flex-col">
+  
+  <header class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="/" class="font-mono text-sm tracking-tight font-semibold text-zinc-100 hover:text-white flex items-center gap-2.5 transition-colors group">
+        <span class="px-2 py-0.5 rounded bg-zinc-900 text-zinc-200 border border-zinc-800 group-hover:border-zinc-700 text-xs font-mono transition-colors">IS</span>
+        <span class="text-zinc-300 group-hover:text-white transition-colors">shahotko.tech</span>
+      </a>
+
+      <nav class="flex items-center gap-4 text-sm">
+        <a href="/" class="text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
+          <i data-lucide="arrow-left" class="w-4 h-4"></i>
+          <span>Все кейсы и стек</span>
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12">
+    
+    <div class="space-y-4">
+      <div class="flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-500">
+        <a href="/" class="hover:text-zinc-300 transition-colors">Главная</a>
+        <span>/</span>
+        <span class="text-zinc-400">Архитектурный кейс #03 (NDA)</span>
+        <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 ml-auto">Production Verified</span>
+      </div>
+
+      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
+        B2B Support Automation &amp; Private RAG Platform
+      </h1>
+
+      <p class="text-base sm:text-lg text-zinc-400 leading-relaxed font-normal">
+        Архитектура автономного ассистента техподдержки на базе self-hosted LLM: гибридный поиск по базе знаний компании, исключение галлюцинаций и интеграция в CRM без передачи данных в сторонние облака.
+      </p>
+
+      <div class="flex flex-wrap gap-2 pt-2 font-mono text-xs">
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Python (FastAPI)</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">PostgreSQL (pgvector + HNSW)</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Self-Hosted vLLM / Ollama</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Hybrid BM25 + Dense Search</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Enterprise CRM Webhooks</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/80 font-mono text-xs">
+      <div>
+        <div class="text-zinc-500 text-[11px]">L1 TICKET REDUCTION</div>
+        <div class="text-emerald-400 font-bold text-base mt-0.5">-65% Deflection</div>
+      </div>
+      <div>
+        <div class="text-zinc-500 text-[11px]">DATA PRIVACY</div>
+        <div class="text-zinc-200 font-bold text-base mt-0.5">100% On-Prem</div>
+      </div>
+      <div>
+        <div class="text-zinc-500 text-[11px]">AVG RESOLUTION TIME</div>
+        <div class="text-zinc-200 font-bold text-base mt-0.5">&lt; 3.5 sec</div>
+      </div>
+      <div>
+        <div class="text-zinc-500 text-[11px]">FACT ACCURACY</div>
+        <div class="text-emerald-400 font-bold text-base mt-0.5">99.2% Verified</div>
+      </div>
+    </div>
+
+    <article class="space-y-10 text-zinc-300 leading-relaxed text-sm sm:text-base border-t border-zinc-800/80 pt-8">
+      
+      <section class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-5 h-5 text-zinc-400"></i>
+          1. Проблема: высокая нагрузка L1 и жесткие требования NDA
+        </h2>
+        <p>
+          В B2B-секторе первая линия поддержки перегружена типовыми регламентными вопросами по закрытой API-документации, интеграциям и техническим инструкциям. Однако использование публичных API (OpenAI/Anthropic) категорически запрещено политикой безопасности и NDA:
+        </p>
+        <ul class="list-disc list-inside space-y-2 text-zinc-400 pl-2">
+          <li>Никакие исходные коды, логи и персональные данные клиентов не должны покидать защищенный контур.</li>
+          <li>Галлюцинации недопустимы: модель не имеет права «додумывать» технические параметры.</li>
+          <li>При низкой уверенности тикет должен мгновенно бесшовно эскалироваться на дежурного инженера L2 в CRM.</li>
+        </ul>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-zinc-400"></i>
+          2. Архитектура приватного RAG-конвейера
+        </h2>
+        
+        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs text-zinc-300 overflow-x-auto space-y-2">
+          <div class="text-zinc-500 text-[11px] pb-2 border-b border-zinc-900 flex items-center justify-between">
+            <span>ISOLATED ENTERPRISE RAG ARCHITECTURE</span>
+            <span>AIR-GAPPED / ZERO LEAK</span>
+          </div>
+          <pre class="leading-5 text-zinc-300">
+┌─────────────────┐       ┌────────────────────────────────────────────────────────┐
+│  CRM / Support  │ ────&gt; │          FastAPI Agent Orchestrator (Internal)         │
+│  (User Ticket)  │       │                                                        │
+└─────────────────┘       │  1. Query Pre-processing &amp; Entity Extraction           │
+                          │  2. Hybrid Retrieval (BM25 + pgvector HNSW Index)      │
+                          │  3. Re-ranking &amp; Context Pruning                       │
+                          │  4. Local LLM Inference (vLLM / Llama 3 / DeepSeek)   │
+                          │  5. Strict Guardrail &amp; Fact Verification Engine        │
+                          └──────────────────────────┬─────────────────────────────┘
+                                                     │
+                                                     ▼
+                          ┌────────────────────────────────────────────────────────┐
+                          │ Confidence Check: Score &gt; 0.88?                        │
+                          │   ├── [YES] ──&gt; Auto-reply to Customer (CRM API)       │
+                          │   └── [NO]  ──&gt; Escalate to Human L2 with Draft Answer │
+                          └────────────────────────────────────────────────────────┘</pre>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="database" class="w-5 h-5 text-zinc-400"></i>
+          3. Гибридный поиск: почему только векторного поиска недостаточно
+        </h2>
+        <p>
+          В технической документации точные совпадения (коды ошибок, названия методов API `api/v2/auth/token`) часто теряются в чисто семантических векторных эмбеддингах. Мы применили гибридный подход: объединение полнотекстового поиска (Full-Text TSVector) и векторного поиска по косинусному расстоянию (`pgvector` с индексом HNSW) с взвешенным Reciprocal Rank Fusion (RRF).
+        </p>
+
+        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs overflow-x-auto">
+          <div class="text-zinc-500 pb-2 border-b border-zinc-900 flex items-center justify-between">
+            <span>hybrid_vector_search.sql</span>
+            <span class="text-emerald-400">HNSW + Fulltext Hybrid</span>
+          </div>
+          <pre class="pt-3 text-zinc-300 leading-relaxed">
+WITH vector_matches AS (
+    SELECT id, document_chunk, 1 - (embedding &lt;=&gt; :query_vector) AS sim_score
+    FROM kb_embeddings
+    ORDER BY embedding &lt;=&gt; :query_vector
+    LIMIT 20
+),
+text_matches AS (
+    SELECT id, document_chunk, ts_rank(tsv_content, plainto_tsquery('russian', :query_text)) AS text_score
+    FROM kb_embeddings
+    WHERE tsv_content @@ plainto_tsquery('russian', :query_text)
+    LIMIT 20
+)
+SELECT COALESCE(v.id, t.id) AS chunk_id,
+       COALESCE(v.document_chunk, t.document_chunk) AS chunk,
+       (COALESCE(v.sim_score, 0) * 0.6 + COALESCE(t.text_score, 0) * 0.4) AS final_rank
+FROM vector_matches v
+FULL OUTER JOIN text_matches t ON v.id = t.id
+ORDER BY final_rank DESC
+LIMIT 5;</pre>
+        </div>
+      </section>
+
+      <section class="space-y-4">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="shield-check" class="w-5 h-5 text-zinc-400"></i>
+          4. Guardrails и защита от галлюцинаций
+        </h2>
+        <p>
+          Перед отправкой ответа клиенту система выполняет верификацию утверждений: каждое утверждение в ответе проверяется на строгое присутствие в извлеченных чанках базы знаний. Если сходство ниже порога 0.88, ответ маркируется как «неподтвержденный» и передается оператору в качестве подсказки (draft), исключая дезинформацию клиентов.
+        </p>
+      </section>
+
+      <section class="space-y-4 border-t border-zinc-800/80 pt-8">
+        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
+          5. Достигнутые бизнес-метрики
+        </h2>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
+          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-400 font-semibold mb-1">Снижение затрат</div>
+            <div class="text-zinc-300">Сокращение 65% входящей рутины на первой линии поддержки без расширения штата.</div>
+          </div>
+          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-400 font-semibold mb-1">100% Конфиденциальность</div>
+            <div class="text-zinc-300">Ни байта данных не покинуло локальные серверы компании.</div>
+          </div>
+          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-400 font-semibold mb-1">Круглосуточный ответ</div>
+            <div class="text-zinc-300">Время первого ответа клиенту сократилось с 45 минут до 3.5 секунд.</div>
+          </div>
+        </div>
+      </section>
+
+    </article>
+
+    <section class="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-6">
+      <div class="space-y-2">
+        <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Project Inquiry</div>
+        <h3 class="text-xl sm:text-2xl font-bold text-white">Планируете внедрение локального AI в компании?</h3>
+        <p class="text-zinc-400 text-sm">
+          Помогу развернуть закрытый AI-контур, обучить RAG-ассистентов по вашей базе знаний и интегрировать их в CRM/1C.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm">
+          <i data-lucide="send" class="w-4 h-4"></i>
+          <span>Написать в Telegram (@shtoo_on_tvorit)</span>
+        </a>
+        <a href="/#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 transition-all">
+          <i data-lucide="file-text" class="w-4 h-4"></i>
+          <span>Оставить запрос</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-zinc-900 bg-zinc-950/80 py-8 text-xs text-zinc-500">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="font-mono">
+        &copy; 2026 Ivan Shakhotko · Systems Automation &amp; Backend Engineer
+      </div>
+      <div class="flex items-center gap-4 font-mono">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" class="hover:text-zinc-300">Telegram</a>
+        <span>·</span>
+        <a href="mailto:ivan@shahotko.tech" class="hover:text-zinc-300">ivan@shahotko.tech</a>
+        <span>·</span>
+        <a href="/" class="hover:text-zinc-300">Главная</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+  </script>
+</body>
+</html>

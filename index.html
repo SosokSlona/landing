@@ -1,0 +1,839 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Иван Шахотько | Systems Automation &amp; Backend Engineer</title>
+  <meta name="description" content="Инженер автоматизации и системный разработчик. Отказоустойчивая серверная инфраструктура, высокопроизводительные бэкенды на Go/Python, приватная AI-инфраструктура.">
+  <meta name="keywords" content="Иван Шахотько, Ivan Shakhotko, Go, Golang, Python, Backend Engineer, Systems Automation, vLLM, Private AI, ClickHouse, Docker, DevOps">
+  <link rel="canonical" href="https://shahotko.tech/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              950: '#09090b',
+              900: '#141417',
+              850: '#1c1c21',
+              800: '#27272a',
+              700: '#3f3f46',
+              600: '#52525b',
+              500: '#71717a',
+              400: '#a1a1aa',
+              300: '#d4d4d8',
+              200: '#e4e4e7',
+              100: '#f4f4f5',
+              50: '#fafafa',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    body {
+      background-color: #09090b;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+  </style>
+</head>
+<body class="text-zinc-100 font-sans antialiased selection:bg-zinc-800 selection:text-zinc-100 min-h-screen flex flex-col">
+  
+  <header class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#" class="font-mono text-sm tracking-tight font-semibold text-zinc-100 hover:text-white flex items-center gap-2.5 transition-colors group">
+        <span class="px-2 py-0.5 rounded bg-zinc-900 text-zinc-200 border border-zinc-800 group-hover:border-zinc-700 text-xs font-mono transition-colors">IS</span>
+        <span class="text-zinc-300 group-hover:text-white transition-colors">shahotko.tech</span>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-8 text-sm text-zinc-400 font-medium">
+        <a href="#stack" class="hover:text-zinc-100 transition-colors flex items-center gap-1.5">
+          <i data-lucide="layers" class="w-3.5 h-3.5 text-zinc-500"></i>
+          <span>Стек</span>
+        </a>
+        <a href="#projects" class="hover:text-zinc-100 transition-colors flex items-center gap-1.5">
+          <i data-lucide="cpu" class="w-3.5 h-3.5 text-zinc-500"></i>
+          <span>Кейсы (NDA)</span>
+        </a>
+        <a href="#services" class="hover:text-zinc-100 transition-colors flex items-center gap-1.5">
+          <i data-lucide="briefcase" class="w-3.5 h-3.5 text-zinc-500"></i>
+          <span>Услуги</span>
+        </a>
+        <a href="#contact" class="hover:text-zinc-100 transition-colors flex items-center gap-1.5">
+          <i data-lucide="send" class="w-3.5 h-3.5 text-zinc-500"></i>
+          <span>Контакты / Форма</span>
+        </a>
+      </nav>
+
+      <div class="hidden sm:flex items-center gap-3">
+        <div class="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono text-zinc-300 bg-zinc-900/90 border border-zinc-800 rounded-full shadow-sm">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+          </span>
+          <span>Available for B2B &amp; Contract</span>
+        </div>
+      </div>
+
+      <button id="mobileMenuBtn" aria-label="Открыть меню" class="md:hidden p-2 text-zinc-400 hover:text-zinc-100 rounded-lg hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-all">
+        <i data-lucide="menu" class="w-5 h-5"></i>
+      </button>
+    </div>
+
+    <div id="mobileMenu" class="hidden md:hidden border-b border-zinc-800 bg-zinc-950/95 backdrop-blur-xl px-4 pt-3 pb-6 space-y-3">
+      <div class="pb-3 flex items-center gap-2 text-xs font-mono text-zinc-300 border-b border-zinc-900">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+        </span>
+        <span>Available for B2B &amp; Contract</span>
+      </div>
+      <a href="#stack" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Стек технологий</a>
+      <a href="#projects" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Кейсы (NDA разборы)</a>
+      <a href="#services" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Услуги для бизнеса</a>
+      <a href="#contact" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Контакты и форма</a>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-20 sm:space-y-28">
+    
+    <section class="space-y-8">
+      <div class="space-y-4 max-w-4xl">
+        <div class="inline-flex items-center gap-2 px-3 py-1 text-xs font-mono font-medium rounded-md border border-zinc-800 bg-zinc-900/80 text-zinc-300">
+          <i data-lucide="terminal" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Systems Automation &amp; Backend Engineer</span>
+        </div>
+        
+        <h1 class="text-4xl sm:text-6xl font-bold tracking-tight text-white leading-tight">
+          Иван Шахотько <span class="text-zinc-500 font-normal text-2xl sm:text-4xl block sm:inline mt-1 sm:mt-0 font-mono text-zinc-400">/ Ivan Shakhotko</span>
+        </h1>
+        
+        <p class="text-lg sm:text-xl text-zinc-300 leading-relaxed font-normal pt-1 max-w-3xl">
+          Проектирование отказоустойчивой инфраструктуры, разработка бэкендов на Go/Python и внедрение автономных AI-систем для бизнеса. Системный подход к оптимизации задержек, обработке данных и автоматизации критических контуров.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3 pt-1">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm group">
+          <i data-lucide="send" class="w-4 h-4 text-zinc-900 group-hover:translate-x-0.5 transition-transform"></i>
+          <span>Написать в Telegram</span>
+        </a>
+        <a href="#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-200 transition-all">
+          <i data-lucide="message-square" class="w-4 h-4 text-emerald-400"></i>
+          <span>Форма с пингом в TG</span>
+        </a>
+        <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-200 transition-all">
+          <i data-lucide="github" class="w-4 h-4"></i>
+          <span>GitHub</span>
+        </a>
+        <a href="mailto:ivan@shahotko.tech" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-200 transition-all">
+          <i data-lucide="mail" class="w-4 h-4"></i>
+          <span>ivan@shahotko.tech</span>
+        </a>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/80 font-mono text-xs">
+        <div class="space-y-1">
+          <div class="text-zinc-500 flex items-center gap-1.5">
+            <i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-400"></i>
+            <span>AVAILABILITY</span>
+          </div>
+          <div class="text-zinc-200 font-semibold">B2B / Contract / Remote</div>
+        </div>
+        <div class="space-y-1">
+          <div class="text-zinc-500 flex items-center gap-1.5">
+            <i data-lucide="code-2" class="w-3.5 h-3.5 text-zinc-400"></i>
+            <span>CORE RUNTIME</span>
+          </div>
+          <div class="text-zinc-200 font-semibold">Go &amp; Python 3.12+</div>
+        </div>
+        <div class="space-y-1">
+          <div class="text-zinc-500 flex items-center gap-1.5">
+            <i data-lucide="shield" class="w-3.5 h-3.5 text-zinc-400"></i>
+            <span>DATA PRIVACY</span>
+          </div>
+          <div class="text-zinc-200 font-semibold">100% On-Premise / Air-Gapped</div>
+        </div>
+        <div class="space-y-1">
+          <div class="text-zinc-500 flex items-center gap-1.5">
+            <i data-lucide="gauge" class="w-3.5 h-3.5 text-zinc-400"></i>
+            <span>LATENCY SLA</span>
+          </div>
+          <div class="text-zinc-200 font-semibold">Sub-millisecond &amp; Realtime</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="stack" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-zinc-800/80 pb-4">
+        <div>
+          <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Stack &amp; Tooling</div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Технологический стек</h2>
+        </div>
+        <div class="font-mono text-xs text-zinc-500">
+          Strict production toolset
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <div class="p-6 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-4 group">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-200 group-hover:border-zinc-700 transition-colors">
+                <i data-lucide="server" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-bold text-zinc-100">Backend</h3>
+            </div>
+            <span class="font-mono text-xs text-zinc-500">High-Concurrency</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Высокопроизводительные микросервисы, строго типизированные схемы, потоковые сокеты и отказоустойчивые RPC-протоколы.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-1 font-mono text-xs">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="binary" class="w-3 h-3 text-zinc-500"></i>
+              <span>Go</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="file-code-2" class="w-3 h-3 text-zinc-500"></i>
+              <span>Python</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="webhook" class="w-3 h-3 text-zinc-500"></i>
+              <span>REST API</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="radio" class="w-3 h-3 text-zinc-500"></i>
+              <span>WebSocket</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="network" class="w-3 h-3 text-zinc-500"></i>
+              <span>gRPC</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-4 group">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-200 group-hover:border-zinc-700 transition-colors">
+                <i data-lucide="container" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-bold text-zinc-100">Infrastructure &amp; DevOps</h3>
+            </div>
+            <span class="font-mono text-xs text-zinc-500">Security &amp; Ops</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Оркестрация контейнеров, изоляция сред, защита периметра, балансировка нагрузки и автоматизация процессов сборки и деплоя.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-1 font-mono text-xs">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="terminal" class="w-3 h-3 text-zinc-500"></i>
+              <span>Linux</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="box" class="w-3 h-3 text-zinc-500"></i>
+              <span>Docker</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="git-branch" class="w-3 h-3 text-zinc-500"></i>
+              <span>CI/CD</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="split" class="w-3 h-3 text-zinc-500"></i>
+              <span>Reverse Proxy</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="shield-check" class="w-3 h-3 text-zinc-500"></i>
+              <span>Cloudflare Zero Trust</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-4 group">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-200 group-hover:border-zinc-700 transition-colors">
+                <i data-lucide="database" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-bold text-zinc-100">Data &amp; Storage</h3>
+            </div>
+            <span class="font-mono text-xs text-zinc-500">OLTP &amp; OLAP</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Реляционные и аналитические хранилища, in-memory структуры для кэширования, транзакционных очередей и аналитики больших объемов.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-1 font-mono text-xs">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="hard-drive" class="w-3 h-3 text-zinc-500"></i>
+              <span>PostgreSQL</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="zap" class="w-3 h-3 text-zinc-500"></i>
+              <span>Redis</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="bar-chart-2" class="w-3 h-3 text-zinc-500"></i>
+              <span>ClickHouse</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="file-text" class="w-3 h-3 text-zinc-500"></i>
+              <span>SQLite</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-4 group">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-200 group-hover:border-zinc-700 transition-colors">
+                <i data-lucide="cpu" class="w-4 h-4"></i>
+              </div>
+              <h3 class="font-bold text-zinc-100">AI &amp; Automation</h3>
+            </div>
+            <span class="font-mono text-xs text-zinc-500">Autonomous Agents</span>
+          </div>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Оркестрация и инференс открытых LLM, распределенные ETL-пайплайны, обработка очередей и боты на Telegram Bot API.
+          </p>
+          <div class="flex flex-wrap gap-2 pt-1 font-mono text-xs">
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="sparkles" class="w-3 h-3 text-zinc-500"></i>
+              <span>Local LLM Orchestration (vLLM/Ollama)</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="workflow" class="w-3 h-3 text-zinc-500"></i>
+              <span>ETL Pipelines</span>
+            </div>
+            <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
+              <i data-lucide="bot" class="w-3 h-3 text-zinc-500"></i>
+              <span>Telegram Bot API</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="projects" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-zinc-800/80 pb-4">
+        <div>
+          <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Architecture &amp; Solutions</div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Ключевые кейсы и архитектурные решения</h2>
+        </div>
+        <div class="font-mono text-xs text-zinc-500">
+          Click to read in-depth NDA case studies
+        </div>
+      </div>
+
+      <div class="space-y-6">
+        
+        <div class="p-6 sm:p-8 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div class="space-y-1.5">
+              <div class="font-mono text-xs text-emerald-400 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span>Case #01 · Infrastructure &amp; Latency</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-zinc-100">High-Performance LLM Gateway &amp; Rate-Limiter</h3>
+            </div>
+            <div class="flex flex-wrap gap-2 font-mono text-xs">
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Go</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Redis</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Reverse Proxy</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Prometheus</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-lg bg-zinc-950 border border-zinc-800/80 font-mono text-xs text-zinc-400 overflow-x-auto">
+            <div class="flex items-center gap-2 text-zinc-500 pb-2 border-b border-zinc-900 text-[11px]">
+              <i data-lucide="git-commit" class="w-3 h-3 text-zinc-600"></i>
+              <span>ARCHITECTURAL PIPELINE</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 pt-2 text-zinc-300 text-xs">
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Client / API</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400">[Go Reverse Proxy]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">[Redis Token Bucket]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">[vLLM Cluster]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">[Metrics Exporter]</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div class="space-y-2 p-4 rounded-lg bg-zinc-900/40 border border-zinc-850">
+              <div class="font-mono text-xs text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-zinc-500"></i>
+                <span>Проблема и вызов</span>
+              </div>
+              <p class="text-zinc-400 leading-relaxed text-xs sm:text-sm">
+                Централизованный контроль потокового инференс-трафика (SSE) к пулу GPU-воркеров, предотвращение деградации VRAM и учет лимитов токенов в реальном времени.
+              </p>
+            </div>
+            <div class="space-y-2 p-4 rounded-lg bg-zinc-900/40 border border-zinc-850">
+              <div class="font-mono text-xs text-zinc-300 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>Реализованное решение</span>
+              </div>
+              <p class="text-zinc-400 leading-relaxed text-xs sm:text-sm">
+                Разработан высокоскоростной reverse proxy на Go с распределенным алгоритмом Token Bucket в Redis Lua. Реализован непрерывный мониторинг задержек (Latency) и TTFT со сбором метрик и изоляцией сбоящих узлов.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-zinc-850">
+            <div class="flex items-center gap-4 font-mono text-xs text-zinc-400">
+              <span>TTFT: <strong class="text-zinc-200">&lt;140ms</strong></span>
+              <span>·</span>
+              <span>Overhead: <strong class="text-zinc-200">&lt;1.8ms</strong></span>
+              <span>·</span>
+              <span>VRAM Defense: <strong class="text-emerald-400">100%</strong></span>
+            </div>
+            <a href="/cases/llm-gateway-rate-limiter.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 hover:text-white transition-all w-full sm:w-auto justify-center">
+              <span>Читать NDA-разбор архитектуры</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-400"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="p-6 sm:p-8 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div class="space-y-1.5">
+              <div class="font-mono text-xs text-emerald-400 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span>Case #02 · Distributed Systems &amp; Data</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-zinc-100">Autonomous Market Intelligence &amp; Scoring Engine</h3>
+            </div>
+            <div class="flex flex-wrap gap-2 font-mono text-xs">
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Python</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">ClickHouse</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Docker</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Telegram Bot API</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-lg bg-zinc-950 border border-zinc-800/80 font-mono text-xs text-zinc-400 overflow-x-auto">
+            <div class="flex items-center gap-2 text-zinc-500 pb-2 border-b border-zinc-900 text-[11px]">
+              <i data-lucide="git-commit" class="w-3 h-3 text-zinc-600"></i>
+              <span>ARCHITECTURAL PIPELINE</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 pt-2 text-zinc-300 text-xs">
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">External Sources</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400">[Async Workers / Proxy Pool]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">[ClickHouse OLAP]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">[ML Scoring]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">[Telegram Instant Alert]</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div class="space-y-2 p-4 rounded-lg bg-zinc-900/40 border border-zinc-850">
+              <div class="font-mono text-xs text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-zinc-500"></i>
+                <span>Проблема и вызов</span>
+              </div>
+              <p class="text-zinc-400 leading-relaxed text-xs sm:text-sm">
+                Сбор и синхронизация сотен тысяч рыночных лотов из динамических внешних источников с постоянной сменой анти-бот блокировок и неоднородными форматами данных.
+              </p>
+            </div>
+            <div class="space-y-2 p-4 rounded-lg bg-zinc-900/40 border border-zinc-850">
+              <div class="font-mono text-xs text-zinc-300 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>Реализованное решение</span>
+              </div>
+              <p class="text-zinc-400 leading-relaxed text-xs sm:text-sm">
+                Спроектирован распределенный асинхронный парсер и пайплайн нормализации данных с хранением в ClickHouse. Внедрен автоматический AI-скоринг ликвидности лотов и мгновенная отправка алертов в Telegram за &lt;1.2 сек.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-zinc-850">
+            <div class="flex items-center gap-4 font-mono text-xs text-zinc-400">
+              <span>Ingestion: <strong class="text-zinc-200">&gt;350k/day</strong></span>
+              <span>·</span>
+              <span>Push Latency: <strong class="text-zinc-200">&lt;1.2s</strong></span>
+              <span>·</span>
+              <span>ZSTD Compression: <strong class="text-emerald-400">6.2x</strong></span>
+            </div>
+            <a href="/cases/autonomous-market-intelligence.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 hover:text-white transition-all w-full sm:w-auto justify-center">
+              <span>Читать NDA-разбор архитектуры</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-400"></i>
+            </a>
+          </div>
+        </div>
+
+        <div class="p-6 sm:p-8 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-6">
+          <div class="flex flex-col sm:flex-row sm:items-start justify-between gap-4">
+            <div class="space-y-1.5">
+              <div class="font-mono text-xs text-emerald-400 flex items-center gap-1.5">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                <span>Case #03 · Private AI &amp; Integration</span>
+              </div>
+              <h3 class="text-xl sm:text-2xl font-bold text-zinc-100">B2B Support Automation Platform</h3>
+            </div>
+            <div class="flex flex-wrap gap-2 font-mono text-xs">
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Python</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">FastAPI</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">PostgreSQL</span>
+              <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Local LLM</span>
+            </div>
+          </div>
+
+          <div class="p-3.5 rounded-lg bg-zinc-950 border border-zinc-800/80 font-mono text-xs text-zinc-400 overflow-x-auto">
+            <div class="flex items-center gap-2 text-zinc-500 pb-2 border-b border-zinc-900 text-[11px]">
+              <i data-lucide="git-commit" class="w-3 h-3 text-zinc-600"></i>
+              <span>ARCHITECTURAL PIPELINE</span>
+            </div>
+            <div class="flex flex-wrap items-center gap-2 pt-2 text-zinc-300 text-xs">
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Customer Ticket</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400">[Hybrid Vector Retrieval]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">[Local LLM Engine]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">[Strict Guardrails]</span>
+              <span class="text-zinc-600">&rarr;</span>
+              <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-zinc-400">[CRM 2-Way Sync]</span>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+            <div class="space-y-2 p-4 rounded-lg bg-zinc-900/40 border border-zinc-850">
+              <div class="font-mono text-xs text-zinc-400 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="alert-triangle" class="w-3.5 h-3.5 text-zinc-500"></i>
+                <span>Проблема и вызов</span>
+              </div>
+              <p class="text-zinc-400 leading-relaxed text-xs sm:text-sm">
+                Перегрузка первой линии технической поддержки типовыми регламентными вопросами при строгом запрете на отправку коммерческих данных клиентов в сторонние облачные сервисы.
+              </p>
+            </div>
+            <div class="space-y-2 p-4 rounded-lg bg-zinc-900/40 border border-zinc-850">
+              <div class="font-mono text-xs text-zinc-300 uppercase tracking-wider flex items-center gap-1.5">
+                <i data-lucide="check-circle-2" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>Реализованное решение</span>
+              </div>
+              <p class="text-zinc-400 leading-relaxed text-xs sm:text-sm">
+                Создан агентный пайплайн с RAG-поиском по корпоративным базам знаний на базе локальной LLM и двусторонней интеграцией в CRM. Нагрузка на L1 сокращена на 65% с гарантией конфиденциальности.
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2 border-t border-zinc-850">
+            <div class="flex items-center gap-4 font-mono text-xs text-zinc-400">
+              <span>L1 Load: <strong class="text-zinc-200">-65%</strong></span>
+              <span>·</span>
+              <span>Resolution: <strong class="text-zinc-200">&lt;3.5s</strong></span>
+              <span>·</span>
+              <span>Data Leak: <strong class="text-emerald-400">0% (On-Prem)</strong></span>
+            </div>
+            <a href="/cases/enterprise-rag-automation.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-mono font-medium bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 text-zinc-200 hover:text-white transition-all w-full sm:w-auto justify-center">
+              <span>Читать NDA-разбор архитектуры</span>
+              <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-400"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="services" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-zinc-800/80 pb-4">
+        <div>
+          <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Business Solutions</div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Услуги для бизнеса</h2>
+        </div>
+        <div class="font-mono text-xs text-zinc-500">
+          Turnkey engineering
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <div class="p-6 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-200 group-hover:border-zinc-700 transition-colors">
+              <i data-lucide="bot" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base sm:text-lg font-bold text-zinc-100 leading-snug">Автоматизация бизнес-процессов под ключ (боты, парсеры, интеграции 1C/CRM)</h3>
+            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Разработка транзакционных ботов, распределенных парсеров данных любой сложности, интеграционных шлюзов между 1C, CRM, платежными сервисами и внутренними системами.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-zinc-800/80 font-mono text-xs text-zinc-400 flex items-center justify-between">
+            <span>&gt; 1C / CRM / ETL</span>
+            <span class="text-emerald-400 font-semibold">Ready</span>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-200 group-hover:border-zinc-700 transition-colors">
+              <i data-lucide="server" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base sm:text-lg font-bold text-zinc-100 leading-snug">Разработка высоконагруженных бэкендов и микросервисов на Go/Python</h3>
+            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Проектирование и реализация отказоустойчивых REST, gRPC и WebSocket микросервисов на Go и Python. Фокус на высокой пропускной способности, чистоте архитектуры и минимальном оверхеде.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-zinc-800/80 font-mono text-xs text-zinc-400 flex items-center justify-between">
+            <span>&gt; Low latency core</span>
+            <span class="text-emerald-400 font-semibold">Active</span>
+          </div>
+        </div>
+
+        <div class="p-6 rounded-xl bg-zinc-900/30 border border-zinc-800 hover:border-zinc-700 transition-all space-y-4 flex flex-col justify-between group">
+          <div class="space-y-4">
+            <div class="w-10 h-10 rounded-lg bg-zinc-900 border border-zinc-800 flex items-center justify-center text-zinc-200 group-hover:border-zinc-700 transition-colors">
+              <i data-lucide="shield-check" class="w-5 h-5"></i>
+            </div>
+            <h3 class="text-base sm:text-lg font-bold text-zinc-100 leading-snug">Настройка приватной AI-инфраструктуры (локальные LLM без передачи данных наружу)</h3>
+            <p class="text-xs sm:text-sm text-zinc-400 leading-relaxed">
+              Развертывание и оптимизация локальных LLM (vLLM, Ollama) на собственных серверах компании. Автономная работа без передачи чувствительных данных во внешние контуры.
+            </p>
+          </div>
+          <div class="pt-4 border-t border-zinc-800/80 font-mono text-xs text-zinc-400 flex items-center justify-between">
+            <span>&gt; Zero external leak</span>
+            <span class="text-emerald-400 font-semibold">Air-gapped</span>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="contact" class="space-y-6">
+      <div class="p-8 sm:p-12 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-8">
+        <div class="max-w-2xl space-y-3">
+          <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Direct Contacts &amp; Ping Form</div>
+          <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Обсудить проект или сотрудничество</h2>
+          <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
+            Отправьте форму с мгновенным пингом в мой Telegram или напишите напрямую.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+          
+          <div class="lg:col-span-7 space-y-4">
+            <form id="contactForm" class="space-y-4">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="space-y-1.5">
+                  <label for="formName" class="block font-mono text-xs text-zinc-400 uppercase">Ваше имя / Компания</label>
+                  <input type="text" id="formName" required placeholder="Алексей / FinTech Inc." class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
+                </div>
+                <div class="space-y-1.5">
+                  <label for="formContact" class="block font-mono text-xs text-zinc-400 uppercase">Контакт (Telegram / Email)</label>
+                  <input type="text" id="formContact" required placeholder="@username или ivan@mail.com" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
+                </div>
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="formService" class="block font-mono text-xs text-zinc-400 uppercase">Направление задачи</label>
+                <select id="formService" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-200 font-mono transition-colors">
+                  <option value="Автоматизация процессов / Боты / ETL">Автоматизация процессов / Боты / ETL</option>
+                  <option value="Разработка бэкенда (Go / Python)">Разработка бэкенда (Go / Python)</option>
+                  <option value="Приватная AI-инфраструктура / RAG / vLLM">Приватная AI-инфраструктура / RAG / vLLM</option>
+                  <option value="Аудит архитектуры / Консультация">Аудит архитектуры / Консультация</option>
+                  <option value="Другой B2B-контракт">Другой B2B-контракт</option>
+                </select>
+              </div>
+
+              <div class="space-y-1.5">
+                <label for="formMessage" class="block font-mono text-xs text-zinc-400 uppercase">Описание задачи / требования</label>
+                <textarea id="formMessage" rows="3" required placeholder="Опишите стек, требования к нагрузке или желаемый результат..." class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors"></textarea>
+              </div>
+
+              <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+                <button type="submit" id="submitBtn" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-medium bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm group font-mono">
+                  <i data-lucide="send" class="w-4 h-4 text-zinc-950 group-hover:translate-x-0.5 transition-transform"></i>
+                  <span>Отправить запрос в Telegram</span>
+                </button>
+                <span class="font-mono text-xs text-zinc-500 text-center sm:text-left">
+                  Пинг прямо в Telegram автора
+                </span>
+              </div>
+
+              <div id="formStatus" class="pt-1"></div>
+            </form>
+          </div>
+
+          <div class="lg:col-span-5 space-y-4 flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-zinc-800/80 pt-6 lg:pt-0 lg:pl-8">
+            <div class="space-y-4">
+              <div class="font-mono text-xs text-zinc-500 uppercase">Прямые каналы связи</div>
+              
+              <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-850 transition-all flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <div class="p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-300">
+                    <i data-lucide="send" class="w-4 h-4 text-emerald-400"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs text-zinc-500 font-mono">Telegram</div>
+                    <div class="text-sm font-semibold text-zinc-200 group-hover:text-white">@shtoo_on_tvorit</div>
+                  </div>
+                </div>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-600 group-hover:text-zinc-300 transition-colors"></i>
+              </a>
+
+              <div class="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 transition-all flex items-center justify-between group cursor-pointer" id="copyEmailBtn" data-email="ivan@shahotko.tech">
+                <div class="flex items-center gap-3">
+                  <div class="p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-300">
+                    <i data-lucide="mail" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs text-zinc-500 font-mono" id="emailLabel">Email (клик — копия)</div>
+                    <div class="text-sm font-semibold text-zinc-200 group-hover:text-white">ivan@shahotko.tech</div>
+                  </div>
+                </div>
+                <i data-lucide="copy" class="w-4 h-4 text-zinc-600 group-hover:text-zinc-300 transition-colors"></i>
+              </div>
+
+              <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-3.5 rounded-xl bg-zinc-900/80 border border-zinc-800 hover:border-zinc-700 hover:bg-zinc-850 transition-all flex items-center justify-between group">
+                <div class="flex items-center gap-3">
+                  <div class="p-2 rounded-lg bg-zinc-950 border border-zinc-800 text-zinc-300">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                  </div>
+                  <div>
+                    <div class="text-xs text-zinc-500 font-mono">GitHub</div>
+                    <div class="text-sm font-semibold text-zinc-200 group-hover:text-white">Profile &amp; Repos</div>
+                  </div>
+                </div>
+                <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-600 group-hover:text-zinc-300 transition-colors"></i>
+              </a>
+            </div>
+
+            <div class="p-4 rounded-xl bg-zinc-950/60 border border-zinc-850 font-mono text-xs text-zinc-400 space-y-1.5">
+              <div class="text-zinc-300 font-semibold flex items-center gap-1.5">
+                <i data-lucide="clock" class="w-3.5 h-3.5 text-zinc-500"></i>
+                <span>Скорость ответа</span>
+              </div>
+              <p class="text-zinc-500 text-[11px] leading-relaxed">
+                Отвечаю в течение 1–2 часов в рабочее время (GMT+3). Все заявки обрабатываются конфиденциально.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="border-t border-zinc-900 bg-zinc-950/80 py-8 text-xs text-zinc-500">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center gap-2 font-mono">
+        <span class="text-zinc-400">ivan@shahotko.tech</span>
+        <span>·</span>
+        <span class="flex items-center gap-1">
+          <i data-lucide="map-pin" class="w-3 h-3 text-zinc-600"></i>
+          Remote / Минск
+        </span>
+      </div>
+      <div class="font-mono">
+        &copy; 2026 Ivan Shakhotko. All systems operational.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const mobileBtn = document.getElementById('mobileMenuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    if (mobileBtn && mobileMenu) {
+      mobileBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      document.querySelectorAll('.mobile-link').forEach(link => {
+        link.addEventListener('click', () => {
+          mobileMenu.classList.add('hidden');
+        });
+      });
+    }
+
+    const copyBtn = document.getElementById('copyEmailBtn');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', async () => {
+        const email = copyBtn.getAttribute('data-email');
+        if (!email) return;
+        try {
+          await navigator.clipboard.writeText(email);
+          const label = document.getElementById('emailLabel');
+          if (label) {
+            const originalText = label.textContent;
+            label.textContent = 'Скопировано в буфер!';
+            label.classList.add('text-emerald-400');
+            setTimeout(() => {
+              label.textContent = originalText;
+              label.classList.remove('text-emerald-400');
+            }, 2000);
+          }
+        } catch (e) {
+          window.location.href = `mailto:${email}`;
+        }
+      });
+    }
+
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('submitBtn');
+        const status = document.getElementById('formStatus');
+        const name = document.getElementById('formName').value.trim();
+        const contact = document.getElementById('formContact').value.trim();
+        const service = document.getElementById('formService').value;
+        const message = document.getElementById('formMessage').value.trim();
+
+        const formattedText = `🔔 Заявка с сайта shahotko.tech:\n\n• Имя: ${name}\n• Контакт: ${contact}\n• Направление: ${service}\n• Задача: ${message}`;
+        const fallbackUrl = `https://t.me/shtoo_on_tvorit?text=${encodeURIComponent(formattedText)}`;
+
+        btn.disabled = true;
+        btn.innerHTML = `<span class="font-mono">Отправка...</span>`;
+
+        try {
+          const res = await fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, contact, service, message })
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            status.innerHTML = `<div class="p-3 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs font-mono">✓ Заявка отправлена напрямую в Telegram! Свяжусь в ближайшее время.</div>`;
+            contactForm.reset();
+          } else {
+            window.open(fallbackUrl, '_blank');
+            status.innerHTML = `<div class="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono">Открываю диалог в Telegram с готовым текстом заявки...</div>`;
+          }
+        } catch (err) {
+          window.open(fallbackUrl, '_blank');
+          status.innerHTML = `<div class="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono">Перенаправляю в Telegram с текстом заявки...</div>`;
+        } finally {
+          btn.disabled = false;
+          btn.innerHTML = `<i data-lucide="send" class="w-4 h-4 text-zinc-950"></i><span>Отправить запрос в Telegram</span>`;
+          lucide.createIcons();
+        }
+      });
+    }
+  </script>
+</body>
+</html>

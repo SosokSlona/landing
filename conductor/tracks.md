@@ -2,7 +2,9 @@
 
 ## Active Tracks
 
-*(No active tracks)*
+| Track ID | Title | Status | Priority | Created Date |
+|----------|-------|--------|----------|--------------|
+| [FEAT-007](./tracks/FEAT-007/plan.md) | B2B Cold Outreach Pack, Client One-Pager & Objection Handling Guide | In Progress | P1 | 2026-08-26 |
 
 ## Completed Tracks
 

@@ -2,7 +2,9 @@
 
 ## Active Tracks
 
-*(No active tracks)*
+| Track ID | Title | Status | Priority | Current Phase | Progress |
+|----------|-------|--------|----------|---------------|----------|
+| [FEAT-006](./tracks/FEAT-006/plan.md) | Branded 404 Terminal Page with Typewriter Ping Animation | In Progress | P1 | Phase 1 | 0 / 9 (0%) |
 
 ## Completed Tracks
 

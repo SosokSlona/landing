@@ -831,7 +831,7 @@
             
             <div class="space-y-2">
               <label class="block font-mono text-xs text-zinc-400 uppercase tracking-wider">1. Направление и тип задачи</label>
-              <div class="grid grid-cols-2 gap-2" id="calcTypeGroup">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-2.5" id="calcTypeGroup">
                 <button type="button" data-val="backend" class="calc-btn active p-3 rounded-xl border border-emerald-500/80 bg-zinc-900 text-left transition-all">
                   <div class="font-bold text-zinc-100 text-xs sm:text-sm flex items-center gap-2">
                     <i data-lucide="server" class="w-4 h-4 text-emerald-400 shrink-0"></i>
@@ -868,19 +868,19 @@
 
             <div class="space-y-2">
               <label class="block font-mono text-xs text-zinc-400 uppercase tracking-wider">2. Планируемый масштаб и нагрузка</label>
-              <div class="grid grid-cols-3 gap-2" id="calcScaleGroup">
-                <button type="button" data-val="mvp" class="calc-scale-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
-                  <div class="font-bold text-zinc-100 text-xs">MVP / Старт</div>
+              <div class="grid grid-cols-3 gap-1.5 sm:gap-2" id="calcScaleGroup">
+                <button type="button" data-val="mvp" class="calc-scale-btn p-2 sm:p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-[11px] sm:text-xs">MVP / Старт</div>
                   <div class="text-[10px] text-zinc-500 font-mono mt-0.5">&lt; 100 RPS</div>
                 </button>
 
-                <button type="button" data-val="prod" class="calc-scale-btn active p-2.5 rounded-xl border border-emerald-500/80 bg-zinc-900 text-left transition-all">
-                  <div class="font-bold text-zinc-100 text-xs">Production</div>
+                <button type="button" data-val="prod" class="calc-scale-btn active p-2 sm:p-2.5 rounded-xl border border-emerald-500/80 bg-zinc-900 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-[11px] sm:text-xs">Production</div>
                   <div class="text-[10px] text-emerald-400 font-mono mt-0.5">100–1k RPS</div>
                 </button>
 
-                <button type="button" data-val="highload" class="calc-scale-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
-                  <div class="font-bold text-zinc-100 text-xs">High-Load</div>
+                <button type="button" data-val="highload" class="calc-scale-btn p-2 sm:p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-[11px] sm:text-xs">High-Load</div>
                   <div class="text-[10px] text-zinc-500 font-mono mt-0.5">&gt; 1,000 RPS</div>
                 </button>
               </div>
@@ -888,7 +888,7 @@
 
             <div class="space-y-2">
               <label class="block font-mono text-xs text-zinc-400 uppercase tracking-wider">3. Контур развертывания и изоляция данных</label>
-              <div class="grid grid-cols-2 gap-2" id="calcSecurityGroup">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="calcSecurityGroup">
                 <button type="button" data-val="cloud" class="calc-sec-btn active p-2.5 rounded-xl border border-emerald-500/80 bg-zinc-900 text-left transition-all">
                   <div class="font-bold text-zinc-100 text-xs flex items-center gap-1.5">
                     <i data-lucide="cloud" class="w-3.5 h-3.5 text-emerald-400"></i>
@@ -912,16 +912,16 @@
                 <label class="text-zinc-400 uppercase tracking-wider">4. Желаемый бюджет (BYN, опционально)</label>
                 <span id="customBudgetHint" class="text-zinc-500 text-[10px]">Гибко под ваш бюджет</span>
               </div>
-              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="calcBudgetQuickPills">
-                <button type="button" data-val="standard" class="calc-budget-pill active p-2 rounded-lg border border-emerald-500/80 bg-zinc-900 text-center text-xs font-mono text-zinc-100 transition-all">Стандарт</button>
-                <button type="button" data-val="350-650" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-xs font-mono text-zinc-300 transition-all">350–650 BYN</button>
-                <button type="button" data-val="750-1500" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-xs font-mono text-zinc-300 transition-all">750–1.5k BYN</button>
-                <button type="button" data-val="custom" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-xs font-mono text-zinc-300 transition-all">Свой ввод...</button>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-1.5 sm:gap-2" id="calcBudgetQuickPills">
+                <button type="button" data-val="standard" class="calc-budget-pill active p-2 rounded-lg border border-emerald-500/80 bg-zinc-900 text-center text-[11px] sm:text-xs font-mono text-zinc-100 transition-all">Стандарт</button>
+                <button type="button" data-val="350-650" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-[11px] sm:text-xs font-mono text-zinc-300 transition-all">350–650 BYN</button>
+                <button type="button" data-val="750-1500" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-[11px] sm:text-xs font-mono text-zinc-300 transition-all">750–1.5k BYN</button>
+                <button type="button" data-val="custom" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-[11px] sm:text-xs font-mono text-zinc-300 transition-all">Свой ввод...</button>
               </div>
               <div id="customBudgetInputWrap" class="hidden pt-1">
                 <div class="relative">
-                  <input type="number" id="customBudgetInput" placeholder="Укажите вашу сумму в BYN (например, 500)" class="w-full px-3.5 py-2 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-zinc-100 font-mono placeholder-zinc-600 pr-14">
-                  <span class="absolute right-3 top-2 text-xs font-mono text-zinc-500">BYN</span>
+                  <input type="number" id="customBudgetInput" placeholder="Укажите сумму в BYN (например: 500)" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-xs text-zinc-100 font-mono placeholder-zinc-600 pr-14">
+                  <span class="absolute right-3 top-2.5 text-xs font-mono text-zinc-500">BYN</span>
                 </div>
               </div>
             </div>
@@ -1099,18 +1099,18 @@
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                 <div class="space-y-1.5">
                   <label for="formName" class="block font-mono text-[11px] sm:text-xs text-zinc-400 uppercase">Ваше имя / Компания</label>
-                  <input type="text" id="formName" required placeholder="Алексей / FinTech Inc." class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
+                  <input type="text" id="formName" required placeholder="Алексей / FinTech Inc." class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
                 </div>
                 <div class="space-y-1.5">
                   <label for="formContact" class="block font-mono text-[11px] sm:text-xs text-zinc-400 uppercase">Контакт (Telegram / Email)</label>
-                  <input type="text" id="formContact" required placeholder="@username или ivan@mail.com" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
+                  <input type="text" id="formContact" required placeholder="@username или ivan@mail.com" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
                 </div>
               </div>
 
               <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
                 <div class="space-y-1.5">
                   <label for="formService" class="block font-mono text-[11px] sm:text-xs text-zinc-400 uppercase">Направление задачи</label>
-                  <select id="formService" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-200 font-mono transition-colors">
+                  <select id="formService" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-sm text-zinc-200 font-mono transition-colors">
                     <option value="etl">Автоматизация процессов / Боты / ETL</option>
                     <option value="backend">Разработка бэкенда (Go / Python)</option>
                     <option value="ai">Приватная AI-инфраструктура / RAG / vLLM</option>
@@ -1120,7 +1120,7 @@
                 </div>
                 <div class="space-y-1.5">
                   <label for="formBudget" class="block font-mono text-[11px] sm:text-xs text-zinc-400 uppercase">Ориентир бюджета (BYN)</label>
-                  <input type="text" id="formBudget" placeholder="Например: 500 BYN или договорной" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
+                  <input type="text" id="formBudget" placeholder="Например: 500 BYN или договорной" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
                 </div>
               </div>
 
@@ -1132,18 +1132,18 @@
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div class="space-y-1">
                     <label id="dynLabel1" class="block text-zinc-400 text-[11px]">Целевые сервисы / источники</label>
-                    <input type="text" id="dynInput1" placeholder="1C, CRM, Telegram, API..." class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-zinc-200 placeholder-zinc-600 font-mono transition-colors">
+                    <input type="text" id="dynInput1" placeholder="1C, CRM, Telegram, API..." class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-xs text-zinc-200 placeholder-zinc-600 font-mono transition-colors">
                   </div>
                   <div class="space-y-1">
                     <label id="dynLabel2" class="block text-zinc-400 text-[11px]">Периодичность и объем</label>
-                    <input type="text" id="dynInput2" placeholder="Раз в сутки, real-time поток..." class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-zinc-200 placeholder-zinc-600 font-mono transition-colors">
+                    <input type="text" id="dynInput2" placeholder="Раз в сутки, real-time поток..." class="w-full px-3 py-2 rounded-lg bg-zinc-900 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-xs text-zinc-200 placeholder-zinc-600 font-mono transition-colors">
                   </div>
                 </div>
               </div>
 
               <div class="space-y-1.5">
                 <label for="formMessage" class="block font-mono text-[11px] sm:text-xs text-zinc-400 uppercase">Описание задачи / требования</label>
-                <textarea id="formMessage" rows="3" required placeholder="Опишите стек, требования к нагрузке или желаемый результат..." class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors"></textarea>
+                <textarea id="formMessage" rows="3" required placeholder="Опишите стек, требования к нагрузке или желаемый результат..." class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors"></textarea>
               </div>
 
               <div class="space-y-1.5">

@@ -104,16 +104,15 @@
         <div class="pt-3 border-t border-zinc-850">
           <div class="text-zinc-100 flex items-start gap-2">
             <span class="text-emerald-400 font-bold shrink-0">&gt;</span>
-            <div class="min-h-[1.5em]">
-              <span id="typewriterText" class="text-zinc-100 font-semibold"></span>
-              <span id="terminalCursor" class="inline-block w-2 h-4 bg-emerald-400 align-middle animate-pulse ml-0.5"></span>
+            <div class="text-zinc-100 font-semibold">
+              Запрашиваемый маршрут не существует или был перемещен. Все ключевые кейсы и контакты доступны ниже:
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div id="navSection" class="space-y-4 transition-all duration-700 opacity-0 translate-y-4">
+    <div id="navSection" class="space-y-4">
       <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
         <span class="font-mono text-xs uppercase tracking-wider text-zinc-400">Рабочие разделы и кейсы:</span>
         <span class="font-mono text-xs text-emerald-400 font-bold">100% Online</span>
@@ -198,46 +197,6 @@
     if (pingCmd) {
       pingCmd.textContent = `ping -c 3 shahotko.tech${currentPath}`;
     }
-
-    const typewriterElem = document.getElementById('typewriterText');
-    const navSection = document.getElementById('navSection');
-
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    async function runTypewriter() {
-      if (!typewriterElem) return;
-
-      const part1 = "Тут никаго";
-      const part2 = "ого нет... Зато боевые кейсы и калькулятор в полном порядке:";
-
-      for (let i = 0; i < part1.length; i++) {
-        typewriterElem.textContent += part1[i];
-        await sleep(65 + Math.random() * 40);
-      }
-
-      await sleep(500);
-
-      for (let i = 0; i < 3; i++) {
-        typewriterElem.textContent = typewriterElem.textContent.slice(0, -1);
-        await sleep(90);
-      }
-
-      await sleep(350);
-
-      for (let i = 0; i < part2.length; i++) {
-        typewriterElem.textContent += part2[i];
-        await sleep(40 + Math.random() * 30);
-      }
-
-      if (navSection) {
-        navSection.classList.remove('opacity-0', 'translate-y-4');
-        navSection.classList.add('opacity-100', 'translate-y-0');
-      }
-    }
-
-    setTimeout(runTypewriter, 300);
   </script>
 </body>
 </html>

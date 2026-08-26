@@ -2,7 +2,9 @@
 
 ## Active Tracks
 
-*(No active tracks)*
+| Track ID | Title | Status | Priority | Created Date |
+|----------|-------|--------|----------|--------------|
+| [FEAT-008](./tracks/FEAT-008/plan.md) | Interactive Case Playgrounds — ClickHouse ETL Batching & Private RAG Retrieval | In Progress | P1 | 2026-08-26 |
 
 ## Completed Tracks
 

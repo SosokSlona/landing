@@ -1,0 +1,9 @@
+{
+  "track_id": "FEAT-008",
+  "title": "Interactive Case Playgrounds — ClickHouse ETL Batching & Private RAG Retrieval",
+  "type": "feature",
+  "status": "in_progress",
+  "priority": "P1",
+  "created_at": "2026-08-26T16:24:00Z",
+  "updated_at": "2026-08-26T16:24:00Z"
+}

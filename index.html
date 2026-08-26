@@ -907,6 +907,25 @@
               </div>
             </div>
 
+            <div class="space-y-2">
+              <div class="flex items-center justify-between font-mono text-xs">
+                <label class="text-zinc-400 uppercase tracking-wider">4. Желаемый бюджет (BYN, опционально)</label>
+                <span id="customBudgetHint" class="text-zinc-500 text-[10px]">Гибко под ваш бюджет</span>
+              </div>
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="calcBudgetQuickPills">
+                <button type="button" data-val="standard" class="calc-budget-pill active p-2 rounded-lg border border-emerald-500/80 bg-zinc-900 text-center text-xs font-mono text-zinc-100 transition-all">Стандарт</button>
+                <button type="button" data-val="350-650" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-xs font-mono text-zinc-300 transition-all">350–650 BYN</button>
+                <button type="button" data-val="750-1500" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-xs font-mono text-zinc-300 transition-all">750–1.5k BYN</button>
+                <button type="button" data-val="custom" class="calc-budget-pill p-2 rounded-lg border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-center text-xs font-mono text-zinc-300 transition-all">Свой ввод...</button>
+              </div>
+              <div id="customBudgetInputWrap" class="hidden pt-1">
+                <div class="relative">
+                  <input type="number" id="customBudgetInput" placeholder="Укажите вашу сумму в BYN (например, 500)" class="w-full px-3.5 py-2 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-xs text-zinc-100 font-mono placeholder-zinc-600 pr-14">
+                  <span class="absolute right-3 top-2 text-xs font-mono text-zinc-500">BYN</span>
+                </div>
+              </div>
+            </div>
+
           </div>
 
           <div class="lg:col-span-5 flex flex-col justify-between p-5 rounded-xl bg-zinc-950 border border-zinc-850 space-y-4 font-mono text-xs">
@@ -924,14 +943,20 @@
               <div class="grid grid-cols-2 gap-3 pt-1">
                 <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
                   <div class="text-[10px] text-zinc-500">ОЦЕНКА СРОКОВ</div>
-                  <div id="estTimeline" class="text-emerald-400 font-bold text-sm mt-0.5">2–3 недели</div>
-                  <div id="estSprints" class="text-[10px] text-zinc-500 mt-0.5">1–2 спринта</div>
+                  <div id="estTimeline" class="text-emerald-400 font-bold text-sm mt-0.5">1–2 недели</div>
+                  <div id="estSprints" class="text-[10px] text-zinc-500 mt-0.5">1 спринт</div>
                 </div>
 
-                <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
-                  <div class="text-[10px] text-zinc-500">БЮДЖЕТНЫЙ ОРИЕНТИР</div>
-                  <div id="estBudget" class="text-zinc-100 font-bold text-sm mt-0.5">от $1,500</div>
-                  <div class="text-[10px] text-zinc-500 mt-0.5">Поэтапно (Milestones)</div>
+                <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850 relative group/budget cursor-help">
+                  <div class="text-[10px] text-zinc-500 flex items-center justify-between">
+                    <span>ОРИЕНТИР В BYN</span>
+                    <i data-lucide="info" class="w-3 h-3 text-zinc-500"></i>
+                  </div>
+                  <div id="estBudget" class="text-zinc-100 font-bold text-sm mt-0.5">от 850 BYN</div>
+                  <div id="estBudgetUsd" class="text-[10px] text-emerald-400 font-mono mt-0.5 font-semibold">≈ $260 (по курсу)</div>
+                  <div class="absolute bottom-full right-0 sm:left-0 mb-2 hidden group-hover/budget:block w-52 p-2.5 rounded-lg bg-zinc-900 border border-zinc-700 text-[10px] font-mono text-zinc-300 shadow-2xl z-30 pointer-events-none">
+                    Официальные расчеты проводятся в BYN по законодательству РБ. Сумма в $ указана для ориентира.
+                  </div>
                 </div>
               </div>
             </div>
@@ -1082,15 +1107,21 @@
                 </div>
               </div>
 
-              <div class="space-y-1.5">
-                <label for="formService" class="block font-mono text-[11px] sm:text-xs text-zinc-400 uppercase">Направление задачи</label>
-                <select id="formService" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-200 font-mono transition-colors">
-                  <option value="etl">Автоматизация процессов / Боты / ETL</option>
-                  <option value="backend">Разработка бэкенда (Go / Python)</option>
-                  <option value="ai">Приватная AI-инфраструктура / RAG / vLLM</option>
-                  <option value="audit">Аудит архитектуры / Консультация</option>
-                  <option value="contract">Другой B2B-контракт</option>
-                </select>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+                <div class="space-y-1.5">
+                  <label for="formService" class="block font-mono text-[11px] sm:text-xs text-zinc-400 uppercase">Направление задачи</label>
+                  <select id="formService" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-200 font-mono transition-colors">
+                    <option value="etl">Автоматизация процессов / Боты / ETL</option>
+                    <option value="backend">Разработка бэкенда (Go / Python)</option>
+                    <option value="ai">Приватная AI-инфраструктура / RAG / vLLM</option>
+                    <option value="audit">Аудит архитектуры / Консультация</option>
+                    <option value="contract">Другой B2B-контракт</option>
+                  </select>
+                </div>
+                <div class="space-y-1.5">
+                  <label for="formBudget" class="block font-mono text-[11px] sm:text-xs text-zinc-400 uppercase">Ориентир бюджета (BYN)</label>
+                  <input type="text" id="formBudget" placeholder="Например: 500 BYN или договорной" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-950 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-sm text-zinc-100 placeholder-zinc-600 font-mono transition-colors">
+                </div>
               </div>
 
               <div id="dynamicQuestions" class="p-3.5 sm:p-4 rounded-xl bg-zinc-950 border border-zinc-850 space-y-3 font-mono text-xs transition-all">
@@ -1639,62 +1670,66 @@
     let selectedType = 'backend';
     let selectedScale = 'prod';
     let selectedSec = 'cloud';
+    let selectedBudgetPill = 'standard';
+    let customBudgetValue = '';
+
+    const BYN_TO_USD = 3.25;
 
     const estimates = {
       backend: {
         mvp: {
-          cloud: { stack: 'Go 1.23 · SQLite / PostgreSQL · Docker', time: '1–2 недели', sprints: '1 спринт', budget: 'от $800' },
-          private: { stack: 'Go 1.23 · PostgreSQL · Linux Server (On-Prem)', time: '2 недели', sprints: '1 спринт', budget: 'от $1,000' }
+          cloud: { stack: 'Go 1.23 · SQLite / PostgreSQL · Docker', time: '1–2 недели', sprints: '1 спринт', byn: 450, usd: 140 },
+          private: { stack: 'Go 1.23 · PostgreSQL · Linux Server (On-Prem)', time: '1–2 недели', sprints: '1 спринт', byn: 650, usd: 200 }
         },
         prod: {
-          cloud: { stack: 'Go 1.23 · Redis 7 · PostgreSQL · Docker CI/CD', time: '2–3 недели', sprints: '1–2 спринта', budget: 'от $1,500' },
-          private: { stack: 'Go 1.23 · Redis · PostgreSQL · Zero Trust Air-Gapped', time: '3–4 недели', sprints: '2 спринта', budget: 'от $2,000' }
+          cloud: { stack: 'Go 1.23 · Redis 7 · PostgreSQL · Docker CI/CD', time: '2 недели', sprints: '1 спринт', byn: 850, usd: 260 },
+          private: { stack: 'Go 1.23 · Redis · PostgreSQL · Zero Trust Air-Gapped', time: '2–3 недели', sprints: '1–2 спринта', byn: 1200, usd: 370 }
         },
         highload: {
-          cloud: { stack: 'Go 1.23 · Redis Cluster · Kafka / NATS · ClickHouse', time: '4–6 недель', sprints: '2–3 спринта', budget: 'от $3,000' },
-          private: { stack: 'Go 1.23 · ClickHouse · Redis · Bare-Metal Linux HA', time: '4–6 недель', sprints: '3 спринта', budget: 'от $3,500' }
+          cloud: { stack: 'Go 1.23 · Redis Cluster · Kafka / NATS · ClickHouse', time: '3–4 недели', sprints: '2 спринта', byn: 1600, usd: 490 },
+          private: { stack: 'Go 1.23 · ClickHouse · Redis · Bare-Metal Linux HA', time: '4 недели', sprints: '2 спринта', byn: 2200, usd: 680 }
         }
       },
       etl: {
         mvp: {
-          cloud: { stack: 'Python (asyncio) · SQLite / Postgres · Docker', time: '1–2 недели', sprints: '1 спринт', budget: 'от $700' },
-          private: { stack: 'Python · PostgreSQL · On-Premise Worker', time: '1–2 недели', sprints: '1 спринт', budget: 'от $900' }
+          cloud: { stack: 'Python (asyncio) · SQLite / Postgres · Docker', time: '3–5 дней', sprints: 'Express', byn: 350, usd: 110 },
+          private: { stack: 'Python · PostgreSQL · On-Premise Worker', time: '1 неделя', sprints: '1 спринт', byn: 500, usd: 150 }
         },
         prod: {
-          cloud: { stack: 'Python (uvloop) · ClickHouse · Redis · Docker', time: '2–3 недели', sprints: '1–2 спринта', budget: 'от $1,400' },
-          private: { stack: 'Python (uvloop) · ClickHouse ReplacingMergeTree · Air-Gapped', time: '3–4 недели', sprints: '2 спринта', budget: 'от $1,800' }
+          cloud: { stack: 'Python (uvloop) · ClickHouse · Redis · Docker', time: '1–2 недели', sprints: '1 спринт', byn: 750, usd: 230 },
+          private: { stack: 'Python (uvloop) · ClickHouse ReplacingMergeTree · Air-Gapped', time: '2 недели', sprints: '1 спринт', byn: 1100, usd: 340 }
         },
         highload: {
-          cloud: { stack: 'Python + Go · ClickHouse Cluster · Kafka · MinIO', time: '4–5 недель', sprints: '2–3 спринта', budget: 'от $2,800' },
-          private: { stack: 'Python / Go · ClickHouse HA · On-Premises Pipeline', time: '4–6 недель', sprints: '3 спринта', budget: 'от $3,200' }
+          cloud: { stack: 'Python + Go · ClickHouse Cluster · Kafka · MinIO', time: '3 недели', sprints: '2 спринта', byn: 1450, usd: 450 },
+          private: { stack: 'Python / Go · ClickHouse HA · On-Premises Pipeline', time: '3–4 недели', sprints: '2 спринта', byn: 1900, usd: 580 }
         }
       },
       ai: {
         mvp: {
-          cloud: { stack: 'FastAPI · pgvector · Local/API Hybrid · Docker', time: '1–2 недели', sprints: '1 спринт', budget: 'от $900' },
-          private: { stack: 'FastAPI · Ollama / vLLM (Single GPU) · pgvector', time: '2–3 недели', sprints: '1–2 спринта', budget: 'от $1,500' }
+          cloud: { stack: 'FastAPI · pgvector · Local/API Hybrid · Docker', time: '1 неделя', sprints: '1 спринт', byn: 550, usd: 170 },
+          private: { stack: 'FastAPI · Ollama / vLLM (Single GPU) · pgvector', time: '1–2 недели', sprints: '1 спринт', byn: 850, usd: 260 }
         },
         prod: {
-          cloud: { stack: 'FastAPI · pgvector HNSW · vLLM · BM25 Hybrid RRF', time: '3–4 недели', sprints: '2 спринта', budget: 'от $2,200' },
-          private: { stack: 'FastAPI · pgvector · vLLM On-Premise GPU · Guardrails', time: '3–4 недели', sprints: '2 спринта', budget: 'от $2,600' }
+          cloud: { stack: 'FastAPI · pgvector HNSW · vLLM · BM25 Hybrid RRF', time: '2–3 недели', sprints: '1–2 спринта', byn: 1250, usd: 380 },
+          private: { stack: 'FastAPI · pgvector · vLLM On-Premise GPU · Guardrails', time: '2–3 недели', sprints: '1–2 спринта', byn: 1650, usd: 510 }
         },
         highload: {
-          cloud: { stack: 'Go Gateway · vLLM Multi-GPU Cluster · pgvector · Redis', time: '4–6 недель', sprints: '3 спринта', budget: 'от $3,800' },
-          private: { stack: 'Go Gateway · vLLM Multi-Node GPU Cluster · Air-Gapped HA', time: '5–7 недель', sprints: '3–4 спринта', budget: 'от $4,500' }
+          cloud: { stack: 'Go Gateway · vLLM Multi-GPU Cluster · pgvector · Redis', time: '3–4 недели', sprints: '2 спринта', byn: 2200, usd: 680 },
+          private: { stack: 'Go Gateway · vLLM Multi-Node GPU Cluster · Air-Gapped HA', time: '4 недели', sprints: '2 спринта', byn: 2800, usd: 860 }
         }
       },
       audit: {
         mvp: {
-          cloud: { stack: 'pprof / py-spy Profiling · Latency & Query Audit', time: '3–5 дней', sprints: 'Express audit', budget: 'от $500' },
-          private: { stack: 'On-Premises Infrastructure & Security Audit', time: '1 неделя', sprints: 'Express audit', budget: 'от $700' }
+          cloud: { stack: 'pprof / py-spy Profiling · Latency & Query Audit', time: '1–3 дня', sprints: 'Express', byn: 250, usd: 80 },
+          private: { stack: 'On-Premises Infrastructure & Security Audit', time: '3–5 дней', sprints: 'Express', byn: 400, usd: 120 }
         },
         prod: {
-          cloud: { stack: 'Profiling · Redis/DB Optimization · TTFT Tuning', time: '1–2 недели', sprints: '1 спринт', budget: 'от $1,000' },
-          private: { stack: 'Bottleneck Elimination · SQL Tuning · Zero Trust Audit', time: '1–2 недели', sprints: '1 спринт', budget: 'от $1,300' }
+          cloud: { stack: 'Profiling · Redis/DB Optimization · TTFT Tuning', time: '1 неделя', sprints: '1 спринт', byn: 450, usd: 140 },
+          private: { stack: 'Bottleneck Elimination · SQL Tuning · Zero Trust Audit', time: '1 неделя', sprints: '1 спринт', byn: 650, usd: 200 }
         },
         highload: {
-          cloud: { stack: 'End-to-End Stress Test · High-Load Architecture Plan', time: '2 недели', sprints: '1 спринт', budget: 'от $1,800' },
-          private: { stack: 'GPU Cluster Tuning · Kernel/TCP Optimization · Failover Plan', time: '2–3 недели', sprints: '1–2 спринта', budget: 'от $2,200' }
+          cloud: { stack: 'End-to-End Stress Test · High-Load Architecture Plan', time: '1–2 недели', sprints: '1 спринт', byn: 850, usd: 260 },
+          private: { stack: 'GPU Cluster Tuning · Kernel/TCP Optimization · Failover Plan', time: '2 недели', sprints: '1 спринт', byn: 1200, usd: 370 }
         }
       }
     };
@@ -1705,18 +1740,35 @@
       const estTimeline = document.getElementById('estTimeline');
       const estSprints = document.getElementById('estSprints');
       const estBudget = document.getElementById('estBudget');
+      const estBudgetUsd = document.getElementById('estBudgetUsd');
       const estTgLink = document.getElementById('estTgLink');
+
+      let displayByn = `от ${current.byn.toLocaleString()} BYN`;
+      let displayUsd = `≈ $${current.usd} (по курсу)`;
+
+      if (selectedBudgetPill === '350-650') {
+        displayByn = '350–650 BYN';
+        displayUsd = '≈ $110–$200';
+      } else if (selectedBudgetPill === '750-1500') {
+        displayByn = '750–1,500 BYN';
+        displayUsd = '≈ $230–$460';
+      } else if (selectedBudgetPill === 'custom' && customBudgetValue) {
+        const valNum = parseInt(customBudgetValue, 10);
+        displayByn = `${valNum.toLocaleString()} BYN (ваш бюджет)`;
+        displayUsd = `≈ $${Math.round(valNum / BYN_TO_USD)}`;
+      }
 
       if (estStack) estStack.textContent = current.stack;
       if (estTimeline) estTimeline.textContent = current.time;
       if (estSprints) estSprints.textContent = current.sprints;
-      if (estBudget) estBudget.textContent = current.budget;
+      if (estBudget) estBudget.textContent = displayByn;
+      if (estBudgetUsd) estBudgetUsd.textContent = displayUsd;
 
       const typeLabels = { backend: 'Go/Python Бэкенд', etl: 'ETL и Парсинг', ai: 'Private AI / RAG', audit: 'Аудит и оптимизация' };
       const scaleLabels = { mvp: 'MVP (<100 RPS)', prod: 'Production (100–1k RPS)', highload: 'High-Load (>1,000 RPS)' };
       const secLabels = { cloud: 'Cloud / Hybrid', private: 'Air-Gapped On-Premise' };
 
-      const tgText = encodeURIComponent(`Здравствуйте, Иван! Сконфигурировал проект на сайте:\n• Тип задачи: ${typeLabels[selectedType]}\n• Масштаб: ${scaleLabels[selectedScale]}\n• Контур: ${secLabels[selectedSec]}\n• Рекомендуемый стек: ${current.stack}\n• Оценка: ${current.time} (${current.budget})\nХочу обсудить детали и ТЗ.`);
+      const tgText = encodeURIComponent(`Здравствуйте, Иван! Сконфигурировал проект на сайте:\n• Тип задачи: ${typeLabels[selectedType]}\n• Масштаб: ${scaleLabels[selectedScale]}\n• Контур: ${secLabels[selectedSec]}\n• Бюджет: ${displayByn} (${displayUsd})\n• Стек: ${current.stack}\n• Сроки: ${current.time}\nХочу обсудить детали и ТЗ.`);
       if (estTgLink) {
         estTgLink.href = `https://t.me/shtoo_on_tvorit?text=${tgText}`;
       }
@@ -1791,6 +1843,36 @@
       });
     });
 
+    const customBudgetInputWrap = document.getElementById('customBudgetInputWrap');
+    const customBudgetInput = document.getElementById('customBudgetInput');
+
+    document.querySelectorAll('#calcBudgetQuickPills .calc-budget-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('#calcBudgetQuickPills .calc-budget-pill').forEach(p => {
+          p.classList.remove('border-emerald-500/80', 'bg-zinc-900', 'text-zinc-100');
+          p.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-300');
+        });
+        pill.classList.remove('border-zinc-800', 'bg-zinc-950', 'text-zinc-300');
+        pill.classList.add('border-emerald-500/80', 'bg-zinc-900', 'text-zinc-100');
+        selectedBudgetPill = pill.getAttribute('data-val');
+
+        if (selectedBudgetPill === 'custom') {
+          if (customBudgetInputWrap) customBudgetInputWrap.classList.remove('hidden');
+          if (customBudgetInput) customBudgetInput.focus();
+        } else {
+          if (customBudgetInputWrap) customBudgetInputWrap.classList.add('hidden');
+        }
+        recalculateEstimate();
+      });
+    });
+
+    if (customBudgetInput) {
+      customBudgetInput.addEventListener('input', (e) => {
+        customBudgetValue = e.target.value;
+        recalculateEstimate();
+      });
+    }
+
     const applyEstimateBtn = document.getElementById('applyEstimateBtn');
     if (applyEstimateBtn) {
       applyEstimateBtn.addEventListener('click', () => {
@@ -1799,15 +1881,25 @@
         const scaleLabels = { mvp: 'MVP (<100 RPS)', prod: 'Production Scale (100–1k RPS)', highload: 'Enterprise High-Load (>1,000 RPS)' };
         const secLabels = { cloud: 'Cloud / Hybrid', private: 'Air-Gapped On-Premise' };
 
+        let budgetText = `от ${current.byn} BYN (≈ $${current.usd})`;
+        if (selectedBudgetPill === '350-650') budgetText = '350–650 BYN';
+        else if (selectedBudgetPill === '750-1500') budgetText = '750–1,500 BYN';
+        else if (selectedBudgetPill === 'custom' && customBudgetValue) budgetText = `${customBudgetValue} BYN`;
+
         const formServiceSelect = document.getElementById('formService');
         if (formServiceSelect) {
           formServiceSelect.value = selectedType;
           formServiceSelect.dispatchEvent(new Event('change'));
         }
 
+        const formBudget = document.getElementById('formBudget');
+        if (formBudget) {
+          formBudget.value = budgetText;
+        }
+
         const formMessage = document.getElementById('formMessage');
         if (formMessage) {
-          formMessage.value = `[Конфигурация проекта]:\n• Тип задачи: ${typeLabels[selectedType]}\n• Масштаб нагрузки: ${scaleLabels[selectedScale]}\n• Контур развертывания: ${secLabels[selectedSec]}\n• Рекомендуемый стек: ${current.stack}\n• Ориентир: ${current.time} (${current.budget})\n\n[Дополнительные требования к проекту]: `;
+          formMessage.value = `[Конфигурация проекта]:\n• Тип задачи: ${typeLabels[selectedType]}\n• Масштаб нагрузки: ${scaleLabels[selectedScale]}\n• Контур развертывания: ${secLabels[selectedSec]}\n• Бюджетный ориентир: ${budgetText}\n• Рекомендуемый стек: ${current.stack}\n• Ориентир сроков: ${current.time}\n\n[Дополнительные требования к проекту]: `;
         }
 
         const contactSec = document.getElementById('contact');

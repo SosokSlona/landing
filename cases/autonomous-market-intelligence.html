@@ -304,8 +304,95 @@ async def flush_batch(queue: asyncio.Queue, ch_client):
 
       <section class="space-y-3.5">
         <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="play" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+          <span>4. Интерактивная песочница ETL-батчинга (ClickHouse &amp; Telegram Push)</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-zinc-300">
+          Проверьте поведение пайплайна при различных объемах входящего потока. Батч накапливается в RAM (до 5,000 записей) и мгновенно сбрасывается в ClickHouse с ZSTD-сжатием 6.2x, отправляя пуш в Telegram при обнаружении аномалий цен.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <div class="lg:col-span-7 p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-850 space-y-4 font-mono text-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] pb-2 border-b border-zinc-900">
+              <div class="flex items-center gap-1.5 text-zinc-200 font-bold">
+                <i data-lucide="activity" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>CLICKHOUSE ASYNC INGESTION CONTROLLER</span>
+              </div>
+              <span id="etlBufferState" class="text-emerald-400 font-bold text-[10px]">QUEUE IDLE</span>
+            </div>
+
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-zinc-400">RAM Буфер воркера (Flush при 5,000):</span>
+                <span id="etlGaugeText" class="text-emerald-400 font-bold">0 / 5,000 items (0%)</span>
+              </div>
+              <div class="w-full h-3 bg-zinc-900 rounded-full overflow-hidden border border-zinc-800 p-0.5">
+                <div id="etlGaugeBar" class="h-full bg-emerald-500 rounded-full transition-all duration-150" style="width: 0%;"></div>
+              </div>
+              <div class="flex items-center justify-between text-[10px] text-zinc-500 pt-0.5">
+                <span>uvloop Stream Pipe</span>
+                <span id="etlFlushIndicator" class="text-zinc-400">Auto-Flush Timer: 500ms</span>
+                <span>ClickHouse Flush</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-center text-[10px]">
+              <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
+                <div class="text-zinc-500">ОБРАБОТАНО</div>
+                <div id="etlStatTotal" class="font-bold text-zinc-100 text-xs mt-0.5">0 items</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
+                <div class="text-zinc-500">ZSTD COMPRESSION</div>
+                <div id="etlStatCompression" class="font-bold text-emerald-400 text-xs mt-0.5">6.2x</div>
+              </div>
+              <div class="col-span-2 sm:col-span-1 p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
+                <div class="text-zinc-500">TG PUSH LATENCY</div>
+                <div id="etlStatLatency" class="font-bold text-sky-400 text-xs mt-0.5">&lt; 1.2s</div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 pt-1">
+              <button id="etlSingleBtn" type="button" class="flex-1 min-w-[130px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-mono font-bold bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm active:scale-95">
+                <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                <span>+1,000 Лотов</span>
+              </button>
+
+              <button id="etlSpikeBtn" type="button" class="flex-1 min-w-[150px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-mono font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 transition-all shadow-[0_0_15px_rgba(245,158,11,0.25)] active:scale-95">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                <span>⚡ Спайк (+10,000)</span>
+              </button>
+
+              <button id="etlResetBtn" type="button" class="inline-flex items-center justify-center p-3 rounded-lg text-xs font-mono text-zinc-400 hover:text-white bg-zinc-950 border border-zinc-850 hover:border-zinc-700 transition-colors" title="Сбросить симулятор">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 flex flex-col justify-between p-3.5 rounded-xl bg-zinc-950 border border-zinc-850 space-y-3 font-mono text-xs">
+            <div class="flex items-center justify-between text-[11px] text-zinc-500 pb-1.5 border-b border-zinc-900">
+              <div class="flex items-center gap-1.5 text-zinc-300">
+                <i data-lucide="terminal" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>ETL WORKER LOG</span>
+              </div>
+              <span class="text-emerald-400 text-[10px] font-bold">LIVE STREAM</span>
+            </div>
+
+            <div id="etlTerminal" class="h-44 overflow-y-auto space-y-1 text-[10px] leading-relaxed text-zinc-400 pr-1 scrollbar-thin">
+              <div class="text-zinc-600">&gt; ClickHouse ReplacingMergeTree connected. Proxy mesh active.</div>
+            </div>
+
+            <div class="flex items-center justify-between pt-2 border-t border-zinc-900 text-[10px] text-zinc-500">
+              <span>ReplacingMergeTree Table: market_items</span>
+              <span class="text-emerald-400 font-bold">NVMe Direct</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
           <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
-          <span>4. Результаты и бизнес-метрики</span>
+          <span>5. Результаты и бизнес-метрики</span>
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
           <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
@@ -367,6 +454,117 @@ async def flush_batch(queue: asyncio.Queue, ch_client):
 
   <script>
     lucide.createIcons();
+
+    let bufferItems = 0;
+    let totalProcessed = 0;
+    const maxBuffer = 5000;
+
+    const gaugeBar = document.getElementById('etlGaugeBar');
+    const gaugeText = document.getElementById('etlGaugeText');
+    const stateBadge = document.getElementById('etlBufferState');
+    const statTotal = document.getElementById('etlStatTotal');
+    const terminal = document.getElementById('etlTerminal');
+
+    function logETL(msg, type = 'info') {
+      if (!terminal) return;
+      const row = document.createElement('div');
+      const time = new Date().toISOString().split('T')[1].slice(0, 8);
+      if (type === 'flush') {
+        row.className = 'text-emerald-300 font-bold';
+        row.innerHTML = `<span class="text-zinc-600">[${time}]</span> 📦 ${msg}`;
+      } else if (type === 'alert') {
+        row.className = 'text-sky-300 font-bold bg-sky-950/30 p-1 rounded border border-sky-800/40';
+        row.innerHTML = `<span class="text-zinc-600">[${time}]</span> 🔔 ${msg}`;
+      } else if (type === 'warn') {
+        row.className = 'text-amber-300';
+        row.innerHTML = `<span class="text-zinc-600">[${time}]</span> ⚡ ${msg}`;
+      } else {
+        row.className = 'text-zinc-400';
+        row.innerHTML = `<span class="text-zinc-600">[${time}]</span> &gt; ${msg}`;
+      }
+      terminal.appendChild(row);
+      terminal.scrollTop = terminal.scrollHeight;
+    }
+
+    function updateETLGauge() {
+      const pct = Math.min(100, Math.round((bufferItems / maxBuffer) * 100));
+      if (gaugeBar) {
+        gaugeBar.style.width = `${pct}%`;
+        if (pct >= 80) {
+          gaugeBar.className = 'h-full bg-amber-500 rounded-full transition-all duration-150';
+        } else {
+          gaugeBar.className = 'h-full bg-emerald-500 rounded-full transition-all duration-150';
+        }
+      }
+      if (gaugeText) {
+        gaugeText.textContent = `${bufferItems.toLocaleString()} / ${maxBuffer.toLocaleString()} items (${pct}%)`;
+      }
+      if (statTotal) {
+        statTotal.textContent = `${totalProcessed.toLocaleString()} items`;
+      }
+    }
+
+    function flushToClickHouse() {
+      if (bufferItems <= 0) return;
+      const count = bufferItems;
+      const rawKb = (count * 0.85).toFixed(1);
+      const zstdKb = (rawKb / 6.2).toFixed(1);
+      bufferItems = 0;
+      updateETLGauge();
+      if (stateBadge) {
+        stateBadge.textContent = 'FLUSHING TO CLICKHOUSE';
+        stateBadge.className = 'text-emerald-400 font-bold text-[10px] animate-pulse';
+      }
+      logETL(`[CLICKHOUSE FLUSH] Committed ${count.toLocaleString()} rows (Raw: ${rawKb} KB -> ZSTD: ${zstdKb} KB · 6.2x)`, 'flush');
+      
+      setTimeout(() => {
+        const skuId = Math.floor(1000 + Math.random() * 9000);
+        const dropPct = Math.floor(15 + Math.random() * 25);
+        logETL(`[TG PUSH] Anomaly alert (-${dropPct}% on SKU #${skuId}) delivered in 1.14s`, 'alert');
+        if (stateBadge) {
+          stateBadge.textContent = 'BUFFER IDLE';
+          stateBadge.className = 'text-emerald-400 font-bold text-[10px]';
+        }
+      }, 350);
+    }
+
+    const singleBtn = document.getElementById('etlSingleBtn');
+    if (singleBtn) {
+      singleBtn.addEventListener('click', () => {
+        const add = 1000;
+        bufferItems += add;
+        totalProcessed += add;
+        logETL(`[PROXY-MESH] Ingested +${add} items from 18 sources · uvloop delay 6.2ms`);
+        updateETLGauge();
+        if (bufferItems >= maxBuffer) {
+          flushToClickHouse();
+        }
+      });
+    }
+
+    const spikeBtn = document.getElementById('etlSpikeBtn');
+    if (spikeBtn) {
+      spikeBtn.addEventListener('click', () => {
+        const add = 10000;
+        totalProcessed += add;
+        logETL(`[SPYKE INGESTION] +${add.toLocaleString()} items burst! Triggering auto-flushing...`, 'warn');
+        bufferItems = maxBuffer;
+        updateETLGauge();
+        setTimeout(flushToClickHouse, 200);
+      });
+    }
+
+    const resetBtn = document.getElementById('etlResetBtn');
+    if (resetBtn) {
+      resetBtn.addEventListener('click', () => {
+        bufferItems = 0;
+        totalProcessed = 0;
+        updateETLGauge();
+        if (terminal) {
+          terminal.innerHTML = '<div class="text-zinc-600">&gt; ETL Pipeline reset. Ready.</div>';
+        }
+      });
+    }
   </script>
 </body>
 </html>

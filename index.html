@@ -636,6 +636,40 @@
             </div>
           </div>
 
+          <div class="p-3.5 sm:p-4 rounded-xl bg-zinc-950/80 border border-zinc-850 space-y-3 font-mono text-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] pb-2 border-b border-zinc-900">
+              <div class="flex items-center gap-1.5 text-zinc-200 font-bold">
+                <i data-lucide="play" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>ИНТЕРАКТИВНЫЙ ТЕСТ СБОРА И CLICKHOUSE БАТЧИНГА</span>
+              </div>
+              <span id="homeEtlStatus" class="text-emerald-400 font-bold text-[10px]">FLUSH: AUTO (500ms)</span>
+            </div>
+
+            <div class="space-y-1.5">
+              <div class="flex items-center justify-between text-[11px]">
+                <span class="text-zinc-400">RAM Буфер (Сброс при 5,000):</span>
+                <span id="homeEtlGaugeText" class="text-emerald-400 font-bold">0 / 5,000 items (0%)</span>
+              </div>
+              <div class="w-full h-2.5 bg-zinc-900 rounded-full overflow-hidden border border-zinc-800 p-0.5">
+                <div id="homeEtlGaugeBar" class="h-full bg-emerald-500 rounded-full transition-all duration-100" style="width: 0%;"></div>
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2 pt-0.5">
+              <button id="homeEtlSendBtn" type="button" class="flex-1 min-w-[130px] inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-zinc-900 hover:bg-zinc-850 border border-zinc-800 text-zinc-200 text-xs font-semibold active:scale-95 transition-all">
+                <i data-lucide="download" class="w-3 h-3 text-emerald-400"></i>
+                <span>+1,000 Лотов</span>
+              </button>
+              <button id="homeEtlBurstBtn" type="button" class="flex-1 min-w-[140px] inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-lg bg-amber-500/20 hover:bg-amber-500/30 border border-amber-500/40 text-amber-300 text-xs font-bold active:scale-95 transition-all">
+                <i data-lucide="zap" class="w-3 h-3 text-amber-400"></i>
+                <span>⚡ Спайк (+5,000)</span>
+              </button>
+              <div id="homeEtlLogSnippet" class="w-full sm:w-auto px-2.5 py-1.5 rounded bg-zinc-900/90 border border-zinc-850 text-zinc-400 text-[10px] truncate">
+                Нажмите для симуляции сбора
+              </div>
+            </div>
+          </div>
+
           <div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2 border-t border-zinc-850">
             <div class="flex flex-wrap items-center gap-2.5 sm:gap-4 font-mono text-xs text-zinc-400">
               <span>Ingestion: <strong class="text-zinc-100">&gt;350k/day</strong></span>
@@ -731,6 +765,38 @@
               </div>
               <p class="text-zinc-300 leading-relaxed text-xs sm:text-sm">
                 Создан агентный пайплайн с RAG-поиском по корпоративным базам знаний на базе локальной LLM и двусторонней интеграцией в CRM. Нагрузка на L1 сокращена на 65%.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-3.5 sm:p-4 rounded-xl bg-zinc-950/80 border border-zinc-850 space-y-3 font-mono text-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] pb-2 border-b border-zinc-900">
+              <div class="flex items-center gap-1.5 text-zinc-200 font-bold">
+                <i data-lucide="play" class="w-3.5 h-3.5 text-purple-400"></i>
+                <span>ИНТЕРАКТИВНЫЙ ТЕСТ ГИБРИДНОГО ПОИСКА (PGVECTOR + BM25)</span>
+              </div>
+              <span id="homeRagStatus" class="text-emerald-400 font-bold text-[10px]">100% ON-PREMISE</span>
+            </div>
+
+            <div class="flex flex-wrap gap-1.5" id="homeRagPresets">
+              <button type="button" data-q="limit" class="home-rag-btn active px-2.5 py-1 rounded bg-zinc-900 border border-emerald-500/80 text-zinc-100 text-[10px] transition-colors">
+                💳 Лимит выплат
+              </button>
+              <button type="button" data-q="sla" class="home-rag-btn px-2.5 py-1 rounded bg-zinc-950 border border-zinc-800 text-zinc-400 text-[10px] transition-colors">
+                ⏱️ SLA поддержки
+              </button>
+              <button type="button" data-q="pii" class="home-rag-btn px-2.5 py-1 rounded bg-zinc-950 border border-zinc-800 text-zinc-400 text-[10px] transition-colors">
+                🔒 Защита логов
+              </button>
+            </div>
+
+            <div id="homeRagResult" class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850 text-[11px] space-y-1">
+              <div class="flex items-center justify-between text-[10px] text-zinc-500">
+                <span>pgvector Cosine: <strong class="text-emerald-400" id="homeRagScore">0.914</strong> · BM25: <strong class="text-sky-400">0.887</strong></span>
+                <span class="text-emerald-400 font-semibold" id="homeRagDoc">Регламент №14-Б</span>
+              </div>
+              <p id="homeRagSnippet" class="text-zinc-200 text-[11px] italic">
+                «Выплаты до 2,500 BYN осуществляются автоматически через шлюз без ручной верификации СБ...»
               </p>
             </div>
           </div>
@@ -1674,6 +1740,94 @@
         }
       });
     }
+
+    let homeEtlBuffer = 0;
+    const homeEtlMax = 5000;
+    const homeEtlBar = document.getElementById('homeEtlGaugeBar');
+    const homeEtlText = document.getElementById('homeEtlGaugeText');
+    const homeEtlLog = document.getElementById('homeEtlLogSnippet');
+    const homeEtlStatus = document.getElementById('homeEtlStatus');
+
+    function updateHomeEtl(amount) {
+      homeEtlBuffer += amount;
+      const pct = Math.min(100, Math.round((homeEtlBuffer / homeEtlMax) * 100));
+      if (homeEtlBar) {
+        homeEtlBar.style.width = `${pct}%`;
+        homeEtlBar.className = pct >= 80 ? 'h-full bg-amber-500 rounded-full transition-all duration-100' : 'h-full bg-emerald-500 rounded-full transition-all duration-100';
+      }
+      if (homeEtlText) {
+        homeEtlText.textContent = `${homeEtlBuffer.toLocaleString()} / 5,000 items (${pct}%)`;
+      }
+      if (homeEtlLog) {
+        homeEtlLog.innerHTML = `<span class="text-emerald-400 font-bold">[INGESTED +${amount.toLocaleString()}]</span> <span class="text-zinc-300">uvloop proxy stream <span class="text-zinc-500">(ZSTD 6.2x)</span></span>`;
+      }
+      if (homeEtlBuffer >= homeEtlMax) {
+        if (homeEtlStatus) {
+          homeEtlStatus.textContent = 'CLICKHOUSE FLUSH!';
+          homeEtlStatus.className = 'text-emerald-400 font-bold text-[10px] animate-pulse';
+        }
+        setTimeout(() => {
+          homeEtlBuffer = 0;
+          if (homeEtlBar) homeEtlBar.style.width = '0%';
+          if (homeEtlText) homeEtlText.textContent = '0 / 5,000 items (0%)';
+          if (homeEtlStatus) {
+            homeEtlStatus.textContent = 'FLUSH: AUTO (500ms)';
+            homeEtlStatus.className = 'text-emerald-400 font-bold text-[10px]';
+          }
+          if (homeEtlLog) {
+            const drop = Math.floor(15 + Math.random() * 20);
+            homeEtlLog.innerHTML = `<span class="text-sky-300 font-bold">🔔 [TG ALERT]</span> <span class="text-zinc-200">Price drop -${drop}% pushed in 1.18s</span>`;
+          }
+        }, 400);
+      }
+    }
+
+    const homeEtlSendBtn = document.getElementById('homeEtlSendBtn');
+    if (homeEtlSendBtn) {
+      homeEtlSendBtn.addEventListener('click', () => updateHomeEtl(1000));
+    }
+
+    const homeEtlBurstBtn = document.getElementById('homeEtlBurstBtn');
+    if (homeEtlBurstBtn) {
+      homeEtlBurstBtn.addEventListener('click', () => updateHomeEtl(5000));
+    }
+
+    const homeRagData = {
+      limit: {
+        score: '0.914',
+        doc: 'Регламент №14-Б',
+        text: '«Выплаты до 2,500 BYN осуществляются автоматически через шлюз без ручной верификации СБ...»'
+      },
+      sla: {
+        score: '0.938',
+        doc: 'Политика SLA',
+        text: '«Время авто-ответа робота < 3.5 сек. Обращения категории Critical передаются инженеру за 15 мин.»'
+      },
+      pii: {
+        score: '0.896',
+        doc: 'Стандарт ИБ',
+        text: '«Данные PII маскируются. Логи инференса хранятся строго в изолированной PostgreSQL On-Premise.»'
+      }
+    };
+
+    document.querySelectorAll('.home-rag-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.home-rag-btn').forEach(b => {
+          b.classList.remove('active', 'border-emerald-500/80', 'bg-zinc-900', 'text-zinc-100');
+          b.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+        });
+        btn.classList.add('active', 'border-emerald-500/80', 'bg-zinc-900', 'text-zinc-100');
+        btn.classList.remove('border-zinc-800', 'bg-zinc-950', 'text-zinc-400');
+        const q = btn.getAttribute('data-q');
+        const d = homeRagData[q] || homeRagData.limit;
+        const scoreElem = document.getElementById('homeRagScore');
+        const docElem = document.getElementById('homeRagDoc');
+        const snippetElem = document.getElementById('homeRagSnippet');
+        if (scoreElem) scoreElem.textContent = d.score;
+        if (docElem) docElem.textContent = d.doc;
+        if (snippetElem) snippetElem.textContent = d.text;
+      });
+    });
 
     requestAnimationFrame(homeRefillLoop);
 

@@ -312,8 +312,103 @@ async def generate_rag_response(query: str, context_chunks: list[str]) -> str:
 
       <section class="space-y-3.5">
         <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="play" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+          <span>4. Интерактивная песочница Private RAG (Hybrid pgvector + Guardrails)</span>
+        </h2>
+        <p class="text-xs sm:text-sm text-zinc-300">
+          Протестируйте работу гибридного семантического поиска. Выберите типовой вопрос из регламентов или введите свой: модель выполняет параллельный поиск в pgvector и BM25, извлекает проверенный чанк и генерирует ответ без галлюцинаций.
+        </p>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+          <div class="lg:col-span-7 p-4 sm:p-5 rounded-xl bg-zinc-950/80 border border-zinc-850 space-y-4 font-mono text-xs">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-[11px] pb-2 border-b border-zinc-900">
+              <div class="flex items-center gap-1.5 text-zinc-200 font-bold">
+                <i data-lucide="search" class="w-3.5 h-3.5 text-purple-400"></i>
+                <span>AIR-GAPPED HYBRID RETRIEVAL CONSOLE</span>
+              </div>
+              <span id="ragEngineStatus" class="text-emerald-400 font-bold text-[10px]">100% ON-PREMISE</span>
+            </div>
+
+            <div class="space-y-2">
+              <div class="text-zinc-400 text-[11px]">Быстрые пресеты вопросов к базе регламентов:</div>
+              <div class="flex flex-wrap gap-1.5" id="ragPresets">
+                <button type="button" data-q="limit" class="rag-pill active px-2.5 py-1 rounded-lg border border-emerald-500/80 bg-zinc-900 text-zinc-100 text-[11px] hover:border-emerald-400 transition-colors text-left">
+                  💳 Лимит выплат без аппрува
+                </button>
+                <button type="button" data-q="sla" class="rag-pill px-2.5 py-1 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-300 text-[11px] hover:border-zinc-700 transition-colors text-left">
+                  ⏱️ SLA первой линии (L1)
+                </button>
+                <button type="button" data-q="pii" class="rag-pill px-2.5 py-1 rounded-lg border border-zinc-800 bg-zinc-950 text-zinc-300 text-[11px] hover:border-zinc-700 transition-colors text-left">
+                  🔒 Хранение логов и PII
+                </button>
+              </div>
+            </div>
+
+            <div class="space-y-1.5">
+              <div class="relative">
+                <input type="text" id="ragQueryInput" value="Какой лимит выплат без ручного согласования СБ?" class="w-full px-3.5 py-2.5 rounded-lg bg-zinc-900 border border-zinc-800 focus:border-zinc-600 focus:outline-none text-base sm:text-xs text-zinc-100 placeholder-zinc-500 font-mono transition-colors pr-24">
+                <button id="ragRunBtn" type="button" class="absolute right-1.5 top-1.5 px-3 py-1.5 rounded-md bg-zinc-100 hover:bg-white text-zinc-950 font-bold text-xs flex items-center gap-1.5 transition-all">
+                  <i data-lucide="play" class="w-3 h-3 text-zinc-950"></i>
+                  <span>Поиск</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 text-center text-[10px]">
+              <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
+                <div class="text-zinc-500">pgvector Cosine</div>
+                <div id="ragStatCosine" class="font-bold text-emerald-400 text-xs mt-0.5">0.914</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
+                <div class="text-zinc-500">BM25 Rank</div>
+                <div id="ragStatBm25" class="font-bold text-sky-400 text-xs mt-0.5">0.887</div>
+              </div>
+              <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
+                <div class="text-zinc-500">RRF FUSION</div>
+                <div id="ragStatRrf" class="font-bold text-purple-400 text-xs mt-0.5">#1 Match</div>
+              </div>
+            </div>
+
+            <div class="p-3 rounded-lg bg-zinc-900/50 border border-zinc-850 space-y-1 text-[11px]">
+              <div class="flex items-center justify-between text-zinc-500 text-[10px]">
+                <span class="font-bold text-zinc-300">ИЗВЛЕЧЕННЫЙ КОНТЕКСТНЫЙ ЧАНК (TOP-1):</span>
+                <span id="ragSourceDoc" class="text-emerald-400">Регламент №14-Б, п. 3.2</span>
+              </div>
+              <p id="ragContextChunk" class="text-zinc-300 italic leading-relaxed text-xs">
+                «Выплаты до 2,500 BYN осуществляются в автоматическом режиме через шлюз без ручной верификации офицером безопасности. Операции свыше 2,500 BYN требуют обязательной 2-FA авторизации.»
+              </p>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 flex flex-col justify-between p-3.5 rounded-xl bg-zinc-950 border border-zinc-850 space-y-3 font-mono text-xs">
+            <div class="flex items-center justify-between text-[11px] text-zinc-500 pb-1.5 border-b border-zinc-900">
+              <div class="flex items-center gap-1.5 text-zinc-300">
+                <i data-lucide="cpu" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>GROUNDED LOCAL LLM RESPONSE</span>
+              </div>
+              <span class="text-emerald-400 text-[10px] font-bold">GUARDRAILS OK</span>
+            </div>
+
+            <div class="space-y-2 flex-1">
+              <div class="text-zinc-500 text-[10px]">ОТВЕТ ДЛЯ CRM / ТИКЕТ-СИСТЕМЫ:</div>
+              <div id="ragResponseText" class="p-3 rounded-lg bg-zinc-900/70 border border-emerald-800/40 text-xs text-zinc-100 leading-relaxed space-y-1.5">
+                <p>Согласно Регламенту №14-Б (п. 3.2), максимальный лимит автоматической выплаты без ручного согласования составляет <strong>2,500 BYN</strong>.</p>
+                <p class="text-[10px] text-zinc-400">Если сумма транзакции превышает 2,500 BYN, система переводит заявку на второй уровень проверки (2-FA).</p>
+              </div>
+            </div>
+
+            <div class="p-2.5 rounded-lg bg-zinc-900/40 border border-zinc-850 flex items-center justify-between text-[10px]">
+              <span class="text-zinc-400">Hallucination Risk: <strong class="text-emerald-400">&lt;0.4%</strong></span>
+              <span class="text-zinc-400">Inference: <strong class="text-zinc-200">vLLM 2.4s</strong></span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
           <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
-          <span>4. Результаты внедрения в эксплуатацию</span>
+          <span>5. Результаты внедрения в эксплуатацию</span>
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
           <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
@@ -375,6 +470,76 @@ async def generate_rag_response(query: str, context_chunks: list[str]) -> str:
 
   <script>
     lucide.createIcons();
+
+    const ragData = {
+      limit: {
+        query: "Какой лимит выплат без ручного согласования СБ?",
+        cosine: "0.914",
+        bm25: "0.887",
+        doc: "Регламент №14-Б, п. 3.2",
+        chunk: "«Выплаты до 2,500 BYN осуществляются в автоматическом режиме через шлюз без ручной верификации офицером безопасности. Операции свыше 2,500 BYN требуют обязательной 2-FA авторизации.»",
+        answer: "<p>Согласно Регламенту №14-Б (п. 3.2), максимальный лимит автоматической выплаты без ручного согласования составляет <strong>2,500 BYN</strong>.</p><p class='text-[10px] text-zinc-400'>Если сумма транзакции превышает 2,500 BYN, система переводит заявку на второй уровень проверки (2-FA).</p>"
+      },
+      sla: {
+        query: "Какой регламентный SLA установлен для тикетов первой линии?",
+        cosine: "0.938",
+        bm25: "0.902",
+        doc: "Политика поддержки, п. 1.4",
+        chunk: "«Время первой реакции по обращениям категории Critical составляет не более 15 минут. Стандартные консультации по документации закрываются роботом мгновенно (< 3.5 сек) либо оператором в течение 2 часов.»",
+        answer: "<p>По Регламенту поддержки (п. 1.4), SLA на авто-ответ робота составляет <strong>&lt; 3.5 секунд</strong>. Критические инциденты передаются инженерам с гарантией реакции до <strong>15 минут</strong>.</p>"
+      },
+      pii: {
+        query: "Как регламентируется хранение логов транзакций и PII клиентов?",
+        cosine: "0.896",
+        bm25: "0.941",
+        doc: "Стандарт ИБ-2025, п. 5.1",
+        chunk: "«Все персональные данные (PII) клиентов маскируются на этапе CRM-вебхука. Логи инференса хранятся исключительно в изолированной базе PostgreSQL внутри контура компании со сроком ротации 90 дней.»",
+        answer: "<p>В соответствии со Стандартом ИБ-2025 (п. 5.1), данные маскируются до подачи в модель, а транзакционные логи хранятся <strong>строго внутри защищенного On-Premise контура</strong> с ротацией 90 дней.</p>"
+      }
+    };
+
+    const queryInput = document.getElementById('ragQueryInput');
+    const cosineElem = document.getElementById('ragStatCosine');
+    const bm25Elem = document.getElementById('ragStatBm25');
+    const sourceElem = document.getElementById('ragSourceDoc');
+    const chunkElem = document.getElementById('ragContextChunk');
+    const answerElem = document.getElementById('ragResponseText');
+    const runBtn = document.getElementById('ragRunBtn');
+
+    function applyRAG(key) {
+      const data = ragData[key] || ragData.limit;
+      if (queryInput) queryInput.value = data.query;
+      if (cosineElem) cosineElem.textContent = data.cosine;
+      if (bm25Elem) bm25Elem.textContent = data.bm25;
+      if (sourceElem) sourceElem.textContent = data.doc;
+      if (chunkElem) chunkElem.textContent = data.chunk;
+      if (answerElem) answerElem.innerHTML = data.answer;
+    }
+
+    document.querySelectorAll('.rag-pill').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.rag-pill').forEach(b => {
+          b.classList.remove('active', 'border-emerald-500/80', 'bg-zinc-900', 'text-zinc-100');
+          b.classList.add('border-zinc-800', 'bg-zinc-950', 'text-zinc-300');
+        });
+        btn.classList.add('active', 'border-emerald-500/80', 'bg-zinc-900', 'text-zinc-100');
+        btn.classList.remove('border-zinc-800', 'bg-zinc-950', 'text-zinc-300');
+        const qKey = btn.getAttribute('data-q');
+        applyRAG(qKey);
+      });
+    });
+
+    if (runBtn) {
+      runBtn.addEventListener('click', () => {
+        runBtn.innerHTML = '<span class="animate-spin">⚙️</span>';
+        setTimeout(() => {
+          runBtn.innerHTML = '<i data-lucide="play" class="w-3 h-3 text-zinc-950"></i><span>Поиск</span>';
+          lucide.createIcons();
+          if (cosineElem) cosineElem.textContent = (0.900 + Math.random() * 0.05).toFixed(3);
+          if (bm25Elem) bm25Elem.textContent = (0.870 + Math.random() * 0.06).toFixed(3);
+        }, 300);
+      });
+    }
   </script>
 </body>
 </html>

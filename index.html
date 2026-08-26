@@ -898,14 +898,26 @@
         btn.innerHTML = `<span class="font-mono">Отправка...</span>`;
 
         try {
-          const res = await fetch('/api/contact', {
+          const res = await fetch('https://api.web3forms.com/submit', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, contact, service, message })
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({
+              access_key: 'd81ed7f1-bb3c-4faa-85c3-cab256cdbff7',
+              name: name,
+              email: contact.includes('@') ? contact : 'client@shahotko.tech',
+              subject: `🔔 Заявка с сайта shahotko.tech: ${name} [${service}]`,
+              service: service,
+              message: `Контакт клиента: ${contact}\nВыбранное направление: ${service}\n\nОписание задачи:\n${message}`,
+              from_name: "Портфолио shahotko.tech"
+            })
           });
+
           const data = await res.json();
           if (res.ok && data.success) {
-            status.innerHTML = `<div class="p-3 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs font-mono">✓ Заявка успешно отправлена! Свяжусь с вами в ближайшее время.</div>`;
+            status.innerHTML = `<div class="p-3 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs font-mono">✓ Заявка успешно отправлена на email ivan@shahotko.tech! Свяжусь с вами в ближайшее время.</div>`;
             contactForm.reset();
           } else {
             window.open(fallbackUrl, '_blank');

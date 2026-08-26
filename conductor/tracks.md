@@ -2,7 +2,9 @@
 
 ## Active Tracks
 
-*(No active tracks)*
+| Track ID | Title | Status | Priority | Current Phase | Progress |
+|----------|-------|--------|----------|---------------|----------|
+| [FEAT-005](./tracks/FEAT-005/plan.md) | Interactive Project Architecture & Scope Estimator | In Progress | P1 | Phase 1 | 0 / 9 (0%) |
 
 ## Completed Tracks
 

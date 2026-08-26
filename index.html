@@ -72,7 +72,7 @@
         </a>
         <a href="#contact" class="hover:text-zinc-100 transition-colors flex items-center gap-1.5">
           <i data-lucide="send" class="w-3.5 h-3.5 text-zinc-500"></i>
-          <span>Контакты / Форма</span>
+          <span>Контакты</span>
         </a>
       </nav>
 
@@ -131,7 +131,7 @@
         </a>
         <a href="#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-200 transition-all">
           <i data-lucide="message-square" class="w-4 h-4 text-emerald-400"></i>
-          <span>Форма с пингом в TG</span>
+          <span>Форма обратной связи</span>
         </a>
         <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900/60 hover:bg-zinc-900 hover:border-zinc-700 text-zinc-200 transition-all">
           <i data-lucide="github" class="w-4 h-4"></i>
@@ -240,7 +240,7 @@
           </p>
           <div class="flex flex-wrap gap-2 pt-1 font-mono text-xs">
             <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
-              <i data-lucide="terminal" class="w-3 h-3 text-zinc-500"></i>
+              <i data-lucide="terminal" class="w-3.5 h-3.5 text-zinc-500"></i>
               <span>Linux</span>
             </div>
             <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">
@@ -623,10 +623,10 @@
     <section id="contact" class="space-y-6">
       <div class="p-8 sm:p-12 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-8">
         <div class="max-w-2xl space-y-3">
-          <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Direct Contacts &amp; Ping Form</div>
+          <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Direct Contacts &amp; Feedback Form</div>
           <h2 class="text-3xl sm:text-4xl font-bold tracking-tight text-white">Обсудить проект или сотрудничество</h2>
           <p class="text-zinc-400 text-sm sm:text-base leading-relaxed">
-            Отправьте форму с мгновенным пингом в мой Telegram или напишите напрямую.
+            Заполните форму обратной связи или свяжитесь со мной напрямую для обсуждения проекта.
           </p>
         </div>
 
@@ -664,10 +664,10 @@
               <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
                 <button type="submit" id="submitBtn" class="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-sm font-medium bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm group font-mono">
                   <i data-lucide="send" class="w-4 h-4 text-zinc-950 group-hover:translate-x-0.5 transition-transform"></i>
-                  <span>Отправить запрос в Telegram</span>
+                  <span>Отправить заявку</span>
                 </button>
                 <span class="font-mono text-xs text-zinc-500 text-center sm:text-left">
-                  Пинг прямо в Telegram автора
+                  Быстрый ответ в течение рабочего дня
                 </span>
               </div>
 
@@ -818,18 +818,18 @@
           });
           const data = await res.json();
           if (res.ok && data.success) {
-            status.innerHTML = `<div class="p-3 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs font-mono">✓ Заявка отправлена напрямую в Telegram! Свяжусь в ближайшее время.</div>`;
+            status.innerHTML = `<div class="p-3 rounded-lg bg-emerald-950/60 border border-emerald-800 text-emerald-300 text-xs font-mono">✓ Заявка успешно отправлена! Свяжусь с вами в ближайшее время.</div>`;
             contactForm.reset();
           } else {
             window.open(fallbackUrl, '_blank');
-            status.innerHTML = `<div class="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono">Открываю диалог в Telegram с готовым текстом заявки...</div>`;
+            status.innerHTML = `<div class="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono">Открываю диалог в Telegram для отправки сообщения...</div>`;
           }
         } catch (err) {
           window.open(fallbackUrl, '_blank');
-          status.innerHTML = `<div class="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono">Перенаправляю в Telegram с текстом заявки...</div>`;
+          status.innerHTML = `<div class="p-3 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 text-xs font-mono">Перенаправляю в Telegram для отправки сообщения...</div>`;
         } finally {
           btn.disabled = false;
-          btn.innerHTML = `<i data-lucide="send" class="w-4 h-4 text-zinc-950"></i><span>Отправить запрос в Telegram</span>`;
+          btn.innerHTML = `<i data-lucide="send" class="w-4 h-4 text-zinc-950"></i><span>Отправить заявку</span>`;
           lucide.createIcons();
         }
       });

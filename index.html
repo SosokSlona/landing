@@ -807,6 +807,163 @@
         </div>
 
       </div>
+
+      <div class="p-5 sm:p-8 rounded-2xl bg-zinc-900/50 border border-zinc-800 space-y-6" id="estimator">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-4 border-b border-zinc-800/80">
+          <div class="flex items-center gap-3">
+            <div class="p-2 rounded-lg bg-emerald-950/80 border border-emerald-800 text-emerald-400">
+              <i data-lucide="calculator" class="w-5 h-5"></i>
+            </div>
+            <div>
+              <h3 class="text-base sm:text-xl font-bold text-white">Интерактивный конфигуратор проекта</h3>
+              <p class="text-xs text-zinc-400 font-mono">Real-time Architecture Blueprint &amp; Timeline Estimator</p>
+            </div>
+          </div>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-zinc-950 border border-zinc-850 text-xs font-mono text-emerald-400">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+            <span>Мгновенный расчет</span>
+          </span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <div class="lg:col-span-7 space-y-5">
+            
+            <div class="space-y-2">
+              <label class="block font-mono text-xs text-zinc-400 uppercase tracking-wider">1. Направление и тип задачи</label>
+              <div class="grid grid-cols-2 gap-2" id="calcTypeGroup">
+                <button type="button" data-val="backend" class="calc-btn active p-3 rounded-xl border border-emerald-500/80 bg-zinc-900 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs sm:text-sm flex items-center gap-2">
+                    <i data-lucide="server" class="w-4 h-4 text-emerald-400 shrink-0"></i>
+                    <span>Go/Python Бэкенд</span>
+                  </div>
+                  <div class="text-[11px] text-zinc-400 font-mono mt-1">REST / gRPC / SSE прокси</div>
+                </button>
+
+                <button type="button" data-val="etl" class="calc-btn p-3 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs sm:text-sm flex items-center gap-2">
+                    <i data-lucide="database" class="w-4 h-4 text-zinc-400 shrink-0"></i>
+                    <span>ETL и Парсинг</span>
+                  </div>
+                  <div class="text-[11px] text-zinc-400 font-mono mt-1">ClickHouse / Боты / Пайплайны</div>
+                </button>
+
+                <button type="button" data-val="ai" class="calc-btn p-3 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs sm:text-sm flex items-center gap-2">
+                    <i data-lucide="shield-check" class="w-4 h-4 text-zinc-400 shrink-0"></i>
+                    <span>Private AI / RAG</span>
+                  </div>
+                  <div class="text-[11px] text-zinc-400 font-mono mt-1">vLLM / pgvector / On-Prem</div>
+                </button>
+
+                <button type="button" data-val="audit" class="calc-btn p-3 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs sm:text-sm flex items-center gap-2">
+                    <i data-lucide="gauge" class="w-4 h-4 text-zinc-400 shrink-0"></i>
+                    <span>Аудит &amp; Latency</span>
+                  </div>
+                  <div class="text-[11px] text-zinc-400 font-mono mt-1">Профилирование / Оптимизация</div>
+                </button>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="block font-mono text-xs text-zinc-400 uppercase tracking-wider">2. Планируемый масштаб и нагрузка</label>
+              <div class="grid grid-cols-3 gap-2" id="calcScaleGroup">
+                <button type="button" data-val="mvp" class="calc-scale-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs">MVP / Старт</div>
+                  <div class="text-[10px] text-zinc-500 font-mono mt-0.5">&lt; 100 RPS</div>
+                </button>
+
+                <button type="button" data-val="prod" class="calc-scale-btn active p-2.5 rounded-xl border border-emerald-500/80 bg-zinc-900 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs">Production</div>
+                  <div class="text-[10px] text-emerald-400 font-mono mt-0.5">100–1k RPS</div>
+                </button>
+
+                <button type="button" data-val="highload" class="calc-scale-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs">High-Load</div>
+                  <div class="text-[10px] text-zinc-500 font-mono mt-0.5">&gt; 1,000 RPS</div>
+                </button>
+              </div>
+            </div>
+
+            <div class="space-y-2">
+              <label class="block font-mono text-xs text-zinc-400 uppercase tracking-wider">3. Контур развертывания и изоляция данных</label>
+              <div class="grid grid-cols-2 gap-2" id="calcSecurityGroup">
+                <button type="button" data-val="cloud" class="calc-sec-btn active p-2.5 rounded-xl border border-emerald-500/80 bg-zinc-900 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs flex items-center gap-1.5">
+                    <i data-lucide="cloud" class="w-3.5 h-3.5 text-emerald-400"></i>
+                    <span>Cloud / Hybrid</span>
+                  </div>
+                  <div class="text-[10px] text-zinc-400 font-mono mt-0.5">Docker, CI/CD, автоскейлинг</div>
+                </button>
+
+                <button type="button" data-val="private" class="calc-sec-btn p-2.5 rounded-xl border border-zinc-800 bg-zinc-950 hover:border-zinc-700 text-left transition-all">
+                  <div class="font-bold text-zinc-100 text-xs flex items-center gap-1.5">
+                    <i data-lucide="lock" class="w-3.5 h-3.5 text-zinc-400"></i>
+                    <span>Air-Gapped On-Prem</span>
+                  </div>
+                  <div class="text-[10px] text-zinc-400 font-mono mt-0.5">100% изоляция данных, Zero Trust</div>
+                </button>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="lg:col-span-5 flex flex-col justify-between p-5 rounded-xl bg-zinc-950 border border-zinc-850 space-y-4 font-mono text-xs">
+            <div class="space-y-3 pb-3 border-b border-zinc-900">
+              <div class="flex items-center justify-between text-zinc-500 text-[11px]">
+                <span class="font-semibold text-zinc-300">АРХИТЕКТУРНЫЙ РАСЧЕТ</span>
+                <span class="text-emerald-400 font-bold" id="estStatusBadge">ГОТОВО К СТАРТУ</span>
+              </div>
+              
+              <div>
+                <div class="text-[11px] text-zinc-500">РЕКОМЕНДУЕМЫЙ СТЕК</div>
+                <div id="estStack" class="text-zinc-100 font-bold text-sm mt-0.5 leading-snug">Go 1.23 · Redis 7 · PostgreSQL · Docker</div>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3 pt-1">
+                <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
+                  <div class="text-[10px] text-zinc-500">ОЦЕНКА СРОКОВ</div>
+                  <div id="estTimeline" class="text-emerald-400 font-bold text-sm mt-0.5">2–3 недели</div>
+                  <div id="estSprints" class="text-[10px] text-zinc-500 mt-0.5">1–2 спринта</div>
+                </div>
+
+                <div class="p-2.5 rounded-lg bg-zinc-900/60 border border-zinc-850">
+                  <div class="text-[10px] text-zinc-500">БЮДЖЕТНЫЙ ОРИЕНТИР</div>
+                  <div id="estBudget" class="text-zinc-100 font-bold text-sm mt-0.5">от $1,500</div>
+                  <div class="text-[10px] text-zinc-500 mt-0.5">Поэтапно (Milestones)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-2 text-[11px] text-zinc-400">
+              <div class="font-bold text-zinc-300">Включено в поставку:</div>
+              <ul class="space-y-1 text-zinc-400">
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Git-репозиторий со 100% передачей прав</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Dockerfile + CI/CD скрипты деплоя</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> Спецификация OpenAPI/Swagger</li>
+                <li class="flex items-center gap-1.5"><i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i> 30 дней гарантии на исправление дефектов</li>
+              </ul>
+            </div>
+
+            <div class="pt-2 space-y-2">
+              <button id="applyEstimateBtn" type="button" class="w-full inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-mono font-bold bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm active:scale-95">
+                <i data-lucide="arrow-down" class="w-4 h-4 text-zinc-950"></i>
+                <span>Применить параметры в заявку</span>
+              </button>
+
+              <a id="estTgLink" href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-mono font-semibold bg-[#229ED9]/15 hover:bg-[#229ED9]/25 text-sky-300 border border-[#229ED9]/40 hover:border-[#229ED9] transition-all">
+                <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.716-.961 4.384-1.36 6.321-.169.819-.485 1.093-.792 1.12-.667.062-1.173-.439-1.819-.862-1.011-.663-1.583-1.076-2.564-1.723-1.134-.748-.399-1.159.247-1.831.169-.176 3.107-2.848 3.164-3.091.007-.031.014-.149-.056-.212s-.173-.041-.247-.024c-.106.024-1.793 1.14-5.061 3.345-.479.329-.913.489-1.302.481-.429-.009-1.254-.242-1.867-.442-.751-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.664 3.498-1.524 5.831-2.529 7.001-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.155.232.171.325.016.094.037.309.02.478z"/>
+                </svg>
+                <span>Обсудить конфигурацию в Telegram</span>
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
     </section>
 
     <section id="faq" class="space-y-6">
@@ -1478,6 +1635,189 @@
     }
 
     requestAnimationFrame(homeRefillLoop);
+
+    let selectedType = 'backend';
+    let selectedScale = 'prod';
+    let selectedSec = 'cloud';
+
+    const estimates = {
+      backend: {
+        mvp: {
+          cloud: { stack: 'Go 1.23 · SQLite / PostgreSQL · Docker', time: '1–2 недели', sprints: '1 спринт', budget: 'от $800' },
+          private: { stack: 'Go 1.23 · PostgreSQL · Linux Server (On-Prem)', time: '2 недели', sprints: '1 спринт', budget: 'от $1,000' }
+        },
+        prod: {
+          cloud: { stack: 'Go 1.23 · Redis 7 · PostgreSQL · Docker CI/CD', time: '2–3 недели', sprints: '1–2 спринта', budget: 'от $1,500' },
+          private: { stack: 'Go 1.23 · Redis · PostgreSQL · Zero Trust Air-Gapped', time: '3–4 недели', sprints: '2 спринта', budget: 'от $2,000' }
+        },
+        highload: {
+          cloud: { stack: 'Go 1.23 · Redis Cluster · Kafka / NATS · ClickHouse', time: '4–6 недель', sprints: '2–3 спринта', budget: 'от $3,000' },
+          private: { stack: 'Go 1.23 · ClickHouse · Redis · Bare-Metal Linux HA', time: '4–6 недель', sprints: '3 спринта', budget: 'от $3,500' }
+        }
+      },
+      etl: {
+        mvp: {
+          cloud: { stack: 'Python (asyncio) · SQLite / Postgres · Docker', time: '1–2 недели', sprints: '1 спринт', budget: 'от $700' },
+          private: { stack: 'Python · PostgreSQL · On-Premise Worker', time: '1–2 недели', sprints: '1 спринт', budget: 'от $900' }
+        },
+        prod: {
+          cloud: { stack: 'Python (uvloop) · ClickHouse · Redis · Docker', time: '2–3 недели', sprints: '1–2 спринта', budget: 'от $1,400' },
+          private: { stack: 'Python (uvloop) · ClickHouse ReplacingMergeTree · Air-Gapped', time: '3–4 недели', sprints: '2 спринта', budget: 'от $1,800' }
+        },
+        highload: {
+          cloud: { stack: 'Python + Go · ClickHouse Cluster · Kafka · MinIO', time: '4–5 недель', sprints: '2–3 спринта', budget: 'от $2,800' },
+          private: { stack: 'Python / Go · ClickHouse HA · On-Premises Pipeline', time: '4–6 недель', sprints: '3 спринта', budget: 'от $3,200' }
+        }
+      },
+      ai: {
+        mvp: {
+          cloud: { stack: 'FastAPI · pgvector · Local/API Hybrid · Docker', time: '1–2 недели', sprints: '1 спринт', budget: 'от $900' },
+          private: { stack: 'FastAPI · Ollama / vLLM (Single GPU) · pgvector', time: '2–3 недели', sprints: '1–2 спринта', budget: 'от $1,500' }
+        },
+        prod: {
+          cloud: { stack: 'FastAPI · pgvector HNSW · vLLM · BM25 Hybrid RRF', time: '3–4 недели', sprints: '2 спринта', budget: 'от $2,200' },
+          private: { stack: 'FastAPI · pgvector · vLLM On-Premise GPU · Guardrails', time: '3–4 недели', sprints: '2 спринта', budget: 'от $2,600' }
+        },
+        highload: {
+          cloud: { stack: 'Go Gateway · vLLM Multi-GPU Cluster · pgvector · Redis', time: '4–6 недель', sprints: '3 спринта', budget: 'от $3,800' },
+          private: { stack: 'Go Gateway · vLLM Multi-Node GPU Cluster · Air-Gapped HA', time: '5–7 недель', sprints: '3–4 спринта', budget: 'от $4,500' }
+        }
+      },
+      audit: {
+        mvp: {
+          cloud: { stack: 'pprof / py-spy Profiling · Latency & Query Audit', time: '3–5 дней', sprints: 'Express audit', budget: 'от $500' },
+          private: { stack: 'On-Premises Infrastructure & Security Audit', time: '1 неделя', sprints: 'Express audit', budget: 'от $700' }
+        },
+        prod: {
+          cloud: { stack: 'Profiling · Redis/DB Optimization · TTFT Tuning', time: '1–2 недели', sprints: '1 спринт', budget: 'от $1,000' },
+          private: { stack: 'Bottleneck Elimination · SQL Tuning · Zero Trust Audit', time: '1–2 недели', sprints: '1 спринт', budget: 'от $1,300' }
+        },
+        highload: {
+          cloud: { stack: 'End-to-End Stress Test · High-Load Architecture Plan', time: '2 недели', sprints: '1 спринт', budget: 'от $1,800' },
+          private: { stack: 'GPU Cluster Tuning · Kernel/TCP Optimization · Failover Plan', time: '2–3 недели', sprints: '1–2 спринта', budget: 'от $2,200' }
+        }
+      }
+    };
+
+    function recalculateEstimate() {
+      const current = estimates[selectedType][selectedScale][selectedSec];
+      const estStack = document.getElementById('estStack');
+      const estTimeline = document.getElementById('estTimeline');
+      const estSprints = document.getElementById('estSprints');
+      const estBudget = document.getElementById('estBudget');
+      const estTgLink = document.getElementById('estTgLink');
+
+      if (estStack) estStack.textContent = current.stack;
+      if (estTimeline) estTimeline.textContent = current.time;
+      if (estSprints) estSprints.textContent = current.sprints;
+      if (estBudget) estBudget.textContent = current.budget;
+
+      const typeLabels = { backend: 'Go/Python Бэкенд', etl: 'ETL и Парсинг', ai: 'Private AI / RAG', audit: 'Аудит и оптимизация' };
+      const scaleLabels = { mvp: 'MVP (<100 RPS)', prod: 'Production (100–1k RPS)', highload: 'High-Load (>1,000 RPS)' };
+      const secLabels = { cloud: 'Cloud / Hybrid', private: 'Air-Gapped On-Premise' };
+
+      const tgText = encodeURIComponent(`Здравствуйте, Иван! Сконфигурировал проект на сайте:\n• Тип задачи: ${typeLabels[selectedType]}\n• Масштаб: ${scaleLabels[selectedScale]}\n• Контур: ${secLabels[selectedSec]}\n• Рекомендуемый стек: ${current.stack}\n• Оценка: ${current.time} (${current.budget})\nХочу обсудить детали и ТЗ.`);
+      if (estTgLink) {
+        estTgLink.href = `https://t.me/shtoo_on_tvorit?text=${tgText}`;
+      }
+    }
+
+    document.querySelectorAll('#calcTypeGroup .calc-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#calcTypeGroup .calc-btn').forEach(b => {
+          b.classList.remove('border-emerald-500/80', 'bg-zinc-900');
+          b.classList.add('border-zinc-800', 'bg-zinc-950');
+          const icon = b.querySelector('i');
+          if (icon) {
+            icon.classList.remove('text-emerald-400');
+            icon.classList.add('text-zinc-400');
+          }
+        });
+        btn.classList.remove('border-zinc-800', 'bg-zinc-950');
+        btn.classList.add('border-emerald-500/80', 'bg-zinc-900');
+        const icon = btn.querySelector('i');
+        if (icon) {
+          icon.classList.remove('text-zinc-400');
+          icon.classList.add('text-emerald-400');
+        }
+        selectedType = btn.getAttribute('data-val');
+        recalculateEstimate();
+      });
+    });
+
+    document.querySelectorAll('#calcScaleGroup .calc-scale-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#calcScaleGroup .calc-scale-btn').forEach(b => {
+          b.classList.remove('border-emerald-500/80', 'bg-zinc-900');
+          b.classList.add('border-zinc-800', 'bg-zinc-950');
+          const sub = b.querySelector('div:last-child');
+          if (sub) {
+            sub.classList.remove('text-emerald-400');
+            sub.classList.add('text-zinc-500');
+          }
+        });
+        btn.classList.remove('border-zinc-800', 'bg-zinc-950');
+        btn.classList.add('border-emerald-500/80', 'bg-zinc-900');
+        const sub = btn.querySelector('div:last-child');
+        if (sub) {
+          sub.classList.remove('text-zinc-500');
+          sub.classList.add('text-emerald-400');
+        }
+        selectedScale = btn.getAttribute('data-val');
+        recalculateEstimate();
+      });
+    });
+
+    document.querySelectorAll('#calcSecurityGroup .calc-sec-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('#calcSecurityGroup .calc-sec-btn').forEach(b => {
+          b.classList.remove('border-emerald-500/80', 'bg-zinc-900');
+          b.classList.add('border-zinc-800', 'bg-zinc-950');
+          const icon = b.querySelector('i');
+          if (icon) {
+            icon.classList.remove('text-emerald-400');
+            icon.classList.add('text-zinc-400');
+          }
+        });
+        btn.classList.remove('border-zinc-800', 'bg-zinc-950');
+        btn.classList.add('border-emerald-500/80', 'bg-zinc-900');
+        const icon = btn.querySelector('i');
+        if (icon) {
+          icon.classList.remove('text-zinc-400');
+          icon.classList.add('text-emerald-400');
+        }
+        selectedSec = btn.getAttribute('data-val');
+        recalculateEstimate();
+      });
+    });
+
+    const applyEstimateBtn = document.getElementById('applyEstimateBtn');
+    if (applyEstimateBtn) {
+      applyEstimateBtn.addEventListener('click', () => {
+        const current = estimates[selectedType][selectedScale][selectedSec];
+        const typeLabels = { backend: 'Бэкенд на Go/Python', etl: 'ETL и Парсинг данных', ai: 'Private AI / Локальный RAG', audit: 'Аудит и оптимизация задержек' };
+        const scaleLabels = { mvp: 'MVP (<100 RPS)', prod: 'Production Scale (100–1k RPS)', highload: 'Enterprise High-Load (>1,000 RPS)' };
+        const secLabels = { cloud: 'Cloud / Hybrid', private: 'Air-Gapped On-Premise' };
+
+        const formServiceSelect = document.getElementById('formService');
+        if (formServiceSelect) {
+          formServiceSelect.value = selectedType;
+          formServiceSelect.dispatchEvent(new Event('change'));
+        }
+
+        const formMessage = document.getElementById('formMessage');
+        if (formMessage) {
+          formMessage.value = `[Конфигурация проекта]:\n• Тип задачи: ${typeLabels[selectedType]}\n• Масштаб нагрузки: ${scaleLabels[selectedScale]}\n• Контур развертывания: ${secLabels[selectedSec]}\n• Рекомендуемый стек: ${current.stack}\n• Ориентир: ${current.time} (${current.budget})\n\n[Дополнительные требования к проекту]: `;
+        }
+
+        const contactSec = document.getElementById('contact');
+        if (contactSec) {
+          contactSec.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    }
+
+    recalculateEstimate();
   </script>
 </body>
 </html>

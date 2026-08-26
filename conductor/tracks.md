@@ -2,9 +2,7 @@
 
 ## Active Tracks
 
-| Track ID | Title | Status | Priority | Current Phase | Progress |
-|----------|-------|--------|----------|---------------|----------|
-| [FEAT-006](./tracks/FEAT-006/plan.md) | Branded 404 Terminal Page with Typewriter Ping Animation | In Progress | P1 | Phase 1 | 0 / 9 (0%) |
+*(No active tracks)*
 
 ## Completed Tracks
 
@@ -15,3 +13,4 @@
 | [FEAT-003](./tracks/FEAT-003/plan.md) | Interactive Token Bucket Rate Limiter Playground | Completed | P1 | 2026-08-26 |
 | [FEAT-004](./tracks/FEAT-004/plan.md) | B2B Client FAQ & Service Delivery Process Section | Completed | P1 | 2026-08-26 |
 | [FEAT-005](./tracks/FEAT-005/plan.md) | Interactive Project Architecture & Scope Estimator | Completed | P1 | 2026-08-26 |
+| [FEAT-006](./tracks/FEAT-006/plan.md) | Branded 404 Terminal Page with Typewriter Ping Animation | Completed | P1 | 2026-08-26 |

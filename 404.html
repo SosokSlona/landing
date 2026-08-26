@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ru" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404: Маршрут не найден · Иван Шахотько</title>
+  <meta name="description" content="Ошибка 404: Запрашиваемая страница не существует или была перемещена. Перейдите к кейсам и услугам Ивана Шахотько.">
+  <meta name="robots" content="noindex, follow">
+
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://shahotko.tech/404.html">
+  <meta property="og:title" content="404: Маршрут не найден · Иван Шахотько">
+  <meta property="og:description" content="Ошибка 404: Запрашиваемая страница не существует. Перейдите к кейсам и услугам.">
+  <meta property="og:image" content="https://shahotko.tech/assets/og-image.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            zinc: {
+              850: '#1f1f23',
+              900: '#18181b',
+              950: '#09090b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    body {
+      background-color: #09090b;
+      color: #f4f4f5;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .bg-grid-pattern {
+      background-size: 32px 32px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    }
+    .terminal-glow {
+      box-shadow: 0 0 35px -10px rgba(16, 185, 129, 0.15);
+    }
+  </style>
+</head>
+<body class="bg-grid-pattern min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-black">
+
+  <header class="border-b border-zinc-900 bg-zinc-950/80 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+      <a href="/" class="flex items-center gap-2 text-zinc-100 hover:text-white font-mono text-sm font-semibold transition-colors">
+        <span class="w-2.5 h-2.5 rounded-sm bg-emerald-400"></span>
+        <span>shahotko.tech</span>
+      </a>
+      <div class="flex items-center gap-3 font-mono text-xs">
+        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-red-950/80 border border-red-800/80 text-red-400 font-bold">
+          <span class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></span>
+          <span>STATUS: 404 NOT FOUND</span>
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16 w-full space-y-8">
+
+    <div class="rounded-2xl border border-zinc-800 bg-zinc-950/90 terminal-glow overflow-hidden shadow-2xl">
+      <div class="px-4 py-3 bg-zinc-900/90 border-b border-zinc-800 flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-3 h-3 rounded-full bg-red-500/80 inline-block"></span>
+          <span class="w-3 h-3 rounded-full bg-yellow-500/80 inline-block"></span>
+          <span class="w-3 h-3 rounded-full bg-emerald-500/80 inline-block"></span>
+          <span class="font-mono text-xs text-zinc-400 ml-2">bash — route_resolver (80x24)</span>
+        </div>
+        <span class="font-mono text-[11px] text-zinc-500">RTT: timeout</span>
+      </div>
+
+      <div class="p-5 sm:p-7 font-mono text-xs sm:text-sm space-y-4 text-zinc-300 leading-relaxed overflow-x-auto">
+        <div class="space-y-1">
+          <div class="text-zinc-100 flex items-center gap-2">
+            <span class="text-emerald-400 font-bold">ivan@shahotko-gateway:~$</span>
+            <span id="pingCmd">ping -c 3 shahotko.tech/unknown</span>
+          </div>
+          <div id="pingOutput" class="text-zinc-500 space-y-0.5 text-xs pl-2 border-l border-zinc-850">
+            <div>PING target (0.0.0.0): 56 data bytes</div>
+            <div class="text-amber-400/90">Request timeout for icmp_seq 0 (404: HTTP Route Lost)</div>
+            <div class="text-amber-400/90">Request timeout for icmp_seq 1 (Dropping dead-end packet)</div>
+            <div class="text-red-400 font-semibold">--- ping statistics ---</div>
+            <div class="text-red-400">3 packets transmitted, 0 received, 100% packet loss</div>
+          </div>
+        </div>
+
+        <div class="pt-3 border-t border-zinc-850">
+          <div class="text-zinc-100 flex items-start gap-2">
+            <span class="text-emerald-400 font-bold shrink-0">&gt;</span>
+            <div class="min-h-[1.5em]">
+              <span id="typewriterText" class="text-zinc-100 font-semibold"></span>
+              <span id="terminalCursor" class="inline-block w-2 h-4 bg-emerald-400 align-middle animate-pulse ml-0.5"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="navSection" class="space-y-4 transition-all duration-700 opacity-0 translate-y-4">
+      <div class="flex items-center justify-between border-b border-zinc-800 pb-2">
+        <span class="font-mono text-xs uppercase tracking-wider text-zinc-400">Рабочие разделы и кейсы:</span>
+        <span class="font-mono text-xs text-emerald-400 font-bold">100% Online</span>
+      </div>
+
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5 sm:gap-4">
+        
+        <a href="/" class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-emerald-500/60 hover:bg-zinc-900/80 transition-all group flex flex-col justify-between">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-emerald-400 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800">00 · ROOT</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-zinc-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all"></i>
+            </div>
+            <div class="font-bold text-zinc-100 text-sm group-hover:text-white">Главная страница</div>
+            <p class="text-xs text-zinc-400">Архитектура, стек, калькулятор с ценами в BYN и услуги.</p>
+          </div>
+        </a>
+
+        <a href="/cases/llm-gateway-rate-limiter.html" class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-emerald-500/60 hover:bg-zinc-900/80 transition-all group flex flex-col justify-between">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-zinc-400 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800">CASE #01</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-zinc-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all"></i>
+            </div>
+            <div class="font-bold text-zinc-100 text-sm group-hover:text-white">LLM Gateway &amp; Rate Limiter</div>
+            <p class="text-xs text-zinc-400">High-Load Go &amp; Redis Token Bucket с интерактивной песочницей.</p>
+          </div>
+        </a>
+
+        <a href="/cases/autonomous-market-intelligence.html" class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-emerald-500/60 hover:bg-zinc-900/80 transition-all group flex flex-col justify-between">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-zinc-400 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800">CASE #02</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-zinc-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all"></i>
+            </div>
+            <div class="font-bold text-zinc-100 text-sm group-hover:text-white">Autonomous Market ETL</div>
+            <p class="text-xs text-zinc-400">ClickHouse, потоковый парсинг и аналитика цен.</p>
+          </div>
+        </a>
+
+        <a href="/cases/enterprise-rag-automation.html" class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 hover:border-emerald-500/60 hover:bg-zinc-900/80 transition-all group flex flex-col justify-between">
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between">
+              <span class="font-mono text-[11px] text-zinc-400 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-800">CASE #03</span>
+              <i data-lucide="arrow-right" class="w-4 h-4 text-zinc-500 group-hover:text-emerald-400 group-hover:translate-x-1 transition-all"></i>
+            </div>
+            <div class="font-bold text-zinc-100 text-sm group-hover:text-white">Enterprise Private RAG</div>
+            <p class="text-xs text-zinc-400">Локальный vLLM, pgvector и полная изоляция данных.</p>
+          </div>
+        </a>
+
+      </div>
+
+      <div class="pt-3">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="w-full inline-flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl font-mono text-xs sm:text-sm font-bold bg-[#229ED9] hover:bg-[#229ED9]/90 text-white shadow-lg shadow-sky-500/20 transition-all active:scale-[0.98]">
+          <svg class="w-4 h-4 fill-current" viewBox="0 0 24 24">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.716-.961 4.384-1.36 6.321-.169.819-.485 1.093-.792 1.12-.667.062-1.173-.439-1.819-.862-1.011-.663-1.583-1.076-2.564-1.723-1.134-.748-.399-1.159.247-1.831.169-.176 3.107-2.848 3.164-3.091.007-.031.014-.149-.056-.212s-.173-.041-.247-.024c-.106.024-1.793 1.14-5.061 3.345-.479.329-.913.489-1.302.481-.429-.009-1.254-.242-1.867-.442-.751-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.664 3.498-1.524 5.831-2.529 7.001-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.155.232.171.325.016.094.037.309.02.478z"/>
+          </svg>
+          <span>Написать напрямую в Telegram (@shtoo_on_tvorit)</span>
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="border-t border-zinc-900 bg-zinc-950/80 py-6 text-xs text-zinc-500 font-mono">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="flex items-center gap-2">
+        <span class="text-zinc-400">ivan@shahotko.tech</span>
+        <span>·</span>
+        <span>Remote / Минск</span>
+      </div>
+      <div>&copy; 2026 Ivan Shakhotko. All systems operational.</div>
+    </div>
+  </footer>
+
+  <script>
+    lucide.createIcons();
+
+    const currentPath = window.location.pathname || '/unknown';
+    const pingCmd = document.getElementById('pingCmd');
+    if (pingCmd) {
+      pingCmd.textContent = `ping -c 3 shahotko.tech${currentPath}`;
+    }
+
+    const typewriterElem = document.getElementById('typewriterText');
+    const navSection = document.getElementById('navSection');
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function runTypewriter() {
+      if (!typewriterElem) return;
+
+      const part1 = "Тут никаго";
+      const part2 = "ого нет... Зато боевые кейсы и калькулятор в полном порядке:";
+
+      for (let i = 0; i < part1.length; i++) {
+        typewriterElem.textContent += part1[i];
+        await sleep(65 + Math.random() * 40);
+      }
+
+      await sleep(500);
+
+      for (let i = 0; i < 3; i++) {
+        typewriterElem.textContent = typewriterElem.textContent.slice(0, -1);
+        await sleep(90);
+      }
+
+      await sleep(350);
+
+      for (let i = 0; i < part2.length; i++) {
+        typewriterElem.textContent += part2[i];
+        await sleep(40 + Math.random() * 30);
+      }
+
+      if (navSection) {
+        navSection.classList.remove('opacity-0', 'translate-y-4');
+        navSection.classList.add('opacity-100', 'translate-y-0');
+      }
+    }
+
+    setTimeout(runTypewriter, 300);
+  </script>
+</body>
+</html>

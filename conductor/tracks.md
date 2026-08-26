@@ -2,7 +2,9 @@
 
 ## Active Tracks
 
-*(No active tracks)*
+| Track ID | Title | Status | Priority | Current Phase | Progress |
+|----------|-------|--------|----------|---------------|----------|
+| [FEAT-002](./tracks/FEAT-002/plan.md) | Advanced SEO, Telegram OpenGraph & Search Indexing | In Progress | P1 | Phase 1 | 0 / 11 (0%) |
 
 ## Completed Tracks
 

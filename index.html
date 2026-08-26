@@ -64,6 +64,52 @@
         "description": "Проектирование и разработка высоконагруженных бэкендов на Go/Python, интеграция приватных AI-систем и автоматизация ETL-процессов.",
         "areaServed": "Worldwide",
         "priceRange": "$$"
+      },
+      {
+        "@type": "FAQPage",
+        "@id": "https://shahotko.tech/#faq",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "Подписываете ли вы NDA перед началом работы?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Да, подписание соглашения о неразглашении (NDA) — стандартная практика до получения любых конфиденциальных материалов и доступов."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Каков порядок оплаты и этапы сотрудничества?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Работа строится по прозрачной схеме майлстоунов с фиксацией промежуточных результатов или по Time & Material с поэтапной оплатой."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "В каком виде передается готовый результат?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Полная передача прав, чистый Git-репозиторий, Dockerfile, CI/CD пайплайны, документация OpenAPI/Swagger и руководство по эксплуатации."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Предоставляется ли гарантия и послерелизная поддержка?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "В каждый проект включено 30 дней бесплатной гарантийной поддержки после релиза, а также возможность заключения SLA на сопровождение."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "Как гарантируется изоляция данных при внедрении Private AI / LLM?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "Все компоненты разворачиваются строго в изолированном контуре заказчика (On-Premise) без передачи данных во внешние публичные API."
+            }
+          }
+        ]
       }
     ]
   }
@@ -131,6 +177,10 @@
           <i data-lucide="briefcase" class="w-3.5 h-3.5 text-zinc-500"></i>
           <span>Услуги</span>
         </a>
+        <a href="#faq" class="hover:text-zinc-100 transition-colors flex items-center gap-1.5">
+          <i data-lucide="help-circle" class="w-3.5 h-3.5 text-zinc-500"></i>
+          <span>FAQ</span>
+        </a>
         <a href="#contact" class="hover:text-zinc-100 transition-colors flex items-center gap-1.5">
           <i data-lucide="send" class="w-3.5 h-3.5 text-zinc-500"></i>
           <span>Контакты</span>
@@ -147,11 +197,11 @@
         </a>
 
         <div class="hidden lg:inline-flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono text-zinc-400 bg-zinc-900/90 border border-zinc-800 rounded-full">
-          <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-          <span>B2B Contract</span>
+          <i data-lucide="shield-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+          <span>Zero Trust Secured</span>
         </div>
 
-        <button id="mobileMenuBtn" aria-label="Открыть меню" class="md:hidden p-2 text-zinc-400 hover:text-zinc-100 rounded-lg hover:bg-zinc-900 border border-transparent hover:border-zinc-800 transition-all">
+        <button type="button" id="mobileMenuBtn" class="md:hidden p-2 rounded-lg bg-zinc-900 border border-zinc-800 text-zinc-300 hover:text-white" aria-label="Открыть меню">
           <i data-lucide="menu" class="w-5 h-5"></i>
         </button>
       </div>
@@ -171,6 +221,7 @@
       <a href="#stack" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Стек технологий</a>
       <a href="#projects" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Кейсы (NDA разборы)</a>
       <a href="#services" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Услуги для бизнеса</a>
+      <a href="#faq" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Частые вопросы (FAQ)</a>
       <a href="#contact" class="block py-2 text-sm text-zinc-300 hover:text-white mobile-link">Контакты и форма заявки</a>
     </div>
   </header>
@@ -758,6 +809,97 @@
       </div>
     </section>
 
+    <section id="faq" class="space-y-6">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 border-b border-zinc-800/80 pb-4">
+        <div>
+          <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">FAQ &amp; Work Process</div>
+          <h2 class="text-2xl sm:text-3xl font-bold tracking-tight text-white">Часто задаваемые вопросы</h2>
+        </div>
+        <div class="font-mono text-xs text-zinc-500">
+          Transparency &amp; SLA
+        </div>
+      </div>
+
+      <div class="space-y-3" id="faqAccordion">
+        
+        <div class="rounded-xl border border-zinc-700 bg-zinc-900/40 overflow-hidden transition-all faq-item">
+          <button type="button" class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-zinc-100 hover:text-white transition-colors faq-trigger">
+            <span class="text-sm sm:text-base flex items-center gap-3">
+              <span class="font-mono text-xs text-emerald-400 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-850">01</span>
+              <span>Подписываете ли вы NDA перед началом работы?</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200 shrink-0 rotate-180"></i>
+          </button>
+          <div class="px-4 sm:px-5 pb-5 text-xs sm:text-sm text-zinc-300 leading-relaxed border-t border-zinc-850/80 pt-3.5 space-y-2 faq-content">
+            <p>
+              <strong>Да, безусловно.</strong> Подписание соглашения о неразглашении (NDA) — стандартная практика до получения любых конфиденциальных материалов, ТЗ, схем баз данных или API-ключей. Конфиденциальность коммерческих данных и исходного кода гарантируется на 100%.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/30 overflow-hidden transition-all faq-item">
+          <button type="button" class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-zinc-100 hover:text-white transition-colors faq-trigger">
+            <span class="text-sm sm:text-base flex items-center gap-3">
+              <span class="font-mono text-xs text-zinc-500 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-850">02</span>
+              <span>Каков порядок оплаты и этапы сотрудничества?</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200 shrink-0"></i>
+          </button>
+          <div class="hidden px-4 sm:px-5 pb-5 text-xs sm:text-sm text-zinc-300 leading-relaxed border-t border-zinc-850/80 pt-3.5 space-y-2 faq-content">
+            <p>
+              Работа строится по прозрачной схеме майлстоунов (Milestone-based) или Time &amp; Material (T&amp;M). Перед стартом фиксируется скоуп задач, составляется техническая смета и поэтапный график приемки. Оплата производится за каждый сданный и протестированный этап.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/30 overflow-hidden transition-all faq-item">
+          <button type="button" class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-zinc-100 hover:text-white transition-colors faq-trigger">
+            <span class="text-sm sm:text-base flex items-center gap-3">
+              <span class="font-mono text-xs text-zinc-500 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-850">03</span>
+              <span>В каком виде передается готовый результат?</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200 shrink-0"></i>
+          </button>
+          <div class="hidden px-4 sm:px-5 pb-5 text-xs sm:text-sm text-zinc-300 leading-relaxed border-t border-zinc-850/80 pt-3.5 space-y-2 faq-content">
+            <p>
+              Вы получаете полную передачу исключительных прав на весь написанный код. В комплект поставки входят: Git-репозиторий с чистой историей, Dockerfile / docker-compose конфигурации, CI/CD пайплайны, спецификации OpenAPI/Swagger и подробное руководство по эксплуатации (Runbook).
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/30 overflow-hidden transition-all faq-item">
+          <button type="button" class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-zinc-100 hover:text-white transition-colors faq-trigger">
+            <span class="text-sm sm:text-base flex items-center gap-3">
+              <span class="font-mono text-xs text-zinc-500 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-850">04</span>
+              <span>Предоставляется ли гарантия и послерелизная поддержка?</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200 shrink-0"></i>
+          </button>
+          <div class="hidden px-4 sm:px-5 pb-5 text-xs sm:text-sm text-zinc-300 leading-relaxed border-t border-zinc-850/80 pt-3.5 space-y-2 faq-content">
+            <p>
+              <strong>Да, 30 дней бесплатной гарантии</strong> включены в каждый проект для оперативного устранения любых скрытых дефектов после релиза. Дополнительно возможно заключение договора на регулярное сопровождение (SLA) и мониторинг инфраструктуры.
+            </p>
+          </div>
+        </div>
+
+        <div class="rounded-xl border border-zinc-800 bg-zinc-900/30 overflow-hidden transition-all faq-item">
+          <button type="button" class="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-semibold text-zinc-100 hover:text-white transition-colors faq-trigger">
+            <span class="text-sm sm:text-base flex items-center gap-3">
+              <span class="font-mono text-xs text-zinc-500 font-bold px-2 py-0.5 rounded bg-zinc-950 border border-zinc-850">05</span>
+              <span>Как гарантируется изоляция данных при внедрении Private AI / LLM?</span>
+            </span>
+            <i data-lucide="chevron-down" class="w-4 h-4 text-zinc-400 transform transition-transform duration-200 shrink-0"></i>
+          </button>
+          <div class="hidden px-4 sm:px-5 pb-5 text-xs sm:text-sm text-zinc-300 leading-relaxed border-t border-zinc-850/80 pt-3.5 space-y-2 faq-content">
+            <p>
+              Все компоненты (vLLM инференс, pgvector база знаний, embeddings) разворачиваются строго в вашем физическом или облачном изолированном контуре (On-Premise / Air-Gapped). Данные не передаются во внешние API (OpenAI, Anthropic и др.), исключая риск регуляторных и коммерческих утечек.
+            </p>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
     <section id="contact" class="space-y-6">
       <div class="p-5 sm:p-10 lg:p-12 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-8">
         <div class="max-w-2xl space-y-2.5 sm:space-y-3">
@@ -934,6 +1076,17 @@
           Remote / Минск
         </span>
       </div>
+      <div class="flex items-center gap-4 font-mono">
+        <a href="#stack" class="hover:text-zinc-300 transition-colors">Стек</a>
+        <span>·</span>
+        <a href="#projects" class="hover:text-zinc-300 transition-colors">Кейсы</a>
+        <span>·</span>
+        <a href="#services" class="hover:text-zinc-300 transition-colors">Услуги</a>
+        <span>·</span>
+        <a href="#faq" class="hover:text-zinc-300 transition-colors">FAQ</a>
+        <span>·</span>
+        <a href="#contact" class="hover:text-zinc-300 transition-colors">Контакты</a>
+      </div>
       <div class="font-mono text-center sm:text-right">
         &copy; 2026 Ivan Shakhotko. All systems operational.
       </div>
@@ -942,6 +1095,53 @@
 
   <script>
     lucide.createIcons();
+
+    document.querySelectorAll('.faq-trigger').forEach(trigger => {
+      trigger.addEventListener('click', () => {
+        const item = trigger.closest('.faq-item');
+        const content = item.querySelector('.faq-content');
+        const icon = trigger.querySelector('[data-lucide="chevron-down"]');
+        const isOpen = !content.classList.contains('hidden');
+
+        document.querySelectorAll('.faq-item').forEach(otherItem => {
+          if (otherItem !== item) {
+            otherItem.classList.remove('border-zinc-700', 'bg-zinc-900/40');
+            otherItem.classList.add('border-zinc-800', 'bg-zinc-900/30');
+            const otherContent = otherItem.querySelector('.faq-content');
+            if (otherContent) otherContent.classList.add('hidden');
+            const otherIcon = otherItem.querySelector('[data-lucide="chevron-down"]');
+            if (otherIcon) otherIcon.classList.remove('rotate-180');
+            const otherBadge = otherItem.querySelector('span.font-mono');
+            if (otherBadge) {
+              otherBadge.classList.remove('text-emerald-400');
+              otherBadge.classList.add('text-zinc-500');
+            }
+          }
+        });
+
+        if (isOpen) {
+          content.classList.add('hidden');
+          item.classList.remove('border-zinc-700', 'bg-zinc-900/40');
+          item.classList.add('border-zinc-800', 'bg-zinc-900/30');
+          if (icon) icon.classList.remove('rotate-180');
+          const badge = item.querySelector('span.font-mono');
+          if (badge) {
+            badge.classList.remove('text-emerald-400');
+            badge.classList.add('text-zinc-500');
+          }
+        } else {
+          content.classList.remove('hidden');
+          item.classList.remove('border-zinc-800', 'bg-zinc-900/30');
+          item.classList.add('border-zinc-700', 'bg-zinc-900/40');
+          if (icon) icon.classList.add('rotate-180');
+          const badge = item.querySelector('span.font-mono');
+          if (badge) {
+            badge.classList.remove('text-zinc-500');
+            badge.classList.add('text-emerald-400');
+          }
+        }
+      });
+    });
 
     const mobileBtn = document.getElementById('mobileMenuBtn');
     const mobileMenu = document.getElementById('mobileMenu');

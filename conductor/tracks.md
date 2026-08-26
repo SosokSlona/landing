@@ -2,7 +2,9 @@
 
 ## Active Tracks
 
-*(No active tracks)*
+| Track ID | Title | Status | Priority | Current Phase | Progress |
+|----------|-------|--------|----------|---------------|----------|
+| [FEAT-003](./tracks/FEAT-003/plan.md) | Interactive Token Bucket Rate Limiter Playground | In Progress | P1 | Phase 1 | 0 / 9 (0%) |
 
 ## Completed Tracks
 

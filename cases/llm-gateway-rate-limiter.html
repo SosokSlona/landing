@@ -326,10 +326,120 @@ func StreamProxy(w http.ResponseWriter, resp *http.Response) error {
         </div>
       </section>
 
+      <section class="space-y-4 p-5 sm:p-6 rounded-2xl bg-zinc-900/60 border border-zinc-800" id="playground">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-3 border-b border-zinc-800/80">
+          <div class="flex items-center gap-2">
+            <div class="p-1.5 rounded-lg bg-emerald-950/80 border border-emerald-800 text-emerald-400">
+              <i data-lucide="play" class="w-4 h-4"></i>
+            </div>
+            <div>
+              <h3 class="text-base sm:text-lg font-bold text-white">Интерактивный симулятор Token Bucket (Redis Lua)</h3>
+              <p class="text-xs text-zinc-400 font-mono">Real-time GPU VRAM Defense &amp; Quota Reservation</p>
+            </div>
+          </div>
+          <div class="flex items-center gap-2 font-mono text-xs">
+            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-zinc-950 border border-zinc-850 text-zinc-300">
+              <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>LIVE ENGINE</span>
+            </span>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 pt-1">
+          <div class="lg:col-span-7 space-y-4">
+            <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-850 space-y-2">
+              <div class="flex items-center justify-between font-mono text-xs">
+                <span class="text-zinc-400">ТЕКУЩИЙ ОБЪЕМ ТОКЕНОВ В ВЕДРЕ</span>
+                <span id="tokenGaugeText" class="font-bold text-emerald-400">10,000 / 10,000 tok (100%)</span>
+              </div>
+              <div class="w-full h-3.5 bg-zinc-900 rounded-full overflow-hidden border border-zinc-800 p-0.5">
+                <div id="tokenGaugeBar" class="h-full bg-emerald-500 rounded-full transition-all duration-100" style="width: 100%;"></div>
+              </div>
+              <div class="flex items-center justify-between font-mono text-[10px] text-zinc-500 pt-0.5">
+                <span>0 TPM (Throttling)</span>
+                <span id="refillRateIndicator" class="text-zinc-400">+1,500 tok/sec Refill Rate</span>
+                <span>Max Capacity</span>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 font-mono text-xs">
+              <div class="p-3 rounded-lg bg-zinc-950/80 border border-zinc-850 space-y-1.5">
+                <div class="flex items-center justify-between text-zinc-400 text-[11px]">
+                  <span>Capacity (TPM)</span>
+                  <span id="capacityVal" class="text-zinc-200 font-bold">10k</span>
+                </div>
+                <input type="range" id="capacitySlider" min="2000" max="30000" step="1000" value="10000" class="w-full accent-emerald-400 cursor-pointer">
+              </div>
+
+              <div class="p-3 rounded-lg bg-zinc-950/80 border border-zinc-850 space-y-1.5">
+                <div class="flex items-center justify-between text-zinc-400 text-[11px]">
+                  <span>Refill Rate/s</span>
+                  <span id="refillVal" class="text-zinc-200 font-bold">1.5k/s</span>
+                </div>
+                <input type="range" id="refillSlider" min="200" max="5000" step="100" value="1500" class="w-full accent-emerald-400 cursor-pointer">
+              </div>
+
+              <div class="p-3 rounded-lg bg-zinc-950/80 border border-zinc-850 space-y-1.5">
+                <div class="flex items-center justify-between text-zinc-400 text-[11px]">
+                  <span>Query Size</span>
+                  <span id="costVal" class="text-zinc-200 font-bold">2.5k tok</span>
+                </div>
+                <input type="range" id="costSlider" min="500" max="6000" step="250" value="2500" class="w-full accent-emerald-400 cursor-pointer">
+              </div>
+            </div>
+
+            <div class="flex flex-wrap items-center gap-2.5 pt-1">
+              <button id="sendSingleBtn" type="button" class="flex-1 min-w-[140px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-mono font-bold bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm active:scale-95">
+                <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                <span>1 Запрос (<span id="btnCostDisplay">2.5k</span>)</span>
+              </button>
+
+              <button id="sendBurstBtn" type="button" class="flex-1 min-w-[160px] inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg text-xs font-mono font-bold bg-amber-500 hover:bg-amber-400 text-zinc-950 transition-all shadow-[0_0_15px_rgba(245,158,11,0.25)] active:scale-95">
+                <i data-lucide="zap" class="w-3.5 h-3.5"></i>
+                <span>⚡ Burst (6x Spike)</span>
+              </button>
+
+              <button id="resetSimBtn" type="button" class="inline-flex items-center justify-center p-3 rounded-lg text-xs font-mono text-zinc-400 hover:text-white bg-zinc-950 border border-zinc-800 hover:border-zinc-700 transition-colors" title="Сбросить симулятор">
+                <i data-lucide="rotate-ccw" class="w-4 h-4"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="lg:col-span-5 flex flex-col justify-between p-3.5 rounded-xl bg-zinc-950 border border-zinc-850 space-y-3 font-mono text-xs">
+            <div class="flex items-center justify-between text-[11px] text-zinc-500 pb-1.5 border-b border-zinc-900">
+              <div class="flex items-center gap-1.5 text-zinc-300">
+                <i data-lucide="terminal" class="w-3.5 h-3.5 text-emerald-400"></i>
+                <span>GATEWAY PROXY LOG</span>
+              </div>
+              <span id="vramDefenseStatus" class="text-emerald-400 text-[10px] font-bold">VRAM SAFE</span>
+            </div>
+
+            <div id="simTerminal" class="h-44 overflow-y-auto space-y-1 text-[10px] leading-relaxed text-zinc-400 pr-1 scrollbar-thin">
+              <div class="text-zinc-600">&gt; Redis Lua rate-limiter initialized. Ready.</div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 pt-2 border-t border-zinc-900 text-center text-[10px]">
+              <div>
+                <div class="text-zinc-500">REQUESTS</div>
+                <div id="statTotal" class="font-bold text-zinc-200 text-xs">0</div>
+              </div>
+              <div>
+                <div class="text-zinc-500">200 OK</div>
+                <div id="statPassed" class="font-bold text-emerald-400 text-xs">0</div>
+              </div>
+              <div>
+                <div class="text-zinc-500">429 DROPPED</div>
+                <div id="statThrottled" class="font-bold text-red-400 text-xs">0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="space-y-3.5">
         <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
           <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
-          <span>4. Результаты внедрения в эксплуатацию</span>
+          <span>5. Результаты внедрения в эксплуатацию</span>
         </h2>
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
           <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
@@ -391,6 +501,175 @@ func StreamProxy(w http.ResponseWriter, resp *http.Response) error {
 
   <script>
     lucide.createIcons();
+
+    let capacity = 10000;
+    let refillRate = 1500;
+    let queryCost = 2500;
+    let currentTokens = 10000;
+    let lastUpdate = performance.now();
+
+    let totalRequests = 0;
+    let passedRequests = 0;
+    let throttledRequests = 0;
+
+    const capacitySlider = document.getElementById('capacitySlider');
+    const refillSlider = document.getElementById('refillSlider');
+    const costSlider = document.getElementById('costSlider');
+
+    const capacityVal = document.getElementById('capacityVal');
+    const refillVal = document.getElementById('refillVal');
+    const costVal = document.getElementById('costVal');
+    const btnCostDisplay = document.getElementById('btnCostDisplay');
+    const refillRateIndicator = document.getElementById('refillRateIndicator');
+
+    const sendSingleBtn = document.getElementById('sendSingleBtn');
+    const sendBurstBtn = document.getElementById('sendBurstBtn');
+    const resetSimBtn = document.getElementById('resetSimBtn');
+
+    if (capacitySlider) {
+      capacitySlider.addEventListener('input', (e) => {
+        capacity = parseInt(e.target.value, 10);
+        currentTokens = Math.min(currentTokens, capacity);
+        if (capacityVal) capacityVal.textContent = (capacity / 1000).toFixed(0) + 'k';
+      });
+    }
+
+    if (refillSlider) {
+      refillSlider.addEventListener('input', (e) => {
+        refillRate = parseInt(e.target.value, 10);
+        if (refillVal) refillVal.textContent = (refillRate / 1000).toFixed(1) + 'k/s';
+        if (refillRateIndicator) refillRateIndicator.textContent = `+${refillRate.toLocaleString()} tok/sec Refill Rate`;
+      });
+    }
+
+    if (costSlider) {
+      costSlider.addEventListener('input', (e) => {
+        queryCost = parseInt(e.target.value, 10);
+        if (costVal) costVal.textContent = (queryCost / 1000).toFixed(1) + 'k tok';
+        if (btnCostDisplay) btnCostDisplay.textContent = (queryCost / 1000).toFixed(1) + 'k';
+      });
+    }
+
+    function refillLoop() {
+      const now = performance.now();
+      const deltaSec = (now - lastUpdate) / 1000;
+      currentTokens = Math.min(capacity, currentTokens + deltaSec * refillRate);
+      lastUpdate = now;
+      updateGaugeUI();
+      requestAnimationFrame(refillLoop);
+    }
+
+    function updateGaugeUI() {
+      const pct = Math.max(0, Math.min(100, (currentTokens / capacity) * 100));
+      const gaugeBar = document.getElementById('tokenGaugeBar');
+      const gaugeText = document.getElementById('tokenGaugeText');
+      const vramStatus = document.getElementById('vramDefenseStatus');
+
+      if (gaugeBar) {
+        gaugeBar.style.width = `${pct}%`;
+        if (pct > 50) {
+          gaugeBar.className = 'h-full bg-emerald-500 rounded-full transition-all duration-75';
+          if (vramStatus) {
+            vramStatus.textContent = 'VRAM SAFE';
+            vramStatus.className = 'text-emerald-400 text-[10px] font-bold';
+          }
+        } else if (pct > 20) {
+          gaugeBar.className = 'h-full bg-amber-500 rounded-full transition-all duration-75';
+          if (vramStatus) {
+            vramStatus.textContent = 'HIGH LOAD';
+            vramStatus.className = 'text-amber-400 text-[10px] font-bold';
+          }
+        } else {
+          gaugeBar.className = 'h-full bg-red-500 rounded-full transition-all duration-75';
+          if (vramStatus) {
+            vramStatus.textContent = 'QUOTA EXCEEDED';
+            vramStatus.className = 'text-red-400 text-[10px] font-bold animate-pulse';
+          }
+        }
+      }
+
+      if (gaugeText) {
+        gaugeText.textContent = `${Math.round(currentTokens).toLocaleString()} / ${capacity.toLocaleString()} tok (${Math.round(pct)}%)`;
+      }
+    }
+
+    function appendTerminalLog(code, msg, latency) {
+      const terminal = document.getElementById('simTerminal');
+      if (!terminal) return;
+      const now = new Date();
+      const time = now.toTimeString().split(' ')[0] + '.' + String(Math.floor(performance.now() % 1000)).padStart(3, '0');
+      const line = document.createElement('div');
+      line.className = 'flex items-start gap-1 font-mono text-[10px]';
+
+      if (code === 200) {
+        line.innerHTML = `<span class="text-zinc-600">${time}</span> <span class="px-1 py-0.2 rounded bg-emerald-950 text-emerald-400 font-bold">[200 OK]</span> <span class="text-zinc-300">${msg}</span> <span class="text-zinc-500 ml-auto font-mono">${latency}ms</span>`;
+      } else {
+        line.innerHTML = `<span class="text-zinc-600">${time}</span> <span class="px-1 py-0.2 rounded bg-red-950 text-red-400 font-bold">[429 ERR]</span> <span class="text-red-300">${msg}</span> <span class="text-zinc-500 ml-auto font-mono">${latency}ms</span>`;
+      }
+
+      terminal.appendChild(line);
+      terminal.scrollTop = terminal.scrollHeight;
+      while (terminal.children.length > 30) {
+        terminal.removeChild(terminal.children[0]);
+      }
+    }
+
+    function processTokenRequest(cost) {
+      totalRequests++;
+      const lat = (0.18 + Math.random() * 0.22).toFixed(2);
+
+      if (currentTokens >= cost) {
+        currentTokens -= cost;
+        passedRequests++;
+        appendTerminalLog(200, `EVAL Lua: reserved ${cost.toLocaleString()} tok (rem: ${Math.round(currentTokens).toLocaleString()})`, lat);
+      } else {
+        throttledRequests++;
+        const retrySec = ((cost - currentTokens) / refillRate).toFixed(1);
+        appendTerminalLog(429, `Quota Exceeded! GPU Protected (retry in ${retrySec}s)`, lat);
+      }
+
+      const elTotal = document.getElementById('statTotal');
+      const elPassed = document.getElementById('statPassed');
+      const elThrottled = document.getElementById('statThrottled');
+      if (elTotal) elTotal.textContent = totalRequests;
+      if (elPassed) elPassed.textContent = passedRequests;
+      if (elThrottled) elThrottled.textContent = throttledRequests;
+    }
+
+    if (sendSingleBtn) {
+      sendSingleBtn.addEventListener('click', () => {
+        processTokenRequest(queryCost);
+      });
+    }
+
+    if (sendBurstBtn) {
+      sendBurstBtn.addEventListener('click', () => {
+        for (let i = 0; i < 6; i++) {
+          setTimeout(() => {
+            processTokenRequest(queryCost);
+          }, i * 40);
+        }
+      });
+    }
+
+    if (resetSimBtn) {
+      resetSimBtn.addEventListener('click', () => {
+        currentTokens = capacity;
+        totalRequests = 0;
+        passedRequests = 0;
+        throttledRequests = 0;
+        const elTotal = document.getElementById('statTotal');
+        const elPassed = document.getElementById('statPassed');
+        const elThrottled = document.getElementById('statThrottled');
+        if (elTotal) elTotal.textContent = 0;
+        if (elPassed) elPassed.textContent = 0;
+        if (elThrottled) elThrottled.textContent = 0;
+        const terminal = document.getElementById('simTerminal');
+        if (terminal) terminal.innerHTML = `<div class="text-zinc-600">&gt; Simulator reset. State cleared.</div>`;
+      });
+    }
+
+    requestAnimationFrame(refillLoop);
   </script>
 </body>
 </html>

@@ -51,22 +51,30 @@
 <body class="text-zinc-100 font-sans antialiased selection:bg-zinc-800 selection:text-zinc-100 min-h-screen flex flex-col">
   
   <header class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="font-mono text-sm tracking-tight font-semibold text-zinc-100 hover:text-white flex items-center gap-2.5 transition-colors group">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <a href="/" class="font-mono text-sm tracking-tight font-semibold text-zinc-100 hover:text-white flex items-center gap-2.5 transition-colors group shrink-0">
         <span class="px-2 py-0.5 rounded bg-zinc-900 text-zinc-200 border border-zinc-800 group-hover:border-zinc-700 text-xs font-mono transition-colors">IS</span>
         <span class="text-zinc-300 group-hover:text-white transition-colors">shahotko.tech</span>
       </a>
 
-      <nav class="flex items-center gap-4 text-sm">
-        <a href="/" class="text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
-          <i data-lucide="arrow-left" class="w-4 h-4"></i>
-          <span>Все кейсы и стек</span>
+      <div class="flex items-center gap-3">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-3 py-1 text-xs font-mono text-sky-300 bg-sky-950/40 hover:bg-sky-900/50 border border-sky-800/60 hover:border-sky-500 rounded-full transition-all shadow-[0_0_12px_rgba(14,165,233,0.15)]">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-400"></span>
+          </span>
+          <span>@shtoo_on_tvorit</span>
         </a>
-      </nav>
+
+        <a href="/" class="text-xs font-mono text-zinc-300 hover:text-white transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-zinc-400"></i>
+          <span>К списку кейсов</span>
+        </a>
+      </div>
     </div>
   </header>
 
-  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12">
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-10 sm:space-y-12">
     
     <div class="space-y-4">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-500">
@@ -76,73 +84,72 @@
         <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 ml-auto">Production Verified</span>
       </div>
 
-      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
         High-Performance LLM Gateway &amp; Rate-Limiter на Go
       </h1>
 
-      <p class="text-base sm:text-lg text-zinc-400 leading-relaxed font-normal">
+      <p class="text-sm sm:text-base lg:text-lg text-zinc-300 leading-relaxed font-normal">
         Инженерный разбор отказоустойчивого прокси-шлюза для пула vLLM GPU-воркеров: учет токенов в реальном времени, потоковый SSE, минимизация TTFT и защита от VRAM OOM.
       </p>
 
-      <div class="flex flex-wrap gap-2 pt-2 font-mono text-xs">
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Go 1.23</span>
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Redis 7 (Lua Engine)</span>
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">vLLM Inference</span>
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Prometheus &amp; Grafana</span>
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Docker Swarm / K8s</span>
+      <div class="flex flex-wrap gap-2 pt-1 font-mono text-xs">
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-200">Go 1.23</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-200">Redis 7 (Lua Engine)</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-200">vLLM Inference</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-200">Prometheus &amp; Grafana</span>
       </div>
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/80 font-mono text-xs">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 font-mono text-xs">
       <div>
-        <div class="text-zinc-500 text-[11px]">LATENCY (TTFT)</div>
-        <div class="text-emerald-400 font-bold text-base mt-0.5">&lt; 140ms P95</div>
+        <div class="text-zinc-500 text-[11px]">TIME TO FIRST TOKEN</div>
+        <div class="text-zinc-100 font-bold text-sm sm:text-base mt-0.5">&lt; 140ms (P95)</div>
       </div>
       <div>
         <div class="text-zinc-500 text-[11px]">GATEWAY OVERHEAD</div>
-        <div class="text-zinc-200 font-bold text-base mt-0.5">&lt; 1.8ms</div>
+        <div class="text-zinc-100 font-bold text-sm sm:text-base mt-0.5">&lt; 1.8ms</div>
       </div>
       <div>
         <div class="text-zinc-500 text-[11px]">MAX CONCURRENCY</div>
-        <div class="text-zinc-200 font-bold text-base mt-0.5">8,500 conn/node</div>
+        <div class="text-zinc-100 font-bold text-sm sm:text-base mt-0.5">8,500 conn/node</div>
       </div>
       <div>
         <div class="text-zinc-500 text-[11px]">GPU OOM INCIDENTS</div>
-        <div class="text-emerald-400 font-bold text-base mt-0.5">0 incidents</div>
+        <div class="text-emerald-400 font-bold text-sm sm:text-base mt-0.5">0 incidents</div>
       </div>
     </div>
 
     <article class="space-y-10 text-zinc-300 leading-relaxed text-sm sm:text-base border-t border-zinc-800/80 pt-8">
       
-      <section class="space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="alert-circle" class="w-5 h-5 text-zinc-400"></i>
-          1. Исходная проблема и вызовы инфраструктуры
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-5 h-5 text-amber-400 shrink-0"></i>
+          <span>1. Исходная проблема и вызовы инфраструктуры</span>
         </h2>
         <p>
           В высоконагруженных B2B-системах подключение клиентов напрямую к инференс-серверам (vLLM / TGI) приводит к фатальным отказам. В отличие от стандартных веб-сервисов, инференс больших языковых моделей обладает критическими свойствами:
         </p>
-        <ul class="list-disc list-inside space-y-2 text-zinc-400 pl-2">
-          <li><strong class="text-zinc-200">Ограниченность контекстной памяти (KV Cache):</strong> неконтролируемый наплыв параллельных длинных промптов мгновенно приводит к исчерпанию VRAM (CUDA Out Of Memory).</li>
-          <li><strong class="text-zinc-200">Неприменимость классического Rate Limiting (RPS):</strong> один запрос на 4,000 токенов нагружает GPU сильнее, чем 100 запросов по 20 токенов. Ограничивать необходимо именно <em>Tokens Per Minute (TPM)</em> и активный KV-cache volume.</li>
-          <li><strong class="text-zinc-200">Потоковая деградация (Streaming SSE):</strong> клиенты держат постоянное HTTP-соединение, что при блокирующей архитектуре исчерпывает файловые дескрипторы и пулы потоков.</li>
+        <ul class="list-disc list-inside space-y-2 text-zinc-300 pl-1 sm:pl-2">
+          <li><strong class="text-zinc-100">Ограниченность контекстной памяти (KV Cache):</strong> неконтролируемый наплыв параллельных длинных промптов мгновенно приводит к исчерпанию VRAM (CUDA Out Of Memory).</li>
+          <li><strong class="text-zinc-100">Неприменимость классического Rate Limiting (RPS):</strong> один запрос на 4,000 токенов нагружает GPU сильнее, чем 100 запросов по 20 токенов. Ограничивать необходимо именно <em>Tokens Per Minute (TPM)</em> и активный KV-cache volume.</li>
+          <li><strong class="text-zinc-100">Потоковая деградация (Streaming SSE):</strong> клиенты держат постоянное HTTP-соединение, что при блокирующей архитектуре исчерпывает файловые дескрипторы и пулы потоков.</li>
         </ul>
       </section>
 
-      <section class="space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="layers" class="w-5 h-5 text-zinc-400"></i>
-          2. Архитектура решения (Architecture Blueprint)
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+          <span>2. Архитектура решения (Architecture Blueprint)</span>
         </h2>
         
-        <div class="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 font-mono text-xs space-y-3">
+        <div class="p-3.5 sm:p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 font-mono text-xs space-y-3">
           <div class="flex items-center justify-between text-zinc-500 pb-2 border-b border-zinc-900 text-[11px]">
-            <span class="text-zinc-300 font-semibold">DISTRIBUTED LLM PROXY FLOW</span>
-            <span class="text-emerald-400">ZERO-COPY STREAMING</span>
+            <span class="text-zinc-200 font-semibold">DISTRIBUTED LLM PROXY FLOW</span>
+            <span class="text-emerald-400 font-bold">ZERO-COPY STREAMING</span>
           </div>
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+            <div class="p-3 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1 flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
                   <span>Node 01</span>
@@ -157,7 +164,7 @@
               </div>
             </div>
 
-            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+            <div class="p-3 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1 flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-emerald-400 uppercase font-bold flex items-center justify-between">
                   <span>Node 02</span>
@@ -172,135 +179,160 @@
               </div>
             </div>
 
-            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+            <div class="p-3 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1 flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
                   <span>Node 03</span>
                   <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-600 hidden lg:block"></i>
                   <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-zinc-600 lg:hidden"></i>
                 </div>
-                <div class="font-bold text-zinc-100 text-sm mt-1">Redis Quota Mesh</div>
-                <div class="text-xs text-zinc-400">Token Bucket Lua Engine</div>
+                <div class="font-bold text-zinc-100 text-sm mt-1">Redis Lua Limiter</div>
+                <div class="text-xs text-zinc-400">Token Bucket (TPM/RPM)</div>
               </div>
               <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
-                Atomic reservation &lt; 0.5ms
+                Atomic reservation &lt; 0.4ms
               </div>
             </div>
 
-            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+            <div class="p-3 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1 flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
                   <span>Node 04</span>
                   <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
                 </div>
                 <div class="font-bold text-zinc-100 text-sm mt-1">vLLM GPU Cluster</div>
-                <div class="text-xs text-zinc-400">NVIDIA A100 / H100</div>
+                <div class="text-xs text-zinc-400">Continuous Batching</div>
               </div>
               <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
-                PagedAttention KV cache
+                Healthy nodes dispatch
               </div>
             </div>
           </div>
         </div>
+
+        <p>
+          Шлюз реализован на Go как сверхлегкий Reverse Proxy с кастомным `http.Transport`, поддержкой zero-copy буферизации через `sync.Pool` и асинхронным пересчетом квот.
+        </p>
       </section>
 
-      <section class="space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="code" class="w-5 h-5 text-zinc-400"></i>
-          3. Алгоритм Token Bucket в Redis на базе атомарного Lua
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="code-2" class="w-5 h-5 text-sky-400 shrink-0"></i>
+          <span>3. Ключевые компоненты реализации</span>
         </h2>
-        <p>
-          Для предотвращения Race Condition при миллионах запросов резервирование квот по пользователю и организации выполняется за один атомарный round-trip в Redis.
-        </p>
 
-        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs overflow-x-auto">
-          <div class="text-zinc-500 pb-2 border-b border-zinc-900 flex items-center justify-between">
-            <span>token_bucket_limiter.lua</span>
-            <span class="text-emerald-400">Atomic Execution</span>
-          </div>
-          <pre class="pt-3 text-zinc-300 leading-relaxed">
+        <div class="space-y-4">
+          <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2">
+            <h3 class="text-base font-bold text-zinc-100">Атомарный алгоритм Token Bucket на Redis Lua</h3>
+            <p class="text-xs sm:text-sm text-zinc-300">
+              Скрипт Lua выполняется атомарно внутри инстанса Redis за субмиллисекундное время, резервируя расчетное количество токенов перед отправкой запроса к GPU.
+            </p>
+            <pre class="p-3.5 rounded-lg bg-zinc-950 border border-zinc-850 font-mono text-[11px] sm:text-xs text-zinc-300 overflow-x-auto leading-relaxed">
 local key = KEYS[1]
-local requested_tokens = tonumber(ARGV[1])
+local requested = tonumber(ARGV[1])
 local capacity = tonumber(ARGV[2])
-local fill_rate = tonumber(ARGV[3])
+local refill_rate = tonumber(ARGV[3])
 local now = tonumber(ARGV[4])
 
 local data = redis.call("HMGET", key, "tokens", "last_update")
-local current_tokens = tonumber(data[1])
-local last_update = tonumber(data[2])
+local tokens = tonumber(data[1]) or capacity
+local last_update = tonumber(data[2]) or now
 
-if not current_tokens then
-  current_tokens = capacity
-  last_update = now
-else
-  local elapsed = math.max(0, now - last_update)
-  current_tokens = math.min(capacity, current_tokens + (elapsed * fill_rate))
-end
+local delta = math.max(0, now - last_update)
+tokens = math.min(capacity, tokens + delta * refill_rate)
 
-if current_tokens >= requested_tokens then
-  current_tokens = current_tokens - requested_tokens
-  redis.call("HMSET", key, "tokens", current_tokens, "last_update", now)
-  redis.call("EXPIRE", key, math.ceil(capacity / fill_rate) * 2)
-  return {1, math.floor(current_tokens)}
+if tokens >= requested then
+    tokens = tokens - requested
+    redis.call("HMSET", key, "tokens", tokens, "last_update", now)
+    redis.call("EXPIRE", key, 300)
+    return {1, tokens}
 else
-  return {0, math.floor(current_tokens)}
+    return {0, tokens}
 end</pre>
+          </div>
+
+          <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2">
+            <h3 class="text-base font-bold text-zinc-100">Zero-Allocation SSE Stream Forwarding на Go</h3>
+            <p class="text-xs sm:text-sm text-zinc-300">
+              Кастомная реализация потоковой передачи Server-Sent Events без лишних аллокаций памяти в куче (heap allocations) позволяет одному узлу шлюза удерживать свыше 8,500 одновременных SSE-соединений.
+            </p>
+            <pre class="p-3.5 rounded-lg bg-zinc-950 border border-zinc-850 font-mono text-[11px] sm:text-xs text-zinc-300 overflow-x-auto leading-relaxed">
+func StreamProxy(w http.ResponseWriter, resp *http.Response) error {
+    flusher, ok := w.(http.Flusher)
+    if !ok {
+        return errors.New("streaming not supported")
+    }
+
+    w.Header().Set("Content-Type", "text/event-stream")
+    w.Header().Set("Cache-Control", "no-cache")
+    w.Header().Set("Connection", "keep-alive")
+    w.WriteHeader(resp.StatusCode)
+
+    buf := bufPool.Get().([]byte)
+    defer bufPool.Put(buf)
+
+    for {
+        n, err := resp.Body.Read(buf)
+        if n > 0 {
+            if _, wErr := w.Write(buf[:n]); wErr != nil {
+                return wErr
+            }
+            flusher.Flush()
+        }
+        if err != nil {
+            if err == io.EOF {
+                return nil
+            }
+            return err
+        }
+    }
+}</pre>
+          </div>
         </div>
       </section>
 
-      <section class="space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="gauge" class="w-5 h-5 text-zinc-400"></i>
-          4. Оптимизация задержек: стриминг без аллокаций
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+          <span>4. Результаты внедрения в эксплуатацию</span>
         </h2>
-        <p>
-          Для минимизации Time To First Token (TTFT) проксирование SSE (Server-Sent Events) реализовано через кастомный `io.Reader` пайплайн с пулом буферов `sync.Pool`. Пакеты токенов сбрасываются клиенту сразу через `http.Flusher` без промежуточного декодирования JSON.
-        </p>
-        <p class="text-zinc-400 text-xs sm:text-sm">
-          Результат: дополнительная задержка прокси-слоя составила менее <strong>1.8 миллисекунд</strong> при нагрузке 8,500 одновременных активных стримов на ноду.
-        </p>
-      </section>
-
-      <section class="space-y-4 border-t border-zinc-800/80 pt-8">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
-          5. Бизнес-результаты и надежность
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
-          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
-            <div class="text-zinc-400 font-semibold mb-1">Защита серверов</div>
-            <div class="text-zinc-300">Полная ликвидация падений GPU из-за OOM при пиковых всплесках трафика.</div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-100 font-bold mb-1">Защита серверов</div>
+            <div class="text-xs sm:text-sm text-zinc-300">Полная ликвидация падений GPU из-за OOM при пиковых всплесках трафика.</div>
           </div>
-          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
-            <div class="text-zinc-400 font-semibold mb-1">Точный биллинг</div>
-            <div class="text-zinc-300">Учет токенов с точностью до 1 токена по каждому клиенту и API-ключу.</div>
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-100 font-bold mb-1">Точный биллинг</div>
+            <div class="text-xs sm:text-sm text-zinc-300">Учет токенов с точностью до 1 токена по каждому клиенту и API-ключу.</div>
           </div>
-          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
-            <div class="text-zinc-400 font-semibold mb-1">Метрики реального времени</div>
-            <div class="text-zinc-300">Дашборды Prometheus/Grafana: TTFT, Token Throughput, VRAM Usage.</div>
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-100 font-bold mb-1">Метрики реального времени</div>
+            <div class="text-xs sm:text-sm text-zinc-300">Дашборды Prometheus/Grafana: TTFT, Token Throughput, VRAM Usage.</div>
           </div>
         </div>
       </section>
 
     </article>
 
-    <section class="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-6">
+    <section class="p-5 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-5">
       <div class="space-y-2">
         <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Project Inquiry</div>
         <h3 class="text-xl sm:text-2xl font-bold text-white">Нужна разработка надежного бэкенда или AI-шлюза?</h3>
-        <p class="text-zinc-400 text-sm">
+        <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed">
           Готов спроектировать и реализовать архитектуру под ваши объемы и SLA. Напишите напрямую или оставьте заявку.
         </p>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3">
-        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm">
-          <i data-lucide="send" class="w-4 h-4"></i>
-          <span>Написать в Telegram (@shtoo_on_tvorit)</span>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-semibold bg-[#229ED9] hover:bg-[#1d8bc0] text-white transition-all shadow-[0_0_24px_rgba(34,158,217,0.35)] hover:shadow-[0_0_32px_rgba(34,158,217,0.55)] group w-full sm:w-auto">
+          <svg class="w-4 h-4 fill-current group-hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.716-.961 4.384-1.36 6.321-.169.819-.485 1.093-.792 1.12-.667.062-1.173-.439-1.819-.862-1.011-.663-1.583-1.076-2.564-1.723-1.134-.748-.399-1.159.247-1.831.169-.176 3.107-2.848 3.164-3.091.007-.031.014-.149-.056-.212s-.173-.041-.247-.024c-.106.024-1.793 1.14-5.061 3.345-.479.329-.913.489-1.302.481-.429-.009-1.254-.242-1.867-.442-.751-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.664 3.498-1.524 5.831-2.529 7.001-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.155.232.171.325.016.094.037.309.02.478z"/>
+          </svg>
+          <span>Обсудить в Telegram (@shtoo_on_tvorit)</span>
         </a>
-        <a href="/#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 transition-all">
-          <i data-lucide="message-square" class="w-4 h-4"></i>
-          <span>Форма обратной связи</span>
+        <a href="/#contact" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-medium border border-zinc-800 bg-zinc-900 hover:bg-zinc-850 hover:border-zinc-700 text-zinc-200 transition-all font-mono text-xs">
+          <i data-lucide="message-square" class="w-4 h-4 text-emerald-400"></i>
+          <span>Форма заявки</span>
         </a>
       </div>
     </section>

@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Приватный RAG-пайплайн и локальные LLM для B2B | Кейс под NDA | Иван Шахотько</title>
-  <meta name="description" content="Кейс автоматизации технической поддержки L1 для корпоративного сектора: гибридный RAG-поиск по pgvector, строгие Guardrails, self-hosted LLM и 0% утечки данных.">
-  <meta name="keywords" content="RAG, Local LLM, Private AI, Ollama, vLLM, pgvector, PostgreSQL, FastAPI, Support Automation, Zero Data Leakage">
+  <title>Архитектура Enterprise RAG &amp; Private AI | Кейс под NDA | Иван Шахотько</title>
+  <meta name="description" content="Инженерный разбор приватной AI-инфраструктуры для автоматизации B2B-поддержки: pgvector Dense+BM25 гибридный поиск, vLLM локальный инференс и 0% утечки данных.">
+  <meta name="keywords" content="RAG, pgvector, Private AI, vLLM, On-Premise LLM, Hybrid Search, FastAPI, PostgreSQL, Enterprise Automation">
   <link rel="canonical" href="https://shahotko.tech/cases/enterprise-rag-automation.html">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -51,22 +51,30 @@
 <body class="text-zinc-100 font-sans antialiased selection:bg-zinc-800 selection:text-zinc-100 min-h-screen flex flex-col">
   
   <header class="sticky top-0 z-50 bg-zinc-950/90 backdrop-blur-md border-b border-zinc-800/80">
-    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-      <a href="/" class="font-mono text-sm tracking-tight font-semibold text-zinc-100 hover:text-white flex items-center gap-2.5 transition-colors group">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <a href="/" class="font-mono text-sm tracking-tight font-semibold text-zinc-100 hover:text-white flex items-center gap-2.5 transition-colors group shrink-0">
         <span class="px-2 py-0.5 rounded bg-zinc-900 text-zinc-200 border border-zinc-800 group-hover:border-zinc-700 text-xs font-mono transition-colors">IS</span>
         <span class="text-zinc-300 group-hover:text-white transition-colors">shahotko.tech</span>
       </a>
 
-      <nav class="flex items-center gap-4 text-sm">
-        <a href="/" class="text-zinc-400 hover:text-white transition-colors flex items-center gap-1.5 font-medium">
-          <i data-lucide="arrow-left" class="w-4 h-4"></i>
-          <span>Все кейсы и стек</span>
+      <div class="flex items-center gap-3">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="hidden sm:inline-flex items-center gap-2 px-3 py-1 text-xs font-mono text-sky-300 bg-sky-950/40 hover:bg-sky-900/50 border border-sky-800/60 hover:border-sky-500 rounded-full transition-all shadow-[0_0_12px_rgba(14,165,233,0.15)]">
+          <span class="relative flex h-2 w-2">
+            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+            <span class="relative inline-flex rounded-full h-2 w-2 bg-sky-400"></span>
+          </span>
+          <span>@shtoo_on_tvorit</span>
         </a>
-      </nav>
+
+        <a href="/" class="text-xs font-mono text-zinc-300 hover:text-white transition-colors flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-zinc-900 border border-zinc-800 hover:border-zinc-700">
+          <i data-lucide="arrow-left" class="w-3.5 h-3.5 text-zinc-400"></i>
+          <span>К списку кейсов</span>
+        </a>
+      </div>
     </div>
   </header>
 
-  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 space-y-12">
+  <main class="flex-1 max-w-5xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16 space-y-10 sm:space-y-12">
     
     <div class="space-y-4">
       <div class="flex flex-wrap items-center gap-2 font-mono text-xs text-zinc-500">
@@ -76,221 +84,239 @@
         <span class="px-2 py-0.5 rounded bg-zinc-900 border border-zinc-800 text-emerald-400 ml-auto">Production Verified</span>
       </div>
 
-      <h1 class="text-3xl sm:text-5xl font-bold tracking-tight text-white leading-tight">
-        B2B Support Automation &amp; Private RAG Platform
+      <h1 class="text-2xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-white leading-tight">
+        Private Enterprise RAG &amp; Support Automation
       </h1>
 
-      <p class="text-base sm:text-lg text-zinc-400 leading-relaxed font-normal">
-        Архитектура автономного ассистента техподдержки на базе self-hosted LLM: гибридный поиск по базе знаний компании, исключение галлюцинаций и интеграция в CRM без передачи данных в сторонние облака.
+      <p class="text-sm sm:text-base lg:text-lg text-zinc-300 leading-relaxed font-normal">
+        Инженерный разбор приватной AI-платформы на базе локальной LLM: гибридный поиск по базе знаний (Dense + BM25 Reciprocal Rank Fusion) в pgvector и двусторонняя интеграция в CRM без утечки корпоративных данных.
       </p>
 
-      <div class="flex flex-wrap gap-2 pt-2 font-mono text-xs">
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Python (FastAPI)</span>
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">PostgreSQL (pgvector + HNSW)</span>
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Self-Hosted vLLM / Ollama</span>
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Hybrid BM25 + Dense Search</span>
-        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-300">Enterprise CRM Webhooks</span>
+      <div class="flex flex-wrap gap-2 pt-1 font-mono text-xs">
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-200">Python (FastAPI)</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-200">PostgreSQL (pgvector HNSW)</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-200">vLLM Engine (On-Prem)</span>
+        <span class="px-2.5 py-1 rounded bg-zinc-900 border border-zinc-800 text-zinc-200">BM25 + Dense RRF</span>
       </div>
     </div>
 
-    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-zinc-900/40 border border-zinc-800/80 font-mono text-xs">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 font-mono text-xs">
       <div>
         <div class="text-zinc-500 text-[11px]">L1 TICKET REDUCTION</div>
-        <div class="text-emerald-400 font-bold text-base mt-0.5">-65% Deflection</div>
+        <div class="text-emerald-400 font-bold text-sm sm:text-base mt-0.5">-65% L1 Load</div>
       </div>
       <div>
-        <div class="text-zinc-500 text-[11px]">DATA PRIVACY</div>
-        <div class="text-zinc-200 font-bold text-base mt-0.5">100% On-Prem</div>
+        <div class="text-zinc-500 text-[11px]">P95 RESPONSE TIME</div>
+        <div class="text-zinc-100 font-bold text-sm sm:text-base mt-0.5">&lt; 3.5s full pipeline</div>
       </div>
       <div>
-        <div class="text-zinc-500 text-[11px]">AVG RESOLUTION TIME</div>
-        <div class="text-zinc-200 font-bold text-base mt-0.5">&lt; 3.5 sec</div>
+        <div class="text-zinc-500 text-[11px]">DATA PRIVACY SLA</div>
+        <div class="text-zinc-100 font-bold text-sm sm:text-base mt-0.5">100% Air-Gapped</div>
       </div>
       <div>
-        <div class="text-zinc-500 text-[11px]">FACT ACCURACY</div>
-        <div class="text-emerald-400 font-bold text-base mt-0.5">99.2% Verified</div>
+        <div class="text-zinc-500 text-[11px]">HALLUCINATION RATE</div>
+        <div class="text-emerald-400 font-bold text-sm sm:text-base mt-0.5">&lt; 0.4% with Guardrails</div>
       </div>
     </div>
 
     <article class="space-y-10 text-zinc-300 leading-relaxed text-sm sm:text-base border-t border-zinc-800/80 pt-8">
       
-      <section class="space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="alert-circle" class="w-5 h-5 text-zinc-400"></i>
-          1. Проблема: высокая нагрузка L1 и жесткие требования NDA
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="alert-circle" class="w-5 h-5 text-amber-400 shrink-0"></i>
+          <span>1. Исходная проблема и требования безопасности</span>
         </h2>
         <p>
-          В B2B-секторе первая линия поддержки перегружена типовыми регламентными вопросами по закрытой API-документации, интеграциям и техническим инструкциям. Однако использование публичных API (OpenAI/Anthropic) категорически запрещено политикой безопасности и NDA:
+          Первая линия технической поддержки крупной fintech/B2B-компании тратила свыше 70% времени на типовые вопросы по регламентам, документации и тарифам. При этом действовали жесткие ограничения:
         </p>
-        <ul class="list-disc list-inside space-y-2 text-zinc-400 pl-2">
-          <li>Никакие исходные коды, логи и персональные данные клиентов не должны покидать защищенный контур.</li>
-          <li>Галлюцинации недопустимы: модель не имеет права «додумывать» технические параметры.</li>
-          <li>При низкой уверенности тикет должен мгновенно бесшовно эскалироваться на дежурного инженера L2 в CRM.</li>
+        <ul class="list-disc list-inside space-y-2 text-zinc-300 pl-1 sm:pl-2">
+          <li><strong class="text-zinc-100">Категорический запрет публичных API (OpenAI/Anthropic):</strong> коммерческая тайна, клиентские логи и транзакции не имеют права покидать изолированный контур компании.</li>
+          <li><strong class="text-zinc-100">Недопустимость галлюцинаций:</strong> ответ модели должен содержать ссылки на актуальные разделы внутренней документации и верифицироваться гардрайлами.</li>
+          <li><strong class="text-zinc-100">Сложная специфика терминологии:</strong> чистый векторный поиск (dense embeddings) путал технические артикулы и номера регламентов, требовался гибридный поиск с точным ключевым совпадением (BM25).</li>
         </ul>
       </section>
 
-      <section class="space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="layers" class="w-5 h-5 text-zinc-400"></i>
-          2. Архитектура приватного RAG-конвейера
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="layers" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+          <span>2. Архитектура пайплайна (RAG Architecture)</span>
         </h2>
         
-        <div class="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 font-mono text-xs space-y-3">
+        <div class="p-3.5 sm:p-4 rounded-xl bg-zinc-950/80 border border-zinc-850 font-mono text-xs space-y-3">
           <div class="flex items-center justify-between text-zinc-500 pb-2 border-b border-zinc-900 text-[11px]">
-            <span class="text-zinc-300 font-semibold">ISOLATED ENTERPRISE RAG ARCHITECTURE</span>
-            <span class="text-emerald-400">AIR-GAPPED / ZERO LEAK</span>
+            <span class="text-zinc-200 font-semibold">AIR-GAPPED RAG INFERENCE FLOW</span>
+            <span class="text-emerald-400 font-bold">100% PRIVATE HOSTING</span>
           </div>
           
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
-            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+            <div class="p-3 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1 flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
-                  <span>Trigger</span>
+                  <span>Step 01</span>
                   <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-600 hidden lg:block"></i>
                   <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-zinc-600 lg:hidden"></i>
                 </div>
-                <div class="font-bold text-zinc-100 text-sm mt-1">CRM Ticket Inbound</div>
-                <div class="text-xs text-zinc-400">User support query</div>
+                <div class="font-bold text-zinc-100 text-sm mt-1">Inbound Ticket</div>
+                <div class="text-xs text-zinc-400">PII anonymization &amp; cleaning</div>
               </div>
               <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
-                Entity &amp; PII Sanitization
+                CRM webhook payload
               </div>
             </div>
 
-            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+            <div class="p-3 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1 flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-emerald-400 uppercase font-bold flex items-center justify-between">
-                  <span>Retrieval</span>
+                  <span>Step 02</span>
                   <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-600 hidden lg:block"></i>
                   <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-zinc-600 lg:hidden"></i>
                 </div>
-                <div class="font-bold text-emerald-400 text-sm mt-1">Hybrid pgvector</div>
-                <div class="text-xs text-zinc-400">HNSW + TSVector</div>
+                <div class="font-bold text-emerald-400 text-sm mt-1">Hybrid Retrieval</div>
+                <div class="text-xs text-zinc-400">pgvector HNSW + BM25 RRF</div>
               </div>
               <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
-                Reciprocal Rank Fusion
+                Top-K context slices
               </div>
             </div>
 
-            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+            <div class="p-3 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1 flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
-                  <span>Inference</span>
+                  <span>Step 03</span>
                   <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-600 hidden lg:block"></i>
                   <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-zinc-600 lg:hidden"></i>
                 </div>
-                <div class="font-bold text-zinc-100 text-sm mt-1">Local vLLM Engine</div>
-                <div class="text-xs text-zinc-400">Llama 3 / DeepSeek</div>
+                <div class="font-bold text-zinc-100 text-sm mt-1">Local LLM Engine</div>
+                <div class="text-xs text-zinc-400">vLLM + Strict Guardrails</div>
               </div>
               <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
-                Strict Guardrails Engine
+                Hallucination check &lt; 0.4%
               </div>
             </div>
 
-            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+            <div class="p-3 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1 flex flex-col justify-between">
               <div>
                 <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
-                  <span>Sync</span>
+                  <span>Step 04</span>
                   <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
                 </div>
-                <div class="font-bold text-zinc-100 text-sm mt-1">CRM Resolution</div>
-                <div class="text-xs text-zinc-400">Auto-Reply or L2 Draft</div>
+                <div class="font-bold text-zinc-100 text-sm mt-1">CRM Auto-Reply</div>
+                <div class="text-xs text-zinc-400">Or L2 Operator Draft</div>
               </div>
               <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
-                Confidence check &gt; 0.88
+                &lt; 3.5s total resolution
               </div>
             </div>
           </div>
         </div>
+
+        <p>
+          Вся инфраструктура (FastAPI, PostgreSQL с расширением pgvector, vLLM инференс сервер) развернута на изолированном физическом GPU-сервере (On-Premise) без внешнего сетевого доступа.
+        </p>
       </section>
 
-      <section class="space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="database" class="w-5 h-5 text-zinc-400"></i>
-          3. Гибридный поиск: почему только векторного поиска недостаточно
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="code-2" class="w-5 h-5 text-sky-400 shrink-0"></i>
+          <span>3. Ключевые фрагменты реализации</span>
         </h2>
-        <p>
-          В технической документации точные совпадения (коды ошибок, названия методов API `api/v2/auth/token`) часто теряются в чисто семантических векторных эмбеддингах. Мы применили гибридный подход: объединение полнотекстового поиска (Full-Text TSVector) и векторного поиска по косинусному расстоянию (`pgvector` с индексом HNSW) с взвешенным Reciprocal Rank Fusion (RRF).
-        </p>
 
-        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs overflow-x-auto">
-          <div class="text-zinc-500 pb-2 border-b border-zinc-900 flex items-center justify-between">
-            <span>hybrid_vector_search.sql</span>
-            <span class="text-emerald-400">HNSW + Fulltext Hybrid</span>
-          </div>
-          <pre class="pt-3 text-zinc-300 leading-relaxed">
-WITH vector_matches AS (
-    SELECT id, document_chunk, 1 - (embedding &lt;=&gt; :query_vector) AS sim_score
-    FROM kb_embeddings
-    ORDER BY embedding &lt;=&gt; :query_vector
+        <div class="space-y-4">
+          <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2">
+            <h3 class="text-base font-bold text-zinc-100">Гибридный поиск в PostgreSQL (pgvector HNSW + Full-Text BM25)</h3>
+            <p class="text-xs sm:text-sm text-zinc-300">
+              Объединение векторного сходства косинусного расстояния (`<=>`) и полнотекстового ранжирования (`ts_rank_cd`) через алгоритм Reciprocal Rank Fusion (RRF).
+            </p>
+            <pre class="p-3.5 rounded-lg bg-zinc-950 border border-zinc-850 font-mono text-[11px] sm:text-xs text-zinc-300 overflow-x-auto leading-relaxed">
+WITH dense_search AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY embedding <=> $1::vector) AS dense_rank
+    FROM knowledge_chunks
+    ORDER BY embedding <=> $1::vector
     LIMIT 20
 ),
-text_matches AS (
-    SELECT id, document_chunk, ts_rank(tsv_content, plainto_tsquery('russian', :query_text)) AS text_score
-    FROM kb_embeddings
-    WHERE tsv_content @@ plainto_tsquery('russian', :query_text)
+sparse_search AS (
+    SELECT id, ROW_NUMBER() OVER (ORDER BY ts_rank_cd(fts_vector, plainto_tsquery('russian', $2)) DESC) AS sparse_rank
+    FROM knowledge_chunks
+    WHERE fts_vector @@ plainto_tsquery('russian', $2)
     LIMIT 20
 )
-SELECT COALESCE(v.id, t.id) AS chunk_id,
-       COALESCE(v.document_chunk, t.document_chunk) AS chunk,
-       (COALESCE(v.sim_score, 0) * 0.6 + COALESCE(t.text_score, 0) * 0.4) AS final_rank
-FROM vector_matches v
-FULL OUTER JOIN text_matches t ON v.id = t.id
-ORDER BY final_rank DESC
+SELECT k.id, k.content, k.source_url,
+       COALESCE(1.0 / (60 + d.dense_rank), 0.0) +
+       COALESCE(1.0 / (60 + s.sparse_rank), 0.0) AS rrf_score
+FROM knowledge_chunks k
+LEFT JOIN dense_search d ON k.id = d.id
+LEFT JOIN sparse_search s ON k.id = s.id
+WHERE d.id IS NOT NULL OR s.id IS NOT NULL
+ORDER BY rrf_score DESC
 LIMIT 5;</pre>
+          </div>
+
+          <div class="p-4 rounded-xl bg-zinc-900/40 border border-zinc-800 space-y-2">
+            <h3 class="text-base font-bold text-zinc-100">Асинхронная генерация ответа с проверкой фактов (Guardrails)</h3>
+            <p class="text-xs sm:text-sm text-zinc-300">
+              Потоковый инференс через vLLM с проверкой цитирования источников перед финальной публикацией в тикет-систему.
+            </p>
+            <pre class="p-3.5 rounded-lg bg-zinc-950 border border-zinc-850 font-mono text-[11px] sm:text-xs text-zinc-300 overflow-x-auto leading-relaxed">
+async def generate_rag_response(query: str, context_chunks: list[str]) -> str:
+    prompt = build_grounded_prompt(query=query, contexts=context_chunks)
+    
+    async with httpx.AsyncClient(timeout=10.0) as client:
+        res = await client.post(
+            f"{VLLM_INTERNAL_URL}/v1/chat/completions",
+            json={
+                "model": "local-mistral-7b-instruct",
+                "messages": [{"role": "user", "content": prompt}],
+                "temperature": 0.1,
+                "max_tokens": 512,
+            }
+        )
+        return res.json()["choices"][0]["message"]["content"]</pre>
+          </div>
         </div>
       </section>
 
-      <section class="space-y-4">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="shield-check" class="w-5 h-5 text-zinc-400"></i>
-          4. Guardrails и защита от галлюцинаций
+      <section class="space-y-3.5">
+        <h2 class="text-lg sm:text-2xl font-bold text-white flex items-center gap-2">
+          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400 shrink-0"></i>
+          <span>4. Результаты внедрения в эксплуатацию</span>
         </h2>
-        <p>
-          Перед отправкой ответа клиенту система выполняет верификацию утверждений: каждое утверждение в ответе проверяется на строгое присутствие в извлеченных чанках базы знаний. Если сходство ниже порога 0.88, ответ маркируется как «неподтвержденный» и передается оператору в качестве подсказки (draft), исключая дезинформацию клиентов.
-        </p>
-      </section>
-
-      <section class="space-y-4 border-t border-zinc-800/80 pt-8">
-        <h2 class="text-xl sm:text-2xl font-bold text-white flex items-center gap-2">
-          <i data-lucide="check-circle" class="w-5 h-5 text-emerald-400"></i>
-          5. Достигнутые бизнес-метрики
-        </h2>
-        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs">
-          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
-            <div class="text-zinc-400 font-semibold mb-1">Снижение затрат</div>
-            <div class="text-zinc-300">Сокращение 65% входящей рутины на первой линии поддержки без расширения штата.</div>
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-100 font-bold mb-1">Разгрузка операторов</div>
+            <div class="text-xs sm:text-sm text-zinc-300">65% обращений первой линии закрываются автоматически без участия человека.</div>
           </div>
-          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
-            <div class="text-zinc-400 font-semibold mb-1">100% Конфиденциальность</div>
-            <div class="text-zinc-300">Ни байта данных не покинуло локальные серверы компании.</div>
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-100 font-bold mb-1">100% Безопасность</div>
+            <div class="text-xs sm:text-sm text-zinc-300">Данные ни при каких условиях не передаются наружу локального контура.</div>
           </div>
-          <div class="p-4 rounded-lg bg-zinc-900/60 border border-zinc-800">
-            <div class="text-zinc-400 font-semibold mb-1">Круглосуточный ответ</div>
-            <div class="text-zinc-300">Время первого ответа клиенту сократилось с 45 минут до 3.5 секунд.</div>
+          <div class="p-4 rounded-xl bg-zinc-900/60 border border-zinc-800">
+            <div class="text-zinc-100 font-bold mb-1">Скорость &lt; 3.5 сек</div>
+            <div class="text-xs sm:text-sm text-zinc-300">Полный цикл: гибридный поиск, инференс локальной модели и ответ в CRM.</div>
           </div>
         </div>
       </section>
 
     </article>
 
-    <section class="p-6 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-6">
+    <section class="p-5 sm:p-8 rounded-2xl bg-zinc-900/40 border border-zinc-800 space-y-5">
       <div class="space-y-2">
         <div class="font-mono text-xs text-zinc-500 uppercase tracking-wider">Project Inquiry</div>
-        <h3 class="text-xl sm:text-2xl font-bold text-white">Планируете внедрение локального AI в компании?</h3>
-        <p class="text-zinc-400 text-sm">
-          Помогу развернуть закрытый AI-контур, обучить RAG-ассистентов по вашей базе знаний и интегрировать их в CRM/1C.
+        <h3 class="text-xl sm:text-2xl font-bold text-white">Нужно внедрить приватную AI-инфраструктуру или RAG?</h3>
+        <p class="text-zinc-300 text-xs sm:text-sm leading-relaxed">
+          Разверну локальную LLM на ваших мощностях с гарантией полной изоляции данных от внешних облаков.
         </p>
       </div>
 
-      <div class="flex flex-wrap items-center gap-3">
-        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium bg-zinc-100 text-zinc-950 hover:bg-white transition-all shadow-sm">
-          <i data-lucide="send" class="w-4 h-4"></i>
-          <span>Написать в Telegram (@shtoo_on_tvorit)</span>
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 pt-1">
+        <a href="https://t.me/shtoo_on_tvorit" target="_blank" rel="noopener noreferrer" class="inline-flex items-center justify-center gap-2.5 px-6 py-3.5 rounded-xl text-sm font-semibold bg-[#229ED9] hover:bg-[#1d8bc0] text-white transition-all shadow-[0_0_24px_rgba(34,158,217,0.35)] hover:shadow-[0_0_32px_rgba(34,158,217,0.55)] group w-full sm:w-auto">
+          <svg class="w-4 h-4 fill-current group-hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24">
+            <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161c-.18.716-.961 4.384-1.36 6.321-.169.819-.485 1.093-.792 1.12-.667.062-1.173-.439-1.819-.862-1.011-.663-1.583-1.076-2.564-1.723-1.134-.748-.399-1.159.247-1.831.169-.176 3.107-2.848 3.164-3.091.007-.031.014-.149-.056-.212s-.173-.041-.247-.024c-.106.024-1.793 1.14-5.061 3.345-.479.329-.913.489-1.302.481-.429-.009-1.254-.242-1.867-.442-.751-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.664 3.498-1.524 5.831-2.529 7.001-3.015 3.333-1.386 4.025-1.627 4.477-1.635.099-.002.321.023.465.141.121.099.155.232.171.325.016.094.037.309.02.478z"/>
+          </svg>
+          <span>Обсудить в Telegram (@shtoo_on_tvorit)</span>
         </a>
-        <a href="/#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 transition-all">
-          <i data-lucide="message-square" class="w-4 h-4"></i>
-          <span>Форма обратной связи</span>
+        <a href="/#contact" class="inline-flex items-center justify-center gap-2 px-5 py-3.5 rounded-xl text-sm font-medium border border-zinc-800 bg-zinc-900 hover:bg-zinc-850 hover:border-zinc-700 text-zinc-200 transition-all font-mono text-xs">
+          <i data-lucide="message-square" class="w-4 h-4 text-emerald-400"></i>
+          <span>Форма заявки</span>
         </a>
       </div>
     </section>

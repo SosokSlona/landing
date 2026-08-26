@@ -2,7 +2,9 @@
 
 ## Active Tracks
 
-*(No active tracks)*
+| Track ID | Title | Status | Priority | Current Phase | Progress |
+|----------|-------|--------|----------|---------------|----------|
+| [FEAT-004](./tracks/FEAT-004/plan.md) | B2B Client FAQ & Service Delivery Process Section | In Progress | P1 | Phase 1 | 0 / 10 (0%) |
 
 ## Completed Tracks
 

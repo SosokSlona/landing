@@ -135,28 +135,72 @@
           2. Архитектура приватного RAG-конвейера
         </h2>
         
-        <div class="p-4 rounded-xl bg-zinc-950 border border-zinc-800 font-mono text-xs text-zinc-300 overflow-x-auto space-y-2">
-          <div class="text-zinc-500 text-[11px] pb-2 border-b border-zinc-900 flex items-center justify-between">
-            <span>ISOLATED ENTERPRISE RAG ARCHITECTURE</span>
-            <span>AIR-GAPPED / ZERO LEAK</span>
+        <div class="p-4 rounded-xl bg-zinc-950/80 border border-zinc-800 font-mono text-xs space-y-3">
+          <div class="flex items-center justify-between text-zinc-500 pb-2 border-b border-zinc-900 text-[11px]">
+            <span class="text-zinc-300 font-semibold">ISOLATED ENTERPRISE RAG ARCHITECTURE</span>
+            <span class="text-emerald-400">AIR-GAPPED / ZERO LEAK</span>
           </div>
-          <pre class="leading-5 text-zinc-300">
-┌─────────────────┐       ┌────────────────────────────────────────────────────────┐
-│  CRM / Support  │ ────&gt; │          FastAPI Agent Orchestrator (Internal)         │
-│  (User Ticket)  │       │                                                        │
-└─────────────────┘       │  1. Query Pre-processing &amp; Entity Extraction           │
-                          │  2. Hybrid Retrieval (BM25 + pgvector HNSW Index)      │
-                          │  3. Re-ranking &amp; Context Pruning                       │
-                          │  4. Local LLM Inference (vLLM / Llama 3 / DeepSeek)   │
-                          │  5. Strict Guardrail &amp; Fact Verification Engine        │
-                          └──────────────────────────┬─────────────────────────────┘
-                                                     │
-                                                     ▼
-                          ┌────────────────────────────────────────────────────────┐
-                          │ Confidence Check: Score &gt; 0.88?                        │
-                          │   ├── [YES] ──&gt; Auto-reply to Customer (CRM API)       │
-                          │   └── [NO]  ──&gt; Escalate to Human L2 with Draft Answer │
-                          └────────────────────────────────────────────────────────┘</pre>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
+                  <span>Trigger</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-600 hidden lg:block"></i>
+                  <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-zinc-600 lg:hidden"></i>
+                </div>
+                <div class="font-bold text-zinc-100 text-sm mt-1">CRM Ticket Inbound</div>
+                <div class="text-xs text-zinc-400">User support query</div>
+              </div>
+              <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
+                Entity &amp; PII Sanitization
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-emerald-400 uppercase font-bold flex items-center justify-between">
+                  <span>Retrieval</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-600 hidden lg:block"></i>
+                  <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-zinc-600 lg:hidden"></i>
+                </div>
+                <div class="font-bold text-emerald-400 text-sm mt-1">Hybrid pgvector</div>
+                <div class="text-xs text-zinc-400">HNSW + TSVector</div>
+              </div>
+              <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
+                Reciprocal Rank Fusion
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
+                  <span>Inference</span>
+                  <i data-lucide="arrow-right" class="w-3.5 h-3.5 text-zinc-600 hidden lg:block"></i>
+                  <i data-lucide="arrow-down" class="w-3.5 h-3.5 text-zinc-600 lg:hidden"></i>
+                </div>
+                <div class="font-bold text-zinc-100 text-sm mt-1">Local vLLM Engine</div>
+                <div class="text-xs text-zinc-400">Llama 3 / DeepSeek</div>
+              </div>
+              <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
+                Strict Guardrails Engine
+              </div>
+            </div>
+
+            <div class="p-3.5 rounded-lg bg-zinc-900/60 border border-zinc-850 space-y-1.5 flex flex-col justify-between">
+              <div>
+                <div class="text-[10px] text-zinc-500 uppercase font-bold flex items-center justify-between">
+                  <span>Sync</span>
+                  <i data-lucide="check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                </div>
+                <div class="font-bold text-zinc-100 text-sm mt-1">CRM Resolution</div>
+                <div class="text-xs text-zinc-400">Auto-Reply or L2 Draft</div>
+              </div>
+              <div class="text-[11px] text-zinc-500 pt-2 border-t border-zinc-850">
+                Confidence check &gt; 0.88
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -245,8 +289,8 @@ LIMIT 5;</pre>
           <span>Написать в Telegram (@shtoo_on_tvorit)</span>
         </a>
         <a href="/#contact" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium border border-zinc-800 bg-zinc-900 hover:bg-zinc-800 text-zinc-200 transition-all">
-          <i data-lucide="file-text" class="w-4 h-4"></i>
-          <span>Оставить запрос</span>
+          <i data-lucide="message-square" class="w-4 h-4"></i>
+          <span>Форма обратной связи</span>
         </a>
       </div>
     </section>

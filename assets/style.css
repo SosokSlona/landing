@@ -239,10 +239,61 @@ a:hover {
   border: 1px solid transparent;
   cursor: pointer;
   text-decoration: none;
-  transition: background-color 0.15s ease, border-color 0.15s ease;
+  transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
   white-space: nowrap;
 }
 .btn:hover { text-decoration: none; }
+
+.btn svg {
+  flex-shrink: 0;
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+.btn-icon {
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius);
+  border: 1px solid var(--border-color);
+  background: #FFFFFF;
+  color: var(--text-primary);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  flex-shrink: 0;
+}
+.btn-icon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+  flex-shrink: 0;
+}
+.btn-icon:hover {
+  text-decoration: none;
+  border-color: var(--accent);
+  background: var(--bg-alt);
+}
+
+.btn-icon.channel-call { color: #007A7A; }
+.btn-icon.channel-call:hover { border-color: #007A7A; background: #E6F4F4; color: #005F5F; }
+
+.btn-icon.channel-tg { color: #229ED9; }
+.btn-icon.channel-tg:hover { border-color: #229ED9; background: #E8F5FD; color: #1B88BE; }
+
+.btn-icon.channel-viber { color: #7360F2; }
+.btn-icon.channel-viber:hover { border-color: #7360F2; background: #F2EFFF; color: #5B48DF; }
+
+.btn-icon.channel-wa { color: #25D366; }
+.btn-icon.channel-wa:hover { border-color: #25D366; background: #E8F8EE; color: #1EAE53; }
+
+.btn-icon.channel-mail { color: var(--text-secondary); }
+.btn-icon.channel-mail:hover { border-color: var(--text-primary); background: var(--bg-alt); color: var(--text-primary); }
 
 .btn-primary {
   background: var(--accent);

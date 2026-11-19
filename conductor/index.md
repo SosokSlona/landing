@@ -10,4 +10,3 @@
 
 - [Workflow](./workflow.md)
 - [Code Style Guides](./code_styleguides/)
-- [Tracks Registry](./tracks.md)

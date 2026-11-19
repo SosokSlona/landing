@@ -1,26 +1,24 @@
-# Product Definition: Ivan Shakhotko Portfolio & Systems Architecture Showcase
+# Product Definition: shahotko.tech
 
 ## Overview
-An engineering portfolio and technical case study platform for Ivan Shakhotko (Systems Automation & Backend Engineer). Designed with a strict Tech Brutalism aesthetic, it highlights production systems engineering, high-throughput backend services, autonomous data pipelines, and private on-premise AI deployments.
+shahotko.tech — коммерческий статический сайт-каталог инженерных и ИТ-услуг Ивана Шахотько в Минске (Республика Беларусь). Проект ориентирован на прозрачное ценообразование в белорусских рублях (BYN), прямое обращение к инженеру без посредников и мгновенную скорость загрузки страниц.
 
-## Target Audience
-- **B2B Decision Makers & CTOs:** Seeking high-concurrency backend systems, custom ETL pipelines, and private AI/RAG infrastructure.
-- **Contract & Enterprise Clients:** Requiring reliable system automation, 1C/CRM integrations, and high-performance Go/Python microservices under strict NDA/data-privacy constraints.
-- **Engineering Peers & Recruiters:** Evaluating low-level systems knowledge, architectural decision-making, and distributed systems design.
+## Target Audience & Streams
+1. **B2B / Системные и AI-решения (`/ai`)**:
+   - Малый и средний бизнес, предприниматели, ритейл и e-commerce в Беларуси.
+   - Услуги: AI-боты и RAG по прайсам/базам знаний, парсеры маркетплейсов и Kufar, реанимация касс и киосков на Linux с автоподъёмом, настройка Linux-серверов (Docker, VPN, бэкапы), конфигурация MikroTik, сборка и оптимизация рабочих ПК.
+2. **B2C / Частный ремонт и прошивка (`/repair`)**:
+   - Частные клиенты и владельцы электроники в Минске.
+   - Услуги: Установка Windows/Linux с драйверами, установка macOS (OpenCore), прошивка Android и кастомных ОС (Ubuntu Touch), снятие забытых паролей / Google FRP / Mi-аккаунта (законным владельцам), аппаратная чистка ПК/ноутбуков с заменой термопасты.
+   - Интерактивный калькулятор разблокировки Apple (iPhone, iPad, Apple Watch) после мошенников на основе локального `apple-prices.json` с прямой отправкой заявки в Telegram или по почте.
 
 ## Core Value Proposition
-- **Engineering Depth over Buzzwords:** Concrete benchmarks (TTFT < 140ms, >350k lots/day, -65% L1 load) and verified production code snippets.
-- **100% Zero Data Leakage:** Highlighting private, self-hosted LLM infrastructure (vLLM, pgvector) without third-party cloud data transfers.
-- **Zero-Friction Lead Capture:** Dual-mode feedback channel with automated Cloudflare Pages Function routing to Telegram and instant fallback.
+- **Прозрачность и честность**: фиксированные и стартовые цены в BYN, прямой диалог с инженером.
+- **Экстремальная скорость**: вес каждой страницы до 40 КБ, отсутствие тяжелых фреймворков и сборщиков, хостинг на Cloudflare Pages с мгновенным TTFB.
+- **Утилитарная строгость**: эстетика каталога Thomann — фокус на содержании, характеристиках и стоимости, без отвлекающих визуальных шумов.
 
-## Key Features & Pages
-- `index.html`: Main landing with stack matrix, responsive pipeline cards, services, and contact form.
-- `cases/llm-gateway-rate-limiter.html`: Case #01 — Go LLM Gateway & Rate-Limiter.
-- `cases/autonomous-market-intelligence.html`: Case #02 — Python/ClickHouse Market Intelligence ETL.
-- `cases/enterprise-rag-automation.html`: Case #03 — Private Enterprise RAG Platform.
-- `functions/api/contact.js`: Cloudflare Pages Function for instant Telegram notifications.
-
-## Success Metrics
-- **Performance & Reliability:** 100/100 Lighthouse performance score, zero build dependencies, sub-second initial load.
-- **Conversion Rate:** High engagement on case studies leading to direct Telegram conversations.
-- **SEO Visibility:** Indexed technical search terms around Go LLM gateways, ClickHouse ETL, and private enterprise RAG.
+## Key Metrics & Success Criteria
+- Вес каждой HTML-страницы: не более 40 КБ.
+- Скорость загрузки (PageSpeed / Core Web Vitals): 98–100 на мобильных и десктопах.
+- Индексация в поисковых системах Яндекс и Google по целевым запросам в Минске и Беларуси.
+- Прямая конверсия: переход в Telegram `https://t.me/shtoo_on_tvorit` или отправка почты на `ivan@shahotko.tech` без серверных сбоев.

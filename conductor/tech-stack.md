@@ -1,31 +1,24 @@
-# Technology Stack: Ivan Shakhotko Portfolio & Systems Engineering
+# Technology Stack: shahotko.tech
 
-## 1. Web Platform & Edge Runtime
-- **Markup & Styling:**
-  - Semantic HTML5 (Single-file Autonomous Pages, zero build step)
-  - Tailwind CSS via CDN (`https://cdn.tailwindcss.com`) with custom zinc dark palette extension
-  - Lucide Icons via CDN (`https://unpkg.com/lucide@latest`)
-  - Typography: Google Fonts `Inter` (UI/body) + `JetBrains Mono` (code/metrics/badges)
-- **Serverless & Edge Functions:**
-  - Cloudflare Pages Functions (`/functions/api/contact.js`) on Cloudflare Workers V8 runtime
-  - External Integrations: Telegram Bot API (`https://api.telegram.org/bot<TOKEN>/sendMessage`)
-- **Hosting & Infrastructure:**
-  - Cloudflare Pages with automatic Git deployment on push to `main`
-  - Zero-build configuration (`build_command: ""`, `build_output_dir: "/"`)
+## Core Architecture
+- **Type**: Multi-Page Application (MPA) of pure static files.
+- **Hosting & Infrastructure**: Cloudflare Pages serving from root `/`.
+- **Build Pipeline**: None (No Build Step). Instant deployment directly from Git.
 
-## 2. Core Systems & Engineering Competencies (Case Studies)
-- **Backend & Systems Programming:**
-  - **Go (1.23+):** High-concurrency reverse proxy, zero-alloc SSE streaming, `sync.Pool` buffer management, net/http microservices.
-  - **Python (3.12+):** Asynchronous ETL (`asyncio`, `uvloop`, `aiohttp`), FastAPI microservices, data scraping, statistical scoring.
-- **Storage & Databases:**
-  - **PostgreSQL 16+:** Relational storage, `pgvector` extension with HNSW vector index, `tsvector` full-text search.
-  - **Redis 7:** In-memory caching, atomic rate-limiting via Lua scripting (`Token Bucket`), Redis Streams for ingestion queues.
-  - **ClickHouse:** High-throughput columnar OLAP database, `ReplacingMergeTree` table engine with `ZSTD` compression.
-  - **SQLite:** Embedded transactional storage for local state and lightweight tooling.
-- **AI & Machine Learning Infrastructure:**
-  - **Local LLM Orchestration:** vLLM (PagedAttention KV-cache management), Ollama, Llama 3, DeepSeek.
-  - **Information Retrieval:** Hybrid Search (Reciprocal Rank Fusion of BM25 lexical + dense cosine embeddings), strict hallucination guardrails.
-- **DevOps, Telemetry & Security:**
-  - **OS & Containers:** Linux (Debian / Ubuntu / Alpine), Docker, Docker Compose, systemd.
-  - **Observability:** Prometheus metrics exporter, Grafana dashboards, TTFT and P95/P99 latency tracking.
-  - **Security & Network:** Cloudflare Zero Trust, Reverse Proxies (Nginx, Caddy, Envoy), air-gapped on-premise deployments.
+## Frontend Technologies
+- **HTML**: Чистый семантический HTML5 (`index.html`, `ai/index.html`, `repair/index.html`). Строго до 40 КБ на страницу.
+- **CSS**: Один общий файл `assets/style.css`. Нативный CSS3, CSS Custom Properties (Variables), Flexbox/Grid, без препроцессоров и без Tailwind CDN.
+- **JavaScript**: Минимальный нативный Vanilla ES6+ JS только для динамического поиска и калькулятора моделей Apple (`repair/apple-prices.json`).
+- **Data**: Локальный статический JSON `repair/apple-prices.json` с моделями и формулой расчета в BYN.
+
+## Strict Prohibitions (Жёсткие ограничения)
+- ❌ Tailwind CSS (CDN / CLI)
+- ❌ React / Vue / Svelte и любые другие SPA-фреймворки
+- ❌ Google Fonts и внешние веб-шрифты
+- ❌ Внешние иконочные шрифты (FontAwesome и др.)
+- ❌ Серверные функции / Cloudflare Functions / Workers (только нативные `mailto:` и `https://t.me/` ссылки)
+
+## SEO, Discovery & Standards
+- Schema.org `ProfessionalService` JSON-LD разметка (Минск, Беларусь).
+- OpenGraph теги и канонические ссылки (`https://shahotko.tech/`).
+- Статические `robots.txt` и `sitemap.xml`.

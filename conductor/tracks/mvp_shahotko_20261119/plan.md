@@ -47,15 +47,15 @@
 
 ## Phase 5: Repair Catalog & Apple Unlock Widget (`repair/index.html`)
 
-- [ ] Task: Create `repair/index.html`
-  - [ ] Implement page header, breadcrumbs, and repair services table (5 items with BYN prices)
-  - [ ] Build interactive Apple unlock widget with category/model selector and S/N or IMEI input (10–15 char validation)
-  - [ ] Implement Vanilla JS calculator fetching `repair/apple-prices.json` and dynamically rendering price and lead time
-  - [ ] Implement zero-server buttons for mailto (`ivan@shahotko.tech`) and Telegram (`https://t.me/shtoo_on_tvorit`) with pre-filled legal text
-  - [ ] Add prominent legal disclaimer regarding legal device ownership
-  - [ ] Add SEO meta tags, OpenGraph tags, and Schema.org `ProfessionalService` JSON-LD
-  - [ ] Validate weight under 40 KB, run `seo`, `accessibility`, and `best-practices` checks
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Create `repair/index.html` (f52e55d)
+  - [x] Implement page header, breadcrumbs, and repair services table (5 items with BYN prices)
+  - [x] Build interactive Apple unlock widget with category/model selector and S/N or IMEI input (10–15 char validation)
+  - [x] Implement Vanilla JS calculator fetching `repair/apple-prices.json` and dynamically rendering price and lead time
+  - [x] Implement zero-server buttons for mailto (`ivan@shahotko.tech`) and Telegram (`https://t.me/shtoo_on_tvorit`) with pre-filled legal text
+  - [x] Add prominent legal disclaimer regarding legal device ownership
+  - [x] Add SEO meta tags, OpenGraph tags, and Schema.org `ProfessionalService` JSON-LD
+  - [x] Validate weight under 40 KB, run `seo`, `accessibility`, and `best-practices` checks
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [checkpoint: f52e55d]
 
 ## Phase 6: Technical SEO & Documentation (`robots.txt`, `sitemap.xml`, `README.md`)
 

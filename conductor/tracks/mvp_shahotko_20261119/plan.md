@@ -16,14 +16,14 @@
 
 ## Phase 2: Main Navigation Portal (`index.html`)
 
-- [ ] Task: Create `index.html`
-  - [ ] Implement semantic HTML5 header with `SHAHOTKO.TECH`, nav links, and Telegram button
-  - [ ] Implement hero section with engineer positioning in Minsk and Belarus
-  - [ ] Build two equal choice cards for `/ai/` and `/repair/`
-  - [ ] Implement benefits section and footer with NPD self-employed status and contacts
-  - [ ] Add SEO meta tags, OpenGraph tags, and Schema.org `ProfessionalService` JSON-LD
-  - [ ] Validate weight under 40 KB, run `seo`, `accessibility`, and `best-practices` checks
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Create `index.html` (899fdeb)
+  - [x] Implement semantic HTML5 header with `SHAHOTKO.TECH`, nav links, and Telegram button
+  - [x] Implement hero section with engineer positioning in Minsk and Belarus
+  - [x] Build two equal choice cards for `/ai/` and `/repair/`
+  - [x] Implement benefits section and footer with NPD self-employed status and contacts
+  - [x] Add SEO meta tags, OpenGraph tags, and Schema.org `ProfessionalService` JSON-LD
+  - [x] Validate weight under 40 KB, run `seo`, `accessibility`, and `best-practices` checks
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [checkpoint: 899fdeb]
 
 ## Phase 3: Business & Systems Catalog (`ai/index.html`)
 

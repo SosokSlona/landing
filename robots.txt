@@ -2,4 +2,3 @@ User-agent: *
 Allow: /
 
 Sitemap: https://shahotko.tech/sitemap.xml
-Host: shahotko.tech

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 220" width="100%" height="100%">
+  <rect width="400" height="220" fill="#F4F5F7"/>
+  <rect x="20" y="20" width="360" height="180" rx="4" fill="#FFFFFF" stroke="#DCE0E5" stroke-width="1"/>
+  <!-- Bot Icon & Circuit -->
+  <circle cx="100" cy="110" r="40" fill="#E6F4F4" stroke="#008B8B" stroke-width="2"/>
+  <rect x="80" y="95" width="40" height="30" rx="4" fill="#008B8B"/>
+  <circle cx="92" cy="107" r="3" fill="#FFFFFF"/>
+  <circle cx="108" cy="107" r="3" fill="#FFFFFF"/>
+  <line x1="100" y1="85" x2="100" y2="95" stroke="#008B8B" stroke-width="2"/>
+  <circle cx="100" cy="83" r="3" fill="#008B8B"/>
+  <!-- Tech lines -->
+  <line x1="150" y1="80" x2="340" y2="80" stroke="#181A1F" stroke-width="3" stroke-linecap="round"/>
+  <line x1="150" y1="105" x2="300" y2="105" stroke="#4A5058" stroke-width="2" stroke-linecap="round"/>
+  <line x1="150" y1="125" x2="320" y2="125" stroke="#4A5058" stroke-width="2" stroke-linecap="round"/>
+  <!-- Status Badge -->
+  <rect x="150" y="145" width="90" height="22" rx="4" fill="#E6F4F4" stroke="#A3D4D4" stroke-width="1"/>
+  <text x="195" y="160" font-family="system-ui, sans-serif" font-size="11" font-weight="700" fill="#005A5A" text-anchor="middle">RAG ACTIVE</text>
+</svg>

@@ -82,10 +82,10 @@
           <table class="catalog-table" aria-label="Каталог услуг по ремонту и прошивке">
             <thead>
               <tr>
-                <th scope="col" style="width: 32%;">Услуга</th>
+                <th scope="col" style="width: 28%;">Услуга</th>
                 <th scope="col" style="width: 36%;">Что входит в работу</th>
-                <th scope="col" style="width: 12%;">Срок</th>
-                <th scope="col" style="width: 10%;">Стоимость</th>
+                <th scope="col" style="width: 12%; white-space: nowrap;">Срок</th>
+                <th scope="col" style="width: 14%; min-width: 110px; white-space: nowrap;">Стоимость</th>
                 <th scope="col" style="width: 10%; text-align: right;">Заказ</th>
               </tr>
             </thead>
@@ -263,11 +263,18 @@
     function populateSelect(devices) {
       currentDevices = devices;
       modelSelect.innerHTML = '<option value="" disabled selected>— Выберите вашу модель Apple —</option>';
+      var groups = {};
       devices.forEach(function(d) {
+        var groupName = d.category_name || (d.category === 'iphone' ? 'iPhone (после мошенников)' : (d.category === 'ipad' ? 'iPad (Wi-Fi по S/N)' : 'Apple Watch (GPS по S/N)'));
+        if (!groups[groupName]) {
+          groups[groupName] = document.createElement('optgroup');
+          groups[groupName].label = groupName;
+          modelSelect.appendChild(groups[groupName]);
+        }
         var opt = document.createElement('option');
         opt.value = d.id;
         opt.textContent = d.name + ' — ' + d.price_byn + ' BYN';
-        modelSelect.appendChild(opt);
+        groups[groupName].appendChild(opt);
       });
     }
 

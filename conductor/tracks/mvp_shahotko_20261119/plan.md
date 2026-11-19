@@ -59,10 +59,10 @@
 
 ## Phase 6: Technical SEO & Documentation (`robots.txt`, `sitemap.xml`, `README.md`)
 
-- [ ] Task: Create `robots.txt`
-  - [ ] Set User-agent: * Allow: / and Sitemap reference to `https://shahotko.tech/sitemap.xml`
-- [ ] Task: Create `sitemap.xml`
-  - [ ] Generate valid XML sitemap indexing `/`, `/ai/`, and `/repair/`
-- [ ] Task: Update `README.md`
-  - [ ] Update documentation to reflect Cloudflare Pages zero-build architecture, file structure, and services
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Create `robots.txt` (b70e829)
+  - [x] Set User-agent: * Allow: / and Sitemap reference to `https://shahotko.tech/sitemap.xml`
+- [x] Task: Create `sitemap.xml` (7e9ecf4)
+  - [x] Generate valid XML sitemap indexing `/`, `/ai/`, and `/repair/`
+- [x] Task: Update `README.md` (e4f7c44)
+  - [x] Update documentation to reflect Cloudflare Pages zero-build architecture, file structure, and services
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [checkpoint: e4f7c44]

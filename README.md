@@ -1,26 +1,23 @@
-# Ivan Shakhotko — Systems Automation & Backend Engineer
+# shahotko.tech — Инженерные и ИТ-услуги в Минске
 
-Production portfolio and deep-dive architectural NDA case studies.
+Коммерческий статический сайт-каталог услуг системного инженера Ивана Шахотько (Минск, Республика Беларусь).
 
-## Tech Stack
-- **Backend:** Go, Python (3.12+), REST API, WebSocket, gRPC
-- **Infrastructure:** Linux, Docker, CI/CD, Reverse Proxy, Cloudflare Zero Trust / Pages
-- **Data & Storage:** PostgreSQL (pgvector), Redis, ClickHouse, SQLite
-- **AI & Automation:** Local LLMs (vLLM / Ollama), ETL Pipelines, Telegram Bot API
+## Направления и структура
+- `index.html` — Главная страница-навигатор с позиционированием инженера и выбором направления.
+- `ai/index.html` — B2B каталог решений для бизнеса (AI-боты, RAG, парсеры данных, Linux, Docker, MikroTik, сборка ПК).
+- `repair/index.html` — B2C каталог сервиса (установка ОС, прошивка Android/iOS, чистка ПК) и интерактивный калькулятор разблокировки Apple (iCloud).
+- `repair/apple-prices.json` — Локальная база моделей Apple и расчёта фиксированных цен в BYN.
+- `assets/style.css` — Единая таблица стилей в эстетике каталога Thomann (светлая тема, без градиентов и теней).
+- `robots.txt`, `sitemap.xml` — Поисковая индексация для `https://shahotko.tech/`.
 
-## Structure
-- `index.html` — Main landing page & direct feedback form
-- `cases/llm-gateway-rate-limiter.html` — High-Performance LLM Gateway on Go
-- `cases/autonomous-market-intelligence.html` — Real-Time ETL & Scoring on Python & ClickHouse
-- `cases/enterprise-rag-automation.html` — Private Enterprise RAG & Local LLM Platform
-- `functions/api/contact.js` — Cloudflare Pages Function for instant Email and Telegram lead delivery
+## Архитектура и стек
+- **Хостинг**: Cloudflare Pages из корня `/`.
+- **Этап сборки**: Отсутствует (No build step, мгновенный деплой).
+- **Стек**: Чистый семантический HTML5, нативный CSS3 (CSS Variables, Flexbox, Grid), минимальный Vanilla JS (ES6+).
+- **Ограничения**: Без внешних CDNs (без Tailwind, Google Fonts, внешних иконок). Вес каждой страницы — до 40 КБ.
+- **Цены**: Все цены фиксированы или стартуют в белорусских рублях (BYN).
 
-## Cloudflare Pages Configuration
-- **Build command:** *(leave empty)*
-- **Build output directory:** `/` *(or leave empty)*
-- **Environment variables (Settings → Environment Variables):**
-  - `RESEND_API_KEY` — API key from [resend.com](https://resend.com) to receive leads directly by email
-  - `NOTIFICATION_EMAIL` — Destination address (defaults to `ivan@shahotko.tech`)
-  - `RESEND_FROM_EMAIL` — Sender address (defaults to `onboarding@resend.dev` or `leads@shahotko.tech`)
-  - `TELEGRAM_BOT_TOKEN` — *(Optional)* Bot token from `@BotFather`
-  - `TELEGRAM_CHAT_ID` — *(Optional)* Telegram chat ID for dual-channel alerts
+## Контакты
+- Telegram: [@shtoo_on_tvorit](https://t.me/shtoo_on_tvorit)
+- Email: [ivan@shahotko.tech](mailto:ivan@shahotko.tech)
+- Локация: Минск, Республика Беларусь (деятельность в режиме Налога на профессиональный доход).

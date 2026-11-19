@@ -27,14 +27,14 @@
 
 ## Phase 3: Business & Systems Catalog (`ai/index.html`)
 
-- [ ] Task: Create `ai/index.html`
-  - [ ] Implement page header, breadcrumb navigation, and introduction for B2B services
-  - [ ] Build tabular catalog with all 6 services and exact BYN prices
-  - [ ] Add direct Telegram buttons with pre-filled service inquiry parameters
-  - [ ] Implement 3-step workflow block («Как строится работа») and 2 authentic case studies
-  - [ ] Add SEO meta tags, OpenGraph tags, and Schema.org `ProfessionalService` JSON-LD
-  - [ ] Validate weight under 40 KB, run `seo`, `accessibility`, and `best-practices` checks
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Create `ai/index.html` (ccd392f)
+  - [x] Implement page header, breadcrumb navigation, and introduction for B2B services
+  - [x] Build tabular catalog with all 6 services and exact BYN prices
+  - [x] Add direct Telegram buttons with pre-filled service inquiry parameters
+  - [x] Implement 3-step workflow block («Как строится работа») and 2 authentic case studies
+  - [x] Add SEO meta tags, OpenGraph tags, and Schema.org `ProfessionalService` JSON-LD
+  - [x] Validate weight under 40 KB, run `seo`, `accessibility`, and `best-practices` checks
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [checkpoint: ccd392f]
 
 ## Phase 4: Apple Pricing Dataset (`repair/apple-prices.json`)
 

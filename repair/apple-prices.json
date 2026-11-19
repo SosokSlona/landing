@@ -1,0 +1,90 @@
+{
+  "meta": {
+    "currency": "BYN",
+    "updated_at": "2026-11-19",
+    "legal_notice": "Услуга оказывается исключительно законным владельцам устройств (после действий мошенников, сброса или утери доступа). Краденые и утерянные устройства (Lost Mode) в работу не принимаются."
+  },
+  "devices": [
+    {
+      "id": "watch-all",
+      "category": "apple_watch",
+      "category_name": "Apple Watch",
+      "name": "Apple Watch (все серии: SE, Series 4–10, Ultra)",
+      "price_byn": 470,
+      "time_est": "1–4 рабочих дня",
+      "note": "Любые версии GPS / Cellular"
+    },
+    {
+      "id": "ipad-wifi",
+      "category": "ipad",
+      "category_name": "iPad (Wi-Fi)",
+      "name": "iPad Wi-Fi (iPad 9/10/11, Air, mini, Pro Wi-Fi)",
+      "price_byn": 470,
+      "time_est": "1–4 рабочих дня",
+      "note": "Модели только с Wi-Fi (без SIM-лотка)"
+    },
+    {
+      "id": "ipad-cellular",
+      "category": "ipad",
+      "category_name": "iPad (Cellular)",
+      "name": "iPad Cellular + Wi-Fi (с поддержкой SIM / eSIM)",
+      "price_byn": 870,
+      "time_est": "2–5 рабочих дней",
+      "note": "Модели с поддержкой сотовой связи"
+    },
+    {
+      "id": "iphone-11",
+      "category": "iphone",
+      "category_name": "iPhone",
+      "name": "iPhone 11 / 11 Pro / 11 Pro Max",
+      "price_byn": 870,
+      "time_est": "1–5 рабочих дней",
+      "note": "Чистый статус Clean"
+    },
+    {
+      "id": "iphone-12",
+      "category": "iphone",
+      "category_name": "iPhone",
+      "name": "iPhone 12 / 12 mini / 12 Pro / 12 Pro Max",
+      "price_byn": 870,
+      "time_est": "1–5 рабочих дней",
+      "note": "Чистый статус Clean"
+    },
+    {
+      "id": "iphone-13-15-base",
+      "category": "iphone",
+      "category_name": "iPhone",
+      "name": "iPhone 13 / 13 mini / 14 / 14 Plus / 15 / 15 Plus",
+      "price_byn": 870,
+      "time_est": "1–5 рабочих дней",
+      "note": "Чистый статус Clean"
+    },
+    {
+      "id": "iphone-13-15-pro",
+      "category": "iphone",
+      "category_name": "iPhone",
+      "name": "iPhone 13 Pro / 13 Pro Max / 14 Pro / 14 Pro Max / 15 Pro",
+      "price_byn": 1350,
+      "time_est": "2–6 рабочих дней",
+      "note": "Чистый статус Clean"
+    },
+    {
+      "id": "iphone-15-pm-16-pro",
+      "category": "iphone",
+      "category_name": "iPhone",
+      "name": "iPhone 15 Pro Max / 16 / 16 Plus / 16 Pro",
+      "price_byn": 1350,
+      "time_est": "2–6 рабочих дней",
+      "note": "Чистый статус Clean"
+    },
+    {
+      "id": "iphone-16-pm-17",
+      "category": "iphone",
+      "category_name": "iPhone",
+      "name": "iPhone 16 Pro Max / 17 / 17 Plus / 17 Pro / 17 Pro Max",
+      "price_byn": 1740,
+      "time_est": "3–7 рабочих дней",
+      "note": "Чистый статус Clean"
+    }
+  ]
+}

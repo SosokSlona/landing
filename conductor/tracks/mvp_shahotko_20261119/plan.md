@@ -6,13 +6,13 @@
 
 ## Phase 1: Unified Stylesheet (`assets/style.css`)
 
-- [ ] Task: Create `assets/style.css`
-  - [ ] Implement CSS custom properties for palette (`#FFFFFF`, `#F4F5F7`, `#DCE0E5`, `#181A1F`, `#4A5058`, `#008B8B`, `#006D6D`)
-  - [ ] Implement base reset, typography with system sans-serif stack and monospace prices
-  - [ ] Implement Thomann aesthetic components: tables, cards, badges, buttons, form inputs
-  - [ ] Implement responsive media queries (table-to-card reflow for <=768px, zero horizontal overflow)
-  - [ ] Enforce weight under 15 KB and WCAG 2.2 AA contrast
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Create `assets/style.css` (83a3b3a)
+  - [x] Implement CSS custom properties for palette (`#FFFFFF`, `#F4F5F7`, `#DCE0E5`, `#181A1F`, `#4A5058`, `#008B8B`, `#006D6D`)
+  - [x] Implement base reset, typography with system sans-serif stack and monospace prices
+  - [x] Implement Thomann aesthetic components: tables, cards, badges, buttons, form inputs
+  - [x] Implement responsive media queries (table-to-card reflow for <=768px, zero horizontal overflow)
+  - [x] Enforce weight under 15 KB and WCAG 2.2 AA contrast
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [checkpoint: 83a3b3a]
 
 ## Phase 2: Main Navigation Portal (`index.html`)
 

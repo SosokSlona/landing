@@ -38,12 +38,12 @@
 
 ## Phase 4: Apple Pricing Dataset (`repair/apple-prices.json`)
 
-- [ ] Task: Create `repair/apple-prices.json`
-  - [ ] Construct structured array of models with category, name, fixed BYN price, and turnaround
-  - [ ] Populate entries: Watch/iPad from 470 BYN, iPhone 11-15 from 870 BYN, Pro models from 1350 BYN, Pro Max/17 from 1740 BYN
-  - [ ] Include legal ownership disclaimer metadata
-  - [ ] Validate valid JSON syntax and schema
-- [ ] Task: Phase Verification & Checkpoint (Refer to workflow.md)
+- [x] Task: Create `repair/apple-prices.json` (2679791)
+  - [x] Construct structured array of models with category, name, fixed BYN price, and turnaround
+  - [x] Populate entries: Watch/iPad from 470 BYN, iPhone 11-15 from 870 BYN, Pro models from 1350 BYN, Pro Max/17 from 1740 BYN
+  - [x] Include legal ownership disclaimer metadata
+  - [x] Validate valid JSON syntax and schema
+- [x] Task: Phase Verification & Checkpoint (Refer to workflow.md) [checkpoint: 2679791]
 
 ## Phase 5: Repair Catalog & Apple Unlock Widget (`repair/index.html`)
 
